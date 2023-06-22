@@ -13,8 +13,8 @@ class DefaultClass():
             case "root":
                 self.root = main.Root(self)
                 
-                self.root.minsize(550, 50)
-                self.root.maxsize(550, 2000)
+                self.root.minsize(600, 650)
+                self.root.maxsize(600, 650)
 
                 self.root.mainloop()
 

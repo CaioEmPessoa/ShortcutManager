@@ -50,12 +50,12 @@ class Root(ctk.CTk):
         add_button.grid(row=init.row, column=init.column, 
                         padx=10, pady=10, sticky="S")
 
-        clear_button = ctk.CTkButton(master=self.my_frame, text="clear", width=70,
+        clear_button = ctk.CTkButton(master=self.my_frame, text="Apagar", width=70,
                                     command=lambda: self.clear_data(init))
         clear_button.grid(row=init.row+1, column=init.column, pady=10)
 
         theme_buttom = ctk.CTkButton(master=self.my_frame, text="Tema", width=70,
-                                     command=init.switch_theme)
+                                     command=lambda: init.switch_theme())
         theme_buttom.grid(row=init.row+2, column=init.column, 
                           padx=10, pady=10, sticky="N")
 

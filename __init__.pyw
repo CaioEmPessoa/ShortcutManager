@@ -29,27 +29,57 @@ class DefaultClass():
                 self.root.destroy()
 
     def switch_theme(self):
-        if self.tema == "escuro":
-            self.tema = "claro"
-            ctk.set_appearance_mode("Light")
 
-        elif self.tema == "claro":
-            self.tema = "escuro"
-            ctk.set_appearance_mode("Dark")
+        # se o tema for escuro ele troca pra claro e vice versa
+        if self.tema == "Dark":
+            
+            # Salva o tema (reverso) para o json
+            theme_data = {"tema": "Dark"}
+            self.write_data(theme_data)
 
+            # Seta o tema para o verdadeiro
+            self.tema = "Light"
+
+        elif self.tema == "Light":
+
+            # Salva o tema (reverso) para o json
+            theme_data = {"tema": "Light"}
+            self.write_data(theme_data)
+
+            # seta o tema para o verdadeiro
+            self.tema = "Dark"
+
+        ctk.set_appearance_mode(self.tema)
+
+
+
+    # checa os apps no jsone cria uma lista com nomes, caminhos e icones deles.
     def read_data(self):
         with open("apps_data.json", "r") as read_file:
             self.data = json.load(read_file)
 
-        for key in self.data:
-            # Access the elements dynamically using the key
-            element = self.data[key]
+            try:
+                self.tema = self.data["tema"]
+                print(self.tema)
+                
+            except:
+                print("no theme")
+                self.tema = "Light"
+                theme_data = {"tema": "Light"}
+                self.write_data(theme_data)
+                self.switch_theme()
 
-            self.names_list.append(element['name'])
-            self.path_list.append(element['path'])
-            self.icon_list.append(element['icon'])
+        for key in self.data:
+            if key != "tema":
+                # Access the elements dynamically using the key
+                element = self.data[key]
+
+                self.names_list.append(element['name'])
+                self.path_list.append(element['path'])
+                self.icon_list.append(element['icon'])
 
         self.list_number = len(self.names_list)
+        self.switch_theme()
 
     def write_data(self, data):
         self.data.update(data)
@@ -62,9 +92,6 @@ class DefaultClass():
         super().__init__()
 
         # DEFAULT VALUES ----------------<
-        ctk.set_appearance_mode("Dark")
-        self.tema = "escuro"
-
         self.row = 1
         self.column = 0
 
@@ -73,18 +100,30 @@ class DefaultClass():
         self.icon_list = []
         # >--------------------------- END
 
-        # tenta ler a data salva
+        # tenta checar se existe um app salvo
         try:
             print("Lendo Data")
             self.read_data()
         
-        # caso nao tenha data salva, diz que a lista de itens é 0, 
+        # caso nao tenha apsp salvos, diz que a lista de itens é 0. 
         except:
-            print('no previus data')
-            
-            open("apps_data.json", "w")
+            print('no previus apps')
+
             self.list_number = 0
             self.data = {}
+
+            try:
+                self.tema = self.data["tema"]
+                print(self.tema)
+                
+            except:
+                print("no theme")
+                self.tema = "Light"
+                theme_data = {"tema": "Light"}
+                self.write_data(theme_data)
+                self.switch_theme()
+            
+
 
         self.call_window("root")
 

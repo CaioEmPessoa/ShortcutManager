@@ -13,8 +13,8 @@ class DefaultClass():
             case "root":
                 self.root = main.Root(self)
                 
-                self.root.minsize(600, 650)
-                self.root.maxsize(600, 650)
+                self.root.minsize(600, 680)
+                self.root.maxsize(600, 680)
 
                 self.root.mainloop()
 
@@ -50,8 +50,6 @@ class DefaultClass():
             self.tema = "Dark"
 
         ctk.set_appearance_mode(self.tema)
-
-
 
     # checa os apps no jsone cria uma lista com nomes, caminhos e icones deles.
     def read_data(self):
@@ -123,8 +121,6 @@ class DefaultClass():
                 self.write_data(theme_data)
                 self.switch_theme()
             
-
-
         self.call_window("root")
 
 default = DefaultClass()

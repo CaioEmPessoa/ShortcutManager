@@ -61,9 +61,9 @@ class AddApp(ctk.CTkToplevel):
 
             current_app_dic = {
                 self.name: {
-                    "name": self.name,
-                    "path": self.app_path,
-                    "icon": self.icon_path
+                    "name": f"{self.name}",
+                    "path": f"\"{self.app_path}\"",
+                    "icon": f"{self.icon_path}"
                 }
             }
             

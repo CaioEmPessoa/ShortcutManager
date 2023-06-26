@@ -21,7 +21,7 @@ class Root(ctk.CTk):
 
     def open_app(self, init, path):
         
-        os.system(path)
+        os.system(f"\"{path}\"")
         init.call_window("close")
         
     

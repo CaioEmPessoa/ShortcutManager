@@ -30,9 +30,9 @@ class Root(ctk.CTk):
         super().__init__()
         
         # WELCOME LABEL ------------------------------------<
-        welcome = ctk.CTkLabel(master=self, 
-        text="Escolha um app ou adicione um novo.", width=500, font=('Comic Sans MS', 20))
-        welcome.grid(row=0, column=0, columnspan=3)
+        welcome = ctk.CTkLabel(master=self, text="Escolha um app ou adicione um novo.", 
+                               font=('Segoe UI', 20), text_color="#807e7e", width=500)
+        welcome.grid(row=0, column=0, columnspan=9)
         # -----------------------------------------------> END
 
         # Calls the app buttons to generate them. ------------------------------<
@@ -45,19 +45,19 @@ class Root(ctk.CTk):
         self.app_buttons(init) 
 
         # Generate the last button, an "add more" one.
-        add_button = ctk.CTkButton(master=self.my_frame, text=" + ", width=70, 
+        add_button = ctk.CTkButton(master=self, text=" + ", width=70, 
                                    command=lambda: init.call_window("add_app"))
-        add_button.grid(row=init.row, column=init.column, 
-                        padx=10, pady=10, sticky="S")
+        add_button.grid(row=init.row+1, column=0, 
+                        padx=10, pady=10, sticky="E")
 
-        clear_button = ctk.CTkButton(master=self.my_frame, text="Apagar", width=70,
+        clear_button = ctk.CTkButton(master=self, text="Apagar", width=70,
                                     command=lambda: self.clear_data(init))
-        clear_button.grid(row=init.row+1, column=init.column, pady=10)
+        clear_button.grid(row=init.row+1, column=1, pady=10)
 
-        theme_buttom = ctk.CTkButton(master=self.my_frame, text="Tema", width=70,
+        theme_buttom = ctk.CTkButton(master=self, text="Tema", width=70,
                                      command=lambda: init.switch_theme())
-        theme_buttom.grid(row=init.row+2, column=init.column, 
-                          padx=10, pady=10, sticky="N")
+        theme_buttom.grid(row=init.row+1, column=2, 
+                          padx=10, pady=10, sticky="W")
 
         # >---------------------------------------------------------------- END
 
@@ -66,10 +66,10 @@ class Root(ctk.CTk):
             
             icon = ctk.CTkImage(light_image=Image.open("img/unknown.png"),size=(150, 150))
 
-            button = ctk.CTkButton(master=self.my_frame, width=70, text=init.names_list[item], compound="bottom",
-                                   command=lambda app=init.path_list[item]: self.open_app(init, app), 
-                                   image=icon)
-            button.grid(row=init.row, column=init.column, rowspan=3, pady=10, padx=10)
+            button = ctk.CTkButton(master=self.my_frame, width=70, text=init.names_list[item], compound="top",
+                                   command=lambda app=init.path_list[item]: self.open_app(init, app), image=icon, font=('Segoe UI', 16),
+                                   text_color="#807e7e", fg_color="transparent", border_color="#1f6aa5", border_width=2.5)
+            button.grid(row=init.row, column=init.column, columnspan=3, pady=10, padx=10)
 
             # coloca imagem do ícone ao lado do nome do app caso esteja salvo alguma imagem no json 
 
@@ -78,8 +78,8 @@ class Root(ctk.CTk):
                 button.configure(image=icon)
 
             # Change the pos of the buttons
-            init.column += 1
-            if init.column == 3:
+            init.column += 3
+            if init.column == 9:
                 init.column = 0
                 init.row += 3
             # >--------------------- END

@@ -1,0 +1,53 @@
+{
+    "Google": {
+        "name": "Google",
+        "path": "D:\\\u00c1rea de Trabalho do hd\\shortcuts\\google.lnk",
+        "icon": "img/2991148.png"
+    },
+    "Twitter": {
+        "name": "Twitter",
+        "path": "D:\\\u00c1rea de Trabalho do hd\\shortcuts\\twitter.lnk",
+        "icon": "img/Logo_of_Twitter.svg.webp"
+    },
+    "Teams": {
+        "name": "Teams",
+        "path": "D:/\u00c1rea de Trabalho do hd/shortcuts/teams.bat",
+        "icon": "img/Microsoft_Office_Teams_(2018\u2013present).svg.webp"
+    },
+    "Nintendo Discord Status": {
+        "name": "Nintendo Discord Status",
+        "path": "C:/Users/Caio/AppData/Local/Programs/Nintendo-Switch-Discord-Status/Nintendo Switch Discord Status.exe",
+        "icon": "img/8ad624a8ae52f1bc6feffbc8585334c9_icon.png"
+    },
+    "Spotify": {
+        "name": "Spotify",
+        "path": "D:/\u00c1rea de Trabalho do hd/shortcuts/spotify .bat",
+        "icon": "img/Spotify_icon.svg.webp"
+    },
+    "Nintendo Stream": {
+        "name": "Nintendo Stream",
+        "path": "D:/\u00c1rea de Trabalho do hd/tralha do switchW/apps nerds/SysDVR-Client/todos.bat",
+        "icon": "img/stream.png"
+    },
+    "Restart Discord Stream": {
+        "name": "Restart Discord Stream",
+        "path": "D:/\u00c1rea de Trabalho do hd/estudos/programa\u00e7\u00e3o/python/Auto Gui/restart discord.py",
+        "icon": "img/asawsd.jpg"
+    },
+    "Site as App (anime)": {
+        "name": "Site as App (anime)",
+        "path": "D:/\u00c1rea de Trabalho do hd/estudos/programa\u00e7\u00e3o/python/just python/site as app.py",
+        "icon": "None"
+    },
+    "Google Collab": {
+        "name": "Google Collab",
+        "path": "start chrome --new-window --app=https://colab.research.google.com/?utm_source=scs-index & exit",
+        "icon": "img/colab_favicon_256px.png"
+    },
+    "tema": "Light",
+    "Coogle Collab": {
+        "name": "Coogle Collab",
+        "path": "start chrome --new-window --app=https://colab.research.google.com/?utm_source=scs-index&authuser=1 & exit",
+        "icon": "img/colab_favicon_256px.png"
+    }
+}

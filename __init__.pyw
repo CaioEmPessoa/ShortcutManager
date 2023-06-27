@@ -4,6 +4,7 @@ import json
 #my code
 import main
 from src import new_app
+from src import edit_app
 
 class DefaultClass():
 
@@ -27,6 +28,10 @@ class DefaultClass():
 
             case "close":
                 self.root.destroy()
+
+    def call_edit_window(self, app):
+        self.add_app = edit_app.EditAppWindow(self, app)
+        self.add_app.grab_set()
 
     def switch_theme(self):
 
@@ -93,9 +98,14 @@ class DefaultClass():
         self.row = 1
         self.column = 0
 
+        self.changing = 0
+
         self.names_list = []
         self.path_list = []
         self.icon_list = []
+        self.created_buttons = []
+        
+        ctk.set_default_color_theme("dark-blue")
         # >--------------------------- END
 
         # tenta checar se existe um app salvo

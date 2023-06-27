@@ -1,5 +1,6 @@
 import customtkinter as ctk 
 from PIL import Image
+from src import edit_app # É ISSO AI MESMO EU IMPORTEI OUTRO CODIGO Q É MEU AQUI E NAO NO INIT PORRAAAA
 import os
 
 class MyFrame(ctk.CTkScrollableFrame):
@@ -17,22 +18,33 @@ class Root(ctk.CTk):
                 
         init.call_window("close")
         init.call_window("restart")
-        
+
+    def change_buttons(self, init):
+
+    # COLOCA PRA EDITAR OS APPS
+        if init.changing == 0:
+            init.changing = 1
+            for button in init.created_buttons:
+                button.configure(border_color="red", command=lambda app=init.names_list[init.created_buttons.index(button)]: init.call_edit_window(app))
+
+    # VOLTA AO NORMAL
+        else:
+            init.changing = 0
+            for button in init.created_buttons:
+                button.configure(border_color="#1f6aa5", command=lambda app=init.path_list[init.created_buttons.index(button)]: self.open_app(init, app))
 
     def open_app(self, init, path):
         
         os.system(f"\"{path}\"")
         init.call_window("close")
-        
-    
 
     def __init__(self, init):
         super().__init__()
         
         # WELCOME LABEL ------------------------------------<
-        welcome = ctk.CTkLabel(master=self, text="Escolha um app ou adicione um novo.", 
+        welcome = ctk.CTkLabel(master=self, text="Escolha um ou adicione um novo atalho", 
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
-        welcome.grid(row=0, column=0, columnspan=9)
+        welcome.grid(row=0, column=0, columnspan=3)
         # -----------------------------------------------> END
 
         # Calls the app buttons to generate them. ------------------------------<
@@ -50,9 +62,9 @@ class Root(ctk.CTk):
         add_button.grid(row=init.row+1, column=0, 
                         padx=10, pady=10, sticky="E")
 
-        clear_button = ctk.CTkButton(master=self, text="Apagar", width=70,
-                                    command=lambda: self.clear_data(init))
-        clear_button.grid(row=init.row+1, column=1, pady=10)
+        edit_button = ctk.CTkButton(master=self, text="Editar", width=70,
+                                    command=lambda: self.change_buttons(init))
+        edit_button.grid(row=init.row+1, column=1, pady=10)
 
         theme_buttom = ctk.CTkButton(master=self, text="Tema", width=70,
                                      command=lambda: init.switch_theme())
@@ -66,16 +78,18 @@ class Root(ctk.CTk):
             
             icon = ctk.CTkImage(light_image=Image.open("img/unknown.png"),size=(150, 150))
 
-            button = ctk.CTkButton(master=self.my_frame, width=70, text=init.names_list[item], compound="top",
+            app_button = ctk.CTkButton(master=self.my_frame, width=70, text=init.names_list[item], compound="top",
                                    command=lambda app=init.path_list[item]: self.open_app(init, app), image=icon, font=('Segoe UI', 16),
-                                   text_color="#807e7e", fg_color="transparent", border_color="#1f6aa5", border_width=2.5)
-            button.grid(row=init.row, column=init.column, columnspan=3, pady=10, padx=10)
+                                   text_color="#807e7e", fg_color="transparent", border_color="#1f6aa5", border_width=2.5, hover_color="#184c74")
+            app_button.grid(row=init.row, column=init.column, columnspan=3, pady=10, padx=10)
+
+            init.created_buttons.append(app_button)
 
             # coloca imagem do ícone ao lado do nome do app caso esteja salvo alguma imagem no json 
 
             if init.icon_list[item] != "None":
                 icon = ctk.CTkImage(light_image=Image.open(init.icon_list[item]),size=(150, 150))
-                button.configure(image=icon)
+                app_button.configure(image=icon)
 
             # Change the pos of the buttons
             init.column += 3

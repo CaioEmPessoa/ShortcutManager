@@ -107,6 +107,9 @@ class AddApp(ctk.CTkToplevel):
     def __init__(self, init):
         super().__init__()
 
+        self.title("Shortcut Manager")
+        self.iconbitmap("img/icon.ico")
+
         # Buttons, Labels and Entrys
         # LABELS
         self.name_label = ctk.CTkLabel(master=self, justify="left", text="(Escolha o nome do app:")

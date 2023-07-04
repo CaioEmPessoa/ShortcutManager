@@ -44,12 +44,20 @@ class EditAppWindow(ctk.CTkToplevel):
 
     def __init__(self, init, app):
         super().__init__()
+        
+        self.title("Shortcut Manager")
+        self.iconbitmap("img/icon.ico")
+
         self.app = app
 
         # "Head?" of this window -----------------------------------------------------------------------------------<
-        icon = ctk.CTkImage(light_image=Image.open(init.data[self.app]['icon']),size=(150, 150))
+        
+        if init.data[self.app]['icon'] == "None":
+            icon = ctk.CTkImage(light_image=Image.open("img/unknown.png"),size=(150, 150))
+        else:
+            icon = ctk.CTkImage(light_image=Image.open(init.data[self.app]['icon']),size=(150, 150))
 
-        label = ctk.CTkLabel(master=self, text=f"Edit {init.data[self.app]['name']} Shortcut!", font=('Segoe UI', 16))
+        label = ctk.CTkLabel(master=self, text=f"Editar o atalho \"{init.data[self.app]['name']}\" !!", font=('Segoe UI', 16))
         label.grid(row=0, column=0, padx=10, pady=10)
 
         del_button = ctk.CTkButton(master=self, text="Delete", fg_color="red", command=lambda: self.delete_app(init))
@@ -64,7 +72,7 @@ class EditAppWindow(ctk.CTkToplevel):
         icon_label = ctk.CTkLabel(master=self, text="", image=icon)
         icon_label.grid(row=1, column=0, rowspan=3, pady=10, padx=10)
 
-        original_info_text = f"Original Name: {init.data[self.app]['name']}\nOriginal Path: {init.data[self.app]['path']}\nOriginal Icon: {init.data[self.app]['icon']}\n\n**Deixe o espaço vazio para não alterar"
+        original_info_text = f"Nome original: {init.data[self.app]['name']}\nCaminho Original: {init.data[self.app]['path']}\nÍcone Original: {init.data[self.app]['icon']}\n\n**Deixe o espaço vazio para não alterar"
 
         original_info_label = ctk.CTkLabel(master=self, text=original_info_text, font=('Segoe UI', 15), justify="left")
         original_info_label.grid(row=1, column=1, padx=10, pady=10, sticky="W", columnspan=2)

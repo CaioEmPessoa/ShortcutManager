@@ -35,7 +35,7 @@ class Root(ctk.CTk):
 
     def open_app(self, init, path):
         
-        os.system(f"\"{path}\"")
+        os.system(f"{path}")
         init.call_window("close")
 
     def __init__(self, init):
@@ -81,7 +81,7 @@ class Root(ctk.CTk):
             app_button = ctk.CTkButton(master=self.my_frame, width=70, text=init.names_list[item], compound="top",
                                    command=lambda app=init.path_list[item]: self.open_app(init, app), image=icon, font=('Segoe UI', 16),
                                    text_color="#807e7e", fg_color="transparent", border_color="#1f6aa5", border_width=2.5, hover_color="#184c74")
-            app_button.grid(row=init.row, column=init.column, pady=10)
+            app_button.grid(row=init.row, column=init.column, pady=10, padx=5)
 
             init.created_buttons.append(app_button)
 

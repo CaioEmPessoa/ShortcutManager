@@ -16,6 +16,8 @@ class DefaultClass():
                 
                 self.root.minsize(600, 680)
                 self.root.maxsize(600, 680)
+                self.root.iconbitmap("img/icon.ico")
+                self.root.title("Shortcut Manager")
 
                 self.root.mainloop()
 

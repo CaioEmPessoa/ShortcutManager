@@ -1,5 +1,6 @@
 import customtkinter as ctk 
 from PIL import Image
+import subprocess
 from src import edit_app # É ISSO AI MESMO EU IMPORTEI OUTRO CODIGO Q É MEU AQUI E NAO NO INIT PORRAAAA
 import os
 
@@ -34,8 +35,7 @@ class Root(ctk.CTk):
                 button.configure(border_color="#1f6aa5", command=lambda app=init.path_list[init.created_buttons.index(button)]: self.open_app(init, app))
 
     def open_app(self, init, path):
-        
-        os.system(f"{path}")
+        os.startfile(path)
         init.call_window("close")
 
     def __init__(self, init):

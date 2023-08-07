@@ -34,16 +34,14 @@ class Root(ctk.CTk):
                 button.configure(border_color="#1f6aa5", command=lambda app=init.path_list[init.created_buttons.index(button)]: self.open_app(init, app))
 
     def open_app(self, init, path):
-        try:
-            # It is a app
-            # get the path of the app
-            dir_path = os.path.dirname(path)
-            os.chdir(dir_path)
-            os.startfile(path)
+
+        # It is a app
+        # get the path of the app
+        dir_path = os.path.dirname(path)
+        os.chdir(dir_path[1:])
+        os.startfile(path)
             
-        except:
-            # It is a website
-            os.system(f"{path}")
+
             
         init.call_window("close")
 

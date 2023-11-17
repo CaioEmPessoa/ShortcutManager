@@ -9,7 +9,7 @@ try:
     os.remove("apps_data.json")
     os.remove("apps_data.json")
 except:
-    print("One of the itens doesn't exist")
+    print("One of the itens does'nt exist")
 
 ''' # ima try this later (ro not)
 try:

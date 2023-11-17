@@ -7,6 +7,7 @@ from src import new_app
 from src import edit_app
 
 class DefaultClass():
+
     def call_window(self, window):
 
         match window:
@@ -35,8 +36,10 @@ class DefaultClass():
         self.add_app.grab_set()
 
     def switch_theme(self):
+
         # se o tema for escuro ele troca pra claro e vice versa
         if self.tema == "Dark":
+            
             # Salva o tema (reverso) para o json
             theme_data = {"tema": "Dark"}
             self.write_data(theme_data)

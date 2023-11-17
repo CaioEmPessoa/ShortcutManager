@@ -107,16 +107,18 @@ class AddApp(ctk.CTkToplevel):
     def __init__(self, init):
         super().__init__()
 
+        self.title("Shortcut Manager")
+        self.iconbitmap("img/icon.ico")
+
         # Buttons, Labels and Entrys
         # LABELS
-        self.name_label = ctk.CTkLabel(master=self, justify="left", text="(Colocar nome repetido caso queria atualizar) \n\n Escolha o nome do app:")
+        self.name_label = ctk.CTkLabel(master=self, justify="left", text="(Escolha o nome do app:")
         self.name_label.grid(row=0, column=0, padx=10, columnspan=3, sticky="W")
 
         self.site_label = ctk.CTkLabel(master=self, text="É um site?")
         self.site_label.grid(row=2, column=0, pady=10, padx=10, columnspan=3, sticky="W")
 
         self.browser_label = ctk.CTkLabel(master=self, text="Qual navegador utilizará?")
-        self.browser_label
 
         self.path_label = ctk.CTkLabel(master=self, text="Escolha o caminho do app:")
         self.path_label.grid(row=3, column=0, padx=10, columnspan=2, sticky="W")
@@ -143,7 +145,6 @@ class AddApp(ctk.CTkToplevel):
         self.icon_entry.grid(row=8, column=0, pady=10, padx=10, sticky="W")
 
         self.browser_entry = ctk.CTkEntry(master=self)
-
         # END Entry
 
         # Buttons

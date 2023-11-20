@@ -2,7 +2,6 @@ from customtkinter import set_appearance_mode
 import json
 
 #my code
-import main
 from src import new_app
 from src import edit_app
 

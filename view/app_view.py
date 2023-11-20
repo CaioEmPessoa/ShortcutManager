@@ -1,6 +1,6 @@
 import customtkinter as ctk
 
-class AppView():
+class AppWnd():
 
     def __init__(self, init):
         super().__init__()
@@ -12,13 +12,9 @@ class AppView():
 
     def create_itens(self):
 
-        # WELCOME LABEL ------------------------------------<
         welcome = ctk.CTkLabel(master=self, text="Escolha um ou adicione um novo atalho", 
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
         welcome.grid(row=0, column=0, columnspan=3)
-        # -----------------------------------------------> END
-
-        # Calls the app buttons to generate them. ------------------------------<
 
         self.my_frame = MyFrame(master=self, fg_color="transparent",
                                 width=550, height=600, corner_radius=0)
@@ -27,7 +23,6 @@ class AppView():
 
         self.app_buttons(init) 
 
-        # Generate the last button, an "add more" one.
         add_button = ctk.CTkButton(master=self, text=" + ", width=70, 
                                    command=lambda: init.call_window("add_app"))
         add_button.grid(row=init.row+1, column=0, 
@@ -41,8 +36,6 @@ class AppView():
                                      command=lambda: init.switch_theme())
         theme_buttom.grid(row=init.row+1, column=2, 
                           padx=10, pady=10, sticky="W")
-
-        # >---------------------------------------------------------------- END
 
     def app_buttons(self, init):
         for item in range(0, init.list_number): # Loop around the list of app names and create apps with their names.

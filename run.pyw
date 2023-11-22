@@ -1,19 +1,27 @@
-from customtkinter import set_appearance_mode
-import json
-
-#my code
+from src import modify_data
+from src import app
+from view import app_view
 from src import new_app
+from view import new_app_view
 from src import edit_app
+from view import edit_app_view
 
 class DefaultClass():
+    def __init__(self):
+        super().__init__(self)
+
+
+
+        self.app = app.App(self)
+        self.app_view = app_view.AppWnd(self, self.root)
+        self.app_view.mainloop()
 
     def call_window(self, window):
 
         match window:
             case "root":
-                self.root = main.Root(self)
-
-                self.root.mainloop()
+                self.root_view.destroy()
+                default = DefaultClass()
 
             case "add_app":
                 self.add_app = new_app.AddApp(self)
@@ -30,18 +38,6 @@ class DefaultClass():
             case "close":
                 self.root.destroy()
 
-    def switch_theme(self):
-        # If the theme is dark it switches it to light and vice-versa
-        if self.theme == "Light":
-            theme_data = {"theme": "Light"}
-            self.theme = "Dark"
-
-        elif self.theme == "Dark":
-            theme_data = {"theme": "Dark"}
-            self.theme = "Light"
-
-        self.modify_data.write_data(theme_data)
-        set_appearance_mode(self.theme)
-
-default = DefaultClass()
-default.call_window("root")
+if __name__ == "__main__":
+    default = DefaultClass()
+    default.call_window("root")

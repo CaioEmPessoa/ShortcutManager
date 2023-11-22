@@ -1,8 +1,9 @@
+from customtkinter import set_appearance_mode
 import os
 
 class App():
-    def __init__(self):
-        super.__init__(self)
+    def __init__(self, init):
+        self.init = init
 
     def change_buttons(self, init):
         # COLOCA PRA EDITAR OS APPS
@@ -27,3 +28,16 @@ class App():
         except:
             os.system(f"{path}")
         init.call_window("close")
+
+    def switch_theme(self):
+        # If the theme is dark it switches it to light and vice-versa
+        if self.theme == "Light":
+            theme_data = {"theme": "Light"}
+            self.theme = "Dark"
+
+        elif self.theme == "Dark":
+            theme_data = {"theme": "Dark"}
+            self.theme = "Light"
+
+        self.modify_data.write_data(theme_data)
+        set_appearance_mode(self.theme)

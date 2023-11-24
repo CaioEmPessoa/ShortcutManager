@@ -5,12 +5,11 @@ import os
 class ModifyData():
 
     def __init__(self):
-        super.__init__(self)
         self.data = {}
 
     # checa os apps no jsone cria uma lista com nomes, caminhos e icones deles.
     def read_data(self):
-        if not os.path.exists("saves_data.json"):
+        if not os.path.exists("apps_data.json"):
             default_data = {"theme": "Dark"}
 
             self.write_data(default_data)
@@ -23,7 +22,7 @@ class ModifyData():
 
     def write_data(self, data):
         self.data = deep_update(self.data, data)
-        with open("saves_data.json", "w") as write_file:
+        with open("apps_data.json", "w") as write_file:
             json.dump(self.data, write_file, indent=4)
 
     def clear_data(self, init):

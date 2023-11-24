@@ -31,13 +31,14 @@ class App():
 
     def switch_theme(self):
         # If the theme is dark it switches it to light and vice-versa
-        if self.theme == "Light":
-            theme_data = {"theme": "Light"}
-            self.theme = "Dark"
+        current_theme = self.init.data["theme"]
+        if current_theme == "Light":
+            current_theme = "Dark"
 
-        elif self.theme == "Dark":
-            theme_data = {"theme": "Dark"}
-            self.theme = "Light"
+        elif current_theme == "Dark":
+            current_theme = "Light"
 
-        self.modify_data.write_data(theme_data)
-        set_appearance_mode(self.theme)
+        self.init.data["theme"] = current_theme
+
+        self.init.modify_data.write_data(self.init.data)
+        set_appearance_mode(current_theme)

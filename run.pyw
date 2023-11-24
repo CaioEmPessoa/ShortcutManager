@@ -8,19 +8,20 @@ from view import edit_app_view
 
 class DefaultClass():
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
 
-
-
+        self.modify_data = modify_data.ModifyData()
+        self.data = self.modify_data.read_data()
+        
         self.app = app.App(self)
-        self.app_view = app_view.AppWnd(self, self.root)
+        self.app_view = app_view.AppWnd(self, self.app)
         self.app_view.mainloop()
 
     def call_window(self, window):
 
         match window:
             case "root":
-                self.root_view.destroy()
+                self.app_view.destroy()
                 default = DefaultClass()
 
             case "add_app":
@@ -40,4 +41,3 @@ class DefaultClass():
 
 if __name__ == "__main__":
     default = DefaultClass()
-    default.call_window("root")

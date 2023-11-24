@@ -7,7 +7,7 @@ class MyFrame(ctk.CTkScrollableFrame):
 
 class AppWnd(ctk.CTk):
 
-    def __init__(self, init, root):
+    def __init__(self, init, app):
         super().__init__()
 
         self.title("Shortcut Manager")
@@ -15,6 +15,7 @@ class AppWnd(ctk.CTk):
 
         self.grid_rowconfigure((1), weight=1)
         self.grid_columnconfigure((0, 1, 2), weight=1)
+        ctk.set_appearance_mode(init.data["theme"])
 
         w = 600 
         h = 680 
@@ -24,9 +25,9 @@ class AppWnd(ctk.CTk):
         y = (hs/2) - (h/2)
         self.geometry('%dx%d+%d+%d' % (w, h, x, y))
         
-        self.create_itens(init, root)
+        self.create_itens(init, app)
 
-    def create_itens(self, init, root):
+    def create_itens(self, init, app):
 
         welcome = ctk.CTkLabel(master=self, text="Escolha um ou adicione um novo atalho", 
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
@@ -45,11 +46,11 @@ class AppWnd(ctk.CTk):
                         padx=10, pady=10, sticky="E")
 
         edit_button = ctk.CTkButton(master=self, text="Editar", width=70,
-                                    command=lambda: root.change_buttons(init))
+                                    command=lambda: app.change_buttons(init))
         edit_button.grid(row=2, column=1, pady=10)
 
         theme_buttom = ctk.CTkButton(master=self, text="Tema", width=70,
-                                     command=lambda: root.switch_theme())
+                                     command=lambda: app.switch_theme())
         theme_buttom.grid(row=2, column=2, 
                           padx=10, pady=10, sticky="W")
 

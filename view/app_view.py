@@ -38,7 +38,7 @@ class AppWnd(ctk.CTk):
         self.my_frame.grid(row=1, column=0, padx=10,
                            columnspan=3, sticky="nsew")
 
-        self.app_buttons(init) 
+        self.app_buttons(init, app) 
 
         add_button = ctk.CTkButton(master=self, text=" + ", width=70, 
                                    command=lambda: init.call_window("add_app"))
@@ -55,29 +55,29 @@ class AppWnd(ctk.CTk):
         theme_buttom.grid(row=2, column=2, 
                           padx=10, pady=10, sticky="W")
 
-    def app_buttons(self, init):
-        ''' WILL CHANGE HOW THIS READS SAVE
-        for item in range(0, init.list_number): # Loop around the list of app names and create apps with their names.
-            
-            icon = ctk.CTkImage(light_image=Image.open("img/unknown.png"),size=(150, 150))
+    def app_buttons(self, init, app):
+        try:
+            data = init.data["apps"]
 
-            app_button = ctk.CTkButton(master=self.my_frame, width=70, text=init.names_list[item], compound="top",
-                                   command=lambda app=init.path_list[item]: self.open_app(init, app), image=icon, font=('Segoe UI', 16),
+        except KeyError:
+            return
+    
+        btn_nmb = 0
+        max_columns = 3
+
+        for app_name in data:
+            app_data = data[app_name]
+
+            if app_data["icon"] != "None":
+                icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(150, 150))
+            else:
+                icon = ctk.CTkImage(light_image=Image.open("img/unknown.png"),size=(150, 150))
+
+            app_button = ctk.CTkButton(master=self.my_frame, width=70, text=app_data["name"], compound="top",
+                                   command=lambda app_path=app_data["path"]: app.open_app(app_path), image=icon, font=('Segoe UI', 16),
                                    text_color="#807e7e", fg_color="transparent", border_color="#1f6aa5", border_width=2.5, hover_color="#184c74")
-            app_button.grid(row=init.row, column=init.column, pady=10, padx=5)
 
-            init.created_buttons.append(app_button)
-
-            # coloca imagem do ícone ao lado do nome do app caso esteja salvo alguma imagem no json 
-
-            if init.icon_list[item] != "None":
-                icon = ctk.CTkImage(light_image=Image.open(init.icon_list[item]),size=(150, 150))
-                app_button.configure(image=icon)
-
-            # Change the pos of the buttons
-            init.column += 1
-            if init.column == 3:
-                init.column = 0
-                init.row += 3
-            # >--------------------- END
-        '''
+            row = btn_nmb // max_columns
+            col = btn_nmb % max_columns
+            app_button.grid(row=row, column=col, pady=10, padx=5)
+            btn_nmb+=1

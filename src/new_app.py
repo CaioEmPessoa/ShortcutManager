@@ -61,12 +61,14 @@ class AddApp():
 
 
             current_app_dic = {
-                name: {
-                    "name": f"{name}",
-                    "path": f"\"{app_path}\"",
-                    "icon": f"{icon_path}"
+                "apps": {
+                    name: {
+                        "name": f"{name}",
+                        "path": f"\"{app_path}\"",
+                        "icon": f"{icon_path}"
+                        }
+                    }
                 }
-            }
 
             self.init.modify_data.write_data(current_app_dic)
             

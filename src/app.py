@@ -18,7 +18,7 @@ class App():
             for button in init.created_buttons:
                 button.configure(border_color="#1f6aa5", command=lambda app=init.path_list[init.created_buttons.index(button)]: self.open_app(init, app))
 
-    def open_app(self, init, path):
+    def open_app(self, path):
         try:
             dir_path = os.path.dirname(path)
             os.chdir(dir_path[1:])
@@ -27,7 +27,7 @@ class App():
         #   GET ERROR THAT IS NOT A APP
         except:
             os.system(f"{path}")
-        init.call_window("close")
+        self.init.call_window("close")
 
     def switch_theme(self):
         # If the theme is dark it switches it to light and vice-versa

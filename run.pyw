@@ -25,8 +25,10 @@ class DefaultClass():
                 default = DefaultClass()
 
             case "add_app":
+                self.add_app_view = new_app_view.NewAppWnd()
                 self.add_app = new_app.AddApp(self)
-                self.add_app.grab_set()
+                self.add_app_view.create_itens(self.add_app)
+                self.add_app_view.grab_set()
 
             case "edit":
                 self.add_app = edit_app.EditAppWindow(self, app)
@@ -34,10 +36,11 @@ class DefaultClass():
 
 
             case "restart":
+                self.app_view.destroy()
                 default = DefaultClass()
 
             case "close":
-                self.root.destroy()
+                self.app_view.destroy()
 
 if __name__ == "__main__":
     default = DefaultClass()

@@ -45,6 +45,7 @@ class AppWnd(ctk.CTk):
         add_button.grid(row=2, column=0, 
                         padx=10, pady=10, sticky="E")
 
+
         edit_button = ctk.CTkButton(master=self, text="Editar", width=70,
                                     command=lambda: app.change_buttons(init))
         edit_button.grid(row=2, column=1, pady=10)

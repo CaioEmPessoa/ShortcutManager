@@ -1,24 +1,12 @@
 import customtkinter as ctk
 
-class NewAppWnd():
-    def site_app(self):
-        # Caso seja um site
-        if self.site_check.get() == 1:
-            self.path_label.configure(text="Insira o link para o site")
-            self.path_window_button.configure(state="disabled")
+class NewAppWnd(ctk.CTkToplevel):
+    def create_itens(self, newapp):
+        w, h = 220, 330
+        ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
+        x, y = (ws - w) / 2, (hs - h) / 2
+        self.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
 
-            self.browser_label.grid(row=5, column=0, padx=10, columnspan=2, sticky="W")
-            self.browser_entry.grid(row=6, column=0, pady=10, padx=10, sticky="W")
-
-        # Não é um site
-        if self.site_check.get() == 0:
-            self.path_label.configure(text="Insira o caminho do app:")
-            self.path_window_button.configure(state="normal")
-
-            self.browser_entry.grid_forget()
-            self.browser_label.grid_forget()
-
-    def create_itens(self):
         self.title("Shortcut Manager")
         self.iconbitmap("img/icon.ico")
 
@@ -46,7 +34,7 @@ class NewAppWnd():
         self.name_entry.grid(row=1, column=0, 
                         pady=10, padx=10, sticky="W", columnspan=3)
         
-        self.site_check = ctk.CTkCheckBox(master=self, text="", command=self.site_app)
+        self.site_check = ctk.CTkCheckBox(master=self, text="", command=newapp.site_app)
         self.site_check.grid(row=2, column=1, padx=10, columnspan=3, sticky="W")
 
         self.path_entry = ctk.CTkEntry(master=self)
@@ -61,13 +49,13 @@ class NewAppWnd():
 
         # Buttons
         self.path_window_button = ctk.CTkButton(master=self, text="Janela", width=10, 
-                                    command=lambda: self.search_window("path"))
+                                    command=lambda: newapp.search_window("path"))
         self.path_window_button.grid(row=4, column=1, sticky="W")
 
         self.icon_window_button = ctk.CTkButton(master=self, text="Janela", width=10, 
-                                    command=lambda: self.search_window("icon"))
+                                    command=lambda: newapp.search_window("icon"))
         self.icon_window_button.grid(row=8, column=1, sticky="W")
 
-        self.send_button = ctk.CTkButton(master=self, command=lambda: self.send(init), text="Concluir")
+        self.send_button = ctk.CTkButton(master=self, command=newapp.send, text="Concluir")
         self.send_button.grid(row=9, pady=15, columnspan=2)
         # END Buttons

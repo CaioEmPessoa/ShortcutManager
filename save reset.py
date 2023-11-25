@@ -1,4 +1,5 @@
 import os
+import shutil
 
 try:
     for item in os.listdir("img"):
@@ -6,19 +7,21 @@ try:
             pass
         else:
             os.remove("img/" + item)
-    os.remove("apps_data.json")
-    os.remove("apps_data.json")
-except:
-    print("One of the itens does'nt exist")
+            print("removed " + item)
 
-''' # ima try this later (ro not)
-try:
-    os.remove("__pycache__")
-except:
-    print(";3")
+    os.remove("apps_data.json")
+    print("removed saves data")
 
-try:
-    os.remove("src\__pycache__")
 except:
-    print(":33")
-'''
+    print("Save already cleared.")
+
+print("attempting to clear cache...")
+cache_foulders = ["view", "src"]
+for s in cache_foulders:
+    s = os.path.join(os.getcwd(), s, "__pycache__")
+
+    try:
+        shutil.rmtree(s)
+        print("Deleted cache.")
+    except FileNotFoundError:
+        print("Nothing found ;)")

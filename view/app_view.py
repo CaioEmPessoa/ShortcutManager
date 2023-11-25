@@ -40,11 +40,16 @@ class AppWnd(ctk.CTk):
 
         self.app_buttons(init, app) 
 
+        '''
         add_button = ctk.CTkButton(master=self, text=" + ", width=70, 
                                    command=lambda: init.call_window("add_app"))
         add_button.grid(row=2, column=0, 
                         padx=10, pady=10, sticky="E")
-
+        '''
+        optionmenu = ctk.CTkOptionMenu(self, values=["App", "Site", "Foulder"])
+        optionmenu.set("+")
+        optionmenu.grid(row=2, column=0, 
+                        padx=10, pady=10, sticky="E")
 
         edit_button = ctk.CTkButton(master=self, text="Editar", width=70,
                                     command=lambda: app.change_buttons(init))

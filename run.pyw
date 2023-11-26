@@ -1,10 +1,8 @@
 from src import modify_data
 from src import app
 from view import app_view
-from src import new_app
-from view import new_app_view
-from src import edit_app
-from view import edit_app_view
+from src import add_edit_shorcuts
+from view import add_edit_shorcuts_view
 
 class DefaultClass():
     def __init__(self):
@@ -24,16 +22,26 @@ class DefaultClass():
                 self.app_view.destroy()
                 default = DefaultClass()
 
-            case "add_app":
-                self.add_app_view = new_app_view.NewAppWnd()
-                self.add_app = new_app.AddApp(self)
-                self.add_app_view.create_itens(self.add_app)
+            case "App":
+                self.app_view.add_button.set("Add")
+                self.add_app_view = add_edit_shorcuts_view.NewAppWnd()
+                self.add_app = add_edit_shorcuts.AddApp(self)
+                self.add_app_view.new_app_itens(self.add_app)
+                self.add_app_view.grab_set()
+            
+            case "Site":
+                self.app_view.add_button.set("Add")
+                self.add_app_view = add_edit_shorcuts_view.NewAppWnd()
+                self.add_app = add_edit_shorcuts.AddApp(self)
+                self.add_app_view.new_site_itens(self.add_app)
                 self.add_app_view.grab_set()
 
-            case "edit":
-                self.add_app = edit_app.EditAppWindow(self, app)
-                self.add_app.grab_set()
+            case "Pasta":
+                self.app_view.add_button.set("Add")
+                print("don't.")
 
+            case "edit":
+                print("don't.")
 
             case "restart":
                 self.app_view.destroy()

@@ -17,12 +17,9 @@ class AppWnd(ctk.CTk):
         self.grid_columnconfigure((0, 1, 2), weight=1)
         ctk.set_appearance_mode(init.data["theme"])
 
-        w = 600 
-        h = 680 
-        ws = self.winfo_screenwidth()
-        hs = self.winfo_screenheight()
-        x = (ws/2) - (w/2)
-        y = (hs/2) - (h/2)
+        w, h = 600, 680 
+        ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
+        x, y = (ws/2) - (w/2), (hs/2) - (h/2)
         self.geometry('%dx%d+%d+%d' % (w, h, x, y))
         
         self.create_itens(init, app)
@@ -46,13 +43,13 @@ class AppWnd(ctk.CTk):
         add_button.grid(row=2, column=0, 
                         padx=10, pady=10, sticky="E")
         '''
-        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site"], width=70, 
+        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site"], width=70, dropdown_direction="up",
                                             command=lambda x: init.call_window(self.add_button.get()))
         self.add_button.set("Add")
         self.add_button.grid(row=2, column=0, padx=10, pady=10, sticky="E")
 
         edit_button = ctk.CTkButton(master=self, text="Editar", width=70,
-                                    command=lambda: app.change_buttons(init))
+                                    command=lambda: init.call_window("edit"))
         edit_button.grid(row=2, column=1, pady=10)
 
         theme_buttom = ctk.CTkButton(master=self, text="Tema", width=70,

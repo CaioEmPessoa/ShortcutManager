@@ -1,8 +1,9 @@
 from src import modify_data
 from src import app
 from view import app_view
-from src import add_edit_shorcuts
-from view import add_edit_shorcuts_view
+from src import sct_manage
+from view import app_sct_view
+from view import site_sct_view
 
 class DefaultClass():
     def __init__(self):
@@ -24,17 +25,18 @@ class DefaultClass():
 
             case "App":
                 self.app_view.add_button.set("Add")
-                self.add_app_view = add_edit_shorcuts_view.NewAppWnd()
-                self.add_app = add_edit_shorcuts.AddApp(self)
-                self.add_app_view.new_app_itens(self.add_app)
-                self.add_app_view.grab_set()
+
+                self.app_sct_view = app_sct_view.AppSctWnd()
+                self.sct_manage = sct_manage.AddEdit(self)
+                self.sct_manage.add_app(self.app_sct_view)
             
             case "Site":
                 self.app_view.add_button.set("Add")
-                self.add_app_view = add_edit_shorcuts_view.NewAppWnd()
-                self.add_app = add_edit_shorcuts.AddApp(self)
-                self.add_app_view.new_site_itens(self.add_app)
-                self.add_app_view.grab_set()
+
+                self.site_sct_view = site_sct_view.SiteSctWnd()
+                self.sct_manage = sct_manage.AddEdit(self)
+                self.sct_manage.add_site(self.site_sct_view)
+                
 
             case "Pasta":
                 self.app_view.add_button.set("Add")

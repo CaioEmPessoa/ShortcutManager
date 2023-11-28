@@ -70,23 +70,32 @@ class NewSrtcWnd(ctk.CTkToplevel):
         # END Buttons
 
 class EditSrtcView():
-    def edit_itens(self, newapp, init):
-        '''
-        self.saves_list = [save for save in init.data["saves"]]
-        self.name_entry.destroy()
-        self.name_entry = ctk.CTkOptionMenu(master=self, values=self.saves_list, width=220, font=('',16), command=newapp.insert_save,
-                                fg_color=("White", "#343638"), text_color=("Black", "White"), button_color=("#969da3", "#565a5f"))
-        self.name_entry.grid(row=2, column=0, columnspan=3)
+    def call_srtc_wnd(self, init, app_name):
+        type = init.data["apps"][app_name]["type"]
 
-        self.image_path_label.configure(text="Path to the preview image:\n(empty to remove)")
+        if type == "site":
+            init.add_srtc_view.new_site_itens(init.add_srtc)
+        elif type == "app":
+            init.add_srtc_view.new_app_itens(init.add_srtc)
 
-        self.send_button.grid_forget()
-        self.send_button.configure(width=100)
-        self.send_button.grid(row=11, column=0, pady=15, columnspan=1)
+    def __init__(self, init, wnd, edit_srtc):
+        self.srtcs_list = [save for save in init.data["apps"]]
         
-        self.delete_button = ctk.CTkButton(master=self, fg_color="red", text="delete", width=100,
-                                           command=new_save.delete_save)
-        self.delete_button.grid(row=11, column=2, pady=15, columnspan=1)
+        self.call_srtc_wnd(init, self.srtcs_list[0])
 
-        new_save.insert_save(self.saves_list[0])
-        '''
+        wnd.name_entry.destroy()
+        wnd.name_entry = ctk.CTkOptionMenu(master=wnd, values=self.srtcs_list, width=220, font=('',16), command=lambda:print("changewnd"),
+                                fg_color=("White", "#343638"), text_color=("Black", "White"), button_color=("#969da3", "#565a5f"))
+        wnd.name_entry.grid(row=2, column=0, columnspan=3)
+
+        wnd.icon_label.configure(text="Path to the preview image:\n(empty to remove)")
+
+        wnd.send_button.grid_forget()
+        wnd.send_button.configure(width=100)
+        wnd.send_button.grid(row=11, column=0, pady=15)
+        
+        wnd.delete_button = ctk.CTkButton(master=wnd, fg_color="red", text="delete", width=100,
+                                           command=lambda:print("delete :)"))
+        wnd.delete_button.grid(row=11, column=1, pady=15)
+
+        edit_srtc.insert_data(init, wnd, self.srtcs_list[0])

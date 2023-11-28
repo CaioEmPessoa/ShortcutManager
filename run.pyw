@@ -17,31 +17,33 @@ class DefaultClass():
 
     def call_window(self, window):
 
+        self.app_view.add_button.set("Add")
         match window:
             case "root":
                 self.app_view.destroy()
                 default = DefaultClass()
 
             case "App":
-                self.app_view.add_button.set("Add")
-                self.add_app_view = srtc_manage_view.NewSrtcWnd()
-                self.add_app = srtc_manage.AddSrtc(self)
-                self.add_app_view.new_app_itens(self.add_app)
-                self.add_app_view.grab_set()
+                self.add_srtc_view = srtc_manage_view.NewSrtcWnd()
+                self.add_srtc = srtc_manage.AddSrtc(self)
+                self.add_srtc_view.new_app_itens(self.add_srtc)
+                self.add_srtc_view.grab_set()
             
             case "Site":
-                self.app_view.add_button.set("Add")
-                self.add_app_view = srtc_manage_view.NewSrtcWnd()
-                self.add_app = srtc_manage.AddSrtc(self)
-                self.add_app_view.new_site_itens(self.add_app)
-                self.add_app_view.grab_set()
+                self.add_srtc_view = srtc_manage_view.NewSrtcWnd()
+                self.add_srtc = srtc_manage.AddSrtc(self)
+                self.add_srtc_view.new_site_itens(self.add_srtc)
+                self.add_srtc_view.grab_set()
 
             case "Pasta":
-                self.app_view.add_button.set("Add")
                 print("don't.")
 
             case "edit":
-                print("don't.")
+                self.add_srtc_view = srtc_manage_view.NewSrtcWnd()
+                self.add_srtc = srtc_manage.AddSrtc(self)
+                self.edit_srtc = srtc_manage.Edit()
+                self.srtc_edit = srtc_manage_view.EditSrtcView(self, self.add_srtc_view, self.edit_srtc)
+                self.add_srtc_view.grab_set()
 
             case "restart":
                 self.app_view.destroy()

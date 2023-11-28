@@ -1,27 +1,6 @@
 import customtkinter as ctk
 
-class NewAppWnd(ctk.CTkToplevel):
-    def edit_itens(self, newapp, init):
-        '''
-        self.saves_list = [save for save in init.data["saves"]]
-        self.name_entry.destroy()
-        self.name_entry = ctk.CTkOptionMenu(master=self, values=self.saves_list, width=220, font=('',16), command=newapp.insert_save,
-                                fg_color=("White", "#343638"), text_color=("Black", "White"), button_color=("#969da3", "#565a5f"))
-        self.name_entry.grid(row=2, column=0, columnspan=3)
-
-        self.image_path_label.configure(text="Path to the preview image:\n(empty to remove)")
-
-        self.send_button.grid_forget()
-        self.send_button.configure(width=100)
-        self.send_button.grid(row=11, column=0, pady=15, columnspan=1)
-        
-        self.delete_button = ctk.CTkButton(master=self, fg_color="red", text="delete", width=100,
-                                           command=new_save.delete_save)
-        self.delete_button.grid(row=11, column=2, pady=15, columnspan=1)
-
-        new_save.insert_save(self.saves_list[0])
-        '''
-
+class NewSrtcWnd(ctk.CTkToplevel):
     def new_site_itens(self, newapp):
         self.new_app_itens(newapp)
         self.is_app = False
@@ -86,6 +65,28 @@ class NewAppWnd(ctk.CTkToplevel):
                                     command=lambda: newapp.search_window("icon"))
         self.icon_window_button.grid(row=8, column=1, sticky="W")
 
-        self.send_button = ctk.CTkButton(master=self, command=newapp.send, text="Concluir")
+        self.send_button = ctk.CTkButton(master=self, command=lambda: newapp.send(self), text="Concluir")
         self.send_button.grid(row=9, pady=15, columnspan=2)
         # END Buttons
+
+class EditSrtcView():
+    def edit_itens(self, newapp, init):
+        '''
+        self.saves_list = [save for save in init.data["saves"]]
+        self.name_entry.destroy()
+        self.name_entry = ctk.CTkOptionMenu(master=self, values=self.saves_list, width=220, font=('',16), command=newapp.insert_save,
+                                fg_color=("White", "#343638"), text_color=("Black", "White"), button_color=("#969da3", "#565a5f"))
+        self.name_entry.grid(row=2, column=0, columnspan=3)
+
+        self.image_path_label.configure(text="Path to the preview image:\n(empty to remove)")
+
+        self.send_button.grid_forget()
+        self.send_button.configure(width=100)
+        self.send_button.grid(row=11, column=0, pady=15, columnspan=1)
+        
+        self.delete_button = ctk.CTkButton(master=self, fg_color="red", text="delete", width=100,
+                                           command=new_save.delete_save)
+        self.delete_button.grid(row=11, column=2, pady=15, columnspan=1)
+
+        new_save.insert_save(self.saves_list[0])
+        '''

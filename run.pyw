@@ -1,8 +1,8 @@
 from src import modify_data
 from src import app
 from view import app_view
-from src import add_edit_shorcuts
-from view import add_edit_shorcuts_view
+from src import srtc_manage
+from view import srtc_manage_view
 
 class DefaultClass():
     def __init__(self):
@@ -24,15 +24,15 @@ class DefaultClass():
 
             case "App":
                 self.app_view.add_button.set("Add")
-                self.add_app_view = add_edit_shorcuts_view.NewAppWnd()
-                self.add_app = add_edit_shorcuts.AddApp(self)
+                self.add_app_view = srtc_manage_view.NewSrtcWnd()
+                self.add_app = srtc_manage.AddSrtc(self)
                 self.add_app_view.new_app_itens(self.add_app)
                 self.add_app_view.grab_set()
             
             case "Site":
                 self.app_view.add_button.set("Add")
-                self.add_app_view = add_edit_shorcuts_view.NewAppWnd()
-                self.add_app = add_edit_shorcuts.AddApp(self)
+                self.add_app_view = srtc_manage_view.NewSrtcWnd()
+                self.add_app = srtc_manage.AddSrtc(self)
                 self.add_app_view.new_site_itens(self.add_app)
                 self.add_app_view.grab_set()
 

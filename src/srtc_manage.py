@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import filedialog
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 import shutil
 
 class AddSrtc():
@@ -91,19 +91,41 @@ class AddSrtc():
                 icon_path = "img/" + sliced
 
             # caso nao seja uma imagem.
-            except:
+            except UnidentifiedImageError:
                 icon_path = "None"
 
+            except shutil.SameFileError:
+                pass
+
         return name, stc_path, icon_path
-    
+
 class Edit():
+    def call_srtc_wnd(self, init, app_name):
+        type = init.data["apps"][app_name]["type"]
+
+        if type == "site":
+            init.add_srtc_view.new_site_itens(init.add_srtc)
+        elif type == "app":
+            init.add_srtc_view.new_app_itens(init.add_srtc)
+
     def insert_data(self, init, wnd, app):
         app_data = init.data["apps"][app]
 
-        if app_data["type"] == "broswer":
-            wnd.browser_endry.insert(app_data["browser"])
+        if app_data["type"] == "site":
+            path = app_data["path"]
+            split_path = path.split(" ")
+            path = split_path[3].replace("--app=", "")
+            browser = split_path[1]
 
-        wnd.name_entry.set(app_data["name"])
-        wnd.path_entry.insert(0, app_data["path"])
+            wnd.browser_entry.insert(0, browser)
+
+        elif app_data["type"] == "app":
+            path = app_data["path"]
+            path = path[:len(path)-1][1:]
+
+        wnd.name_entry.insert(0, app_data["name"])
+        wnd.name_entry.configure(state="disabled")
+
+        wnd.path_entry.insert(0, path)
         wnd.icon_entry.insert(0, app_data["icon"])
-        
+ 

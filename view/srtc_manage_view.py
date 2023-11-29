@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from tkinter import messagebox
 
 class NewSrtcWnd(ctk.CTkToplevel):
     def new_site_itens(self, newapp):
@@ -70,32 +71,16 @@ class NewSrtcWnd(ctk.CTkToplevel):
         # END Buttons
 
 class EditSrtcView():
-    def call_srtc_wnd(self, init, app_name):
-        type = init.data["apps"][app_name]["type"]
-
-        if type == "site":
-            init.add_srtc_view.new_site_itens(init.add_srtc)
-        elif type == "app":
-            init.add_srtc_view.new_app_itens(init.add_srtc)
-
-    def __init__(self, init, wnd, edit_srtc):
-        self.srtcs_list = [save for save in init.data["apps"]]
-        
-        self.call_srtc_wnd(init, self.srtcs_list[0])
-
-        wnd.name_entry.destroy()
-        wnd.name_entry = ctk.CTkOptionMenu(master=wnd, values=self.srtcs_list, width=220, font=('',16), command=lambda:print("changewnd"),
-                                fg_color=("White", "#343638"), text_color=("Black", "White"), button_color=("#969da3", "#565a5f"))
-        wnd.name_entry.grid(row=2, column=0, columnspan=3)
+    def change_elements(self, init, wnd, edit_srtc, app_to_edit):
+        edit_srtc.call_srtc_wnd(init, app_to_edit)
 
         wnd.icon_label.configure(text="Path to the preview image:\n(empty to remove)")
 
         wnd.send_button.grid_forget()
-        wnd.send_button.configure(width=100)
-        wnd.send_button.grid(row=11, column=0, pady=15)
+        wnd.send_button.grid(row=11, column=0, pady=15, columnspan=1)
         
-        wnd.delete_button = ctk.CTkButton(master=wnd, fg_color="red", text="delete", width=100,
+        wnd.delete_button = ctk.CTkButton(master=wnd, fg_color="red", text="delete",
                                            command=lambda:print("delete :)"))
-        wnd.delete_button.grid(row=11, column=1, pady=15)
+        wnd.delete_button.grid(row=11, column=1, pady=15, columnspan=2)
 
-        edit_srtc.insert_data(init, wnd, self.srtcs_list[0])
+        edit_srtc.insert_data(init, wnd, app_to_edit)

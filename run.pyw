@@ -15,7 +15,7 @@ class DefaultClass():
         self.app_view = app_view.AppWnd(self, self.app)
         self.app_view.mainloop()
 
-    def call_window(self, window):
+    def call_window(self, window, app_to_edit=None):
 
         self.app_view.add_button.set("Add")
         match window:
@@ -42,7 +42,7 @@ class DefaultClass():
                 self.add_srtc_view = srtc_manage_view.NewSrtcWnd()
                 self.add_srtc = srtc_manage.AddSrtc(self)
                 self.edit_srtc = srtc_manage.Edit()
-                self.srtc_edit = srtc_manage_view.EditSrtcView(self, self.add_srtc_view, self.edit_srtc)
+                self.srtc_edit = srtc_manage_view.EditSrtcView().change_elements(self, self.add_srtc_view, self.edit_srtc, app_to_edit)
                 self.add_srtc_view.grab_set()
 
             case "restart":

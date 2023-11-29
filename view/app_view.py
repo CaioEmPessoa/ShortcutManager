@@ -37,19 +37,13 @@ class AppWnd(ctk.CTk):
 
         self.app_buttons(init, app) 
 
-        ''' old add btn
-        add_button = ctk.CTkButton(master=self, text=" + ", width=70, 
-                                   command=lambda: init.call_window("add_app"))
-        add_button.grid(row=2, column=0, 
-                        padx=10, pady=10, sticky="E")
-        '''
         self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site"], width=70, dropdown_direction="up",
                                             command=lambda x: init.call_window(self.add_button.get()))
         self.add_button.set("Add")
         self.add_button.grid(row=2, column=0, padx=10, pady=10, sticky="E")
 
         edit_button = ctk.CTkButton(master=self, text="Editar", width=70,
-                                    command=lambda: init.call_window("edit"))
+                                    command=lambda: app.enable_edit())
         edit_button.grid(row=2, column=1, pady=10)
 
         theme_buttom = ctk.CTkButton(master=self, text="Tema", width=70,
@@ -78,6 +72,8 @@ class AppWnd(ctk.CTk):
             app_button = ctk.CTkButton(master=self.my_frame, width=70, text=app_data["name"], compound="top",
                                    command=lambda app_path=app_data["path"]: app.open_app(app_path), image=icon, font=('Segoe UI', 16),
                                    text_color="#807e7e", fg_color="transparent", border_color="#1f6aa5", border_width=2.5, hover_color="#184c74")
+            
+            app.srtc_btns.append(app_button)
 
             row = btn_nmb // max_columns
             col = btn_nmb % max_columns

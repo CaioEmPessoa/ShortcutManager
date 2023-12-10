@@ -29,7 +29,11 @@ class ModifyData():
 
     def clear_unused_img(self):
         img_path = os.path.join(os.getcwd(), "img")
-        saved_img = [os.path.basename(self.data["apps"][app]["icon"]) for app in self.data["apps"]]
+        try:
+            saved_img = [os.path.basename(self.data["apps"][app]["icon"]) for app in self.data["apps"]]
+        except KeyError:
+            saved_img = []
+
         cache_img = os.listdir(img_path)
 
         app_imgs = ["unknown.png", "icon.ico"]

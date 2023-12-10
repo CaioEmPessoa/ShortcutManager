@@ -14,7 +14,7 @@ class App():
             os.startfile(path)
 
         #   GET ERROR THAT IS NOT A APP
-        except:
+        except OSError:
             os.system(f"{path}")
         self.init.call_window("close")
 

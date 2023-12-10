@@ -18,12 +18,24 @@ class ModifyData():
         with open("apps_data.json", "r") as read_file:
             self.data = json.load(read_file)
         
+        self.clear_unused_img()
+
         return self.data
 
     def write_data(self, data):
         self.data = deep_update(self.data, data)
         with open("apps_data.json", "w") as write_file:
             json.dump(self.data, write_file, indent=4)
+
+    def clear_unused_img(self):
+        img_path = os.path.join(os.getcwd(), "img")
+        saved_img = [os.path.basename(self.data["apps"][app]["icon"]) for app in self.data["apps"]]
+        cache_img = os.listdir(img_path)
+
+        app_imgs = ["unknown.png", "icon.ico"]
+        for img in cache_img:
+            if img not in saved_img and img not in app_imgs:
+                os.remove(os.path.join(img_path, img))
 
     def clear_data(self, init):
         for item in os.listdir("img"):

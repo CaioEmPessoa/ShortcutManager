@@ -91,11 +91,8 @@ class AddSrtc():
                 icon_path = "img/" + sliced
 
             # caso nao seja uma imagem.
-            except UnidentifiedImageError:
+            except:
                 icon_path = "None"
-
-            except shutil.SameFileError:
-                pass
 
         return name, stc_path, icon_path
 

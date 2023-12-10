@@ -10,7 +10,7 @@ class DefaultClass():
 
         self.modify_data = modify_data.ModifyData()
         self.data = self.modify_data.read_data()
-        
+        #
         self.app = app.App(self)
         self.app_view = app_view.AppWnd(self, self.app)
         self.app_view.mainloop()

@@ -10,7 +10,8 @@ class ModifyData():
     # checa os apps no jsone cria uma lista com nomes, caminhos e icones deles.
     def read_data(self):
         if not os.path.exists("apps_data.json"):
-            default_data = {"theme": "Dark"}
+            default_data = {"theme": "Dark",
+                            "size":[600,680]}
 
             self.write_data(default_data)
             self.data = default_data

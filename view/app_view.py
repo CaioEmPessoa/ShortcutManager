@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
 
-class MyFrame(ctk.CTkScrollableFrame):
+class ScrollFrame(ctk.CTkScrollableFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
@@ -18,7 +18,7 @@ class AppWnd(ctk.CTk):
         self.grid_columnconfigure((0, 1, 2), weight=1)
         ctk.set_appearance_mode(init.data["theme"])
 
-        w, h = 600, 680 
+        w, h = tuple(self.init.data["size"])
         ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
         x, y = (ws/2) - (w/2), (hs/2) - (h/2)
         self.geometry('%dx%d+%d+%d' % (w, h, x, y))
@@ -28,6 +28,7 @@ class AppWnd(ctk.CTk):
 
         self.create_itens()
         self.after(500, self.adjust_app_buttons)
+        self.protocol("WM_DELETE_WINDOW", lambda:app.on_close(self.app_size))
 
     def create_itens(self):
 
@@ -35,7 +36,7 @@ class AppWnd(ctk.CTk):
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
         welcome.grid(row=0, column=0, columnspan=3)
 
-        self.my_frame = MyFrame(master=self, fg_color="transparent",
+        self.my_frame = ScrollFrame(master=self, fg_color="transparent",
                                 width=550, height=600, corner_radius=0)
         self.my_frame.grid(row=1, column=0, padx=10,
                            columnspan=3, sticky="nsew")

@@ -32,6 +32,11 @@ class App():
                 btn_data = self.init.data["apps"][btn.cget("text")]
                 btn.configure(border_color="#1f6aa5", command=lambda app=btn_data["path"]: self.open_app(app))
 
+    def on_close(self, wnd_size):
+        size_data = {"size":wnd_size}
+        self.init.modify_data.write_data(size_data)
+        self.init.call_window("close")
+
     def switch_theme(self):
         # If the theme is dark it switches it to light and vice-versa
         current_theme = self.init.data["theme"]

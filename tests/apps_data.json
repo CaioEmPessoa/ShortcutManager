@@ -1,5 +1,7 @@
 {
     "theme": "Dark",
+    "size":[600,680],
+    "foulders":["Default"],
     "apps": {
         "app": {
             "name": "app",

@@ -4,6 +4,8 @@ from PIL import Image
 class ScrollFrame(ctk.CTkScrollableFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
+        self.grid_rowconfigure((1), weight=1)
+        self.grid_columnconfigure((tuple(range(3))), weight=1)
 
 class AppWnd(ctk.CTk):
 
@@ -24,22 +26,19 @@ class AppWnd(ctk.CTk):
         self.geometry('%dx%d+%d+%d' % (w, h, x, y))
         
         self.app_size = (w, h)
+        self.current_foulder = "default"
         self.max_columns = 3
 
         self.create_itens()
-        self.after(500, self.adjust_app_buttons)
+        self.after(5, self.adjust_app_buttons)
         self.protocol("WM_DELETE_WINDOW", lambda:app.on_close(self.app_size))
 
     def create_itens(self):
-
         welcome = ctk.CTkLabel(master=self, text="Escolha um ou adicione um novo atalho", 
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
         welcome.grid(row=0, column=0, columnspan=3)
 
-        self.my_frame = ScrollFrame(master=self, fg_color="transparent",
-                                width=550, height=600, corner_radius=0)
-        self.my_frame.grid(row=1, column=0, padx=10,
-                           columnspan=3, sticky="nsew")
+        self.create_tabs()
 
         self.app_buttons() 
 
@@ -56,6 +55,20 @@ class AppWnd(ctk.CTk):
                                      command=lambda: self.app.switch_theme())
         theme_buttom.grid(row=2, column=2, 
                           padx=10, pady=10, sticky="W")
+
+    def create_tabs(self):
+        self.foulders_tab = ctk.CTkTabview(master=self)
+        self.foulders_tab.grid(row=1, column=0, columnspan=3, padx=15, pady=15, sticky="nsew")
+        
+        for foulder in self.init.data["foulders"]:
+            tab = self.foulders_tab.add(foulder)
+            self.my_frame = ScrollFrame(master=self.foulders_tab.tab(foulder))
+            self.my_frame.pack(fill="both", expand=True)
+
+            try:
+                self.my_frame.grid_columnconfigure((tuple(range(len(self.init.data["apps"])-1))), weight=1)
+            except KeyError:
+                pass
 
     def app_buttons(self):
         try:
@@ -87,18 +100,16 @@ class AppWnd(ctk.CTk):
             btn_nmb+=1
 
     def adjust_app_buttons(self):
-        old_size = self.app_size
         new_size = (self.winfo_width(), self.winfo_height())
-        if new_size != old_size:
-            self.app_size = new_size
-            max_columns = int(self.winfo_width() / 175)
-            if max_columns != self.max_columns and max_columns != 0:
-                self.max_columns = max_columns
+        self.app_size = new_size
+        max_columns = int(self.winfo_width() / 200)
+        if max_columns != self.max_columns and max_columns != 0:
+            self.max_columns = max_columns
 
-                for btn in self.app.srtc_btns:
-                    btn.destroy()
-                self.app.srtc_btns = []
-                self.app_buttons()
+            for btn in self.app.srtc_btns:
+                btn.destroy()
+            self.app.srtc_btns = []
+            self.app_buttons()
             
         self.after(5, self.adjust_app_buttons)
 

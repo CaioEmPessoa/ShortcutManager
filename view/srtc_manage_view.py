@@ -10,6 +10,8 @@ class NewSrtcWnd(ctk.CTkToplevel):
         ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
         x, y = (ws - w) / 2, (hs - h) / 2
         self.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
+        self.grid_columnconfigure((0, 1, 2), weight=1)
+        self.grid_rowconfigure((tuple(range(12))), weight=1)
 
         self.path_label.configure(text="Insira o link para o site:")
         self.path_window_button.grid_forget()
@@ -25,6 +27,9 @@ class NewSrtcWnd(ctk.CTkToplevel):
         ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
         x, y = (ws - w) / 2, (hs - h) / 2
         self.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
+
+        self.grid_columnconfigure((0, 1, 2), weight=1)
+        self.grid_rowconfigure((tuple(range(12))), weight=1)
 
         self.title("Shortcut Manager")
         self.iconbitmap("img/icon.ico")
@@ -67,7 +72,7 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.icon_window_button.grid(row=8, column=1, sticky="W")
 
         self.send_button = ctk.CTkButton(master=self, command=lambda: newapp.send(self), text="Concluir")
-        self.send_button.grid(row=9, pady=15, columnspan=2)
+        self.send_button.grid(row=9, pady=15, padx=15)
         # END Buttons
 
 class EditSrtcView():
@@ -81,6 +86,6 @@ class EditSrtcView():
         
         wnd.delete_button = ctk.CTkButton(master=wnd, fg_color="red", text="delete",
                                            command=lambda:print("delete :)"))
-        wnd.delete_button.grid(row=11, column=1, pady=15, columnspan=2)
+        wnd.delete_button.grid(row=11, column=1, pady=15, padx=10)
 
         edit_srtc.insert_data(init, wnd, app_to_edit)

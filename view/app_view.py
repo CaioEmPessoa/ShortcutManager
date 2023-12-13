@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from tkinter import Menu
 from PIL import Image
 
 class ScrollFrame(ctk.CTkScrollableFrame):
@@ -66,7 +67,7 @@ class AppWnd(ctk.CTk):
             self.my_frame.pack(fill="both", expand=True)
 
             try:
-                self.my_frame.grid_columnconfigure((tuple(range(len(self.init.data["apps"])-1))), weight=1)
+                self.my_frame.grid_columnconfigure((tuple(range(len(self.init.data["apps"])))), weight=1)
             except KeyError:
                 pass
 
@@ -94,10 +95,20 @@ class AppWnd(ctk.CTk):
             
             self.app.srtc_btns.append(app_button)
 
+            self.menu = Menu(tearoff=0, bg="#252425", border=0, fg="white")
+            self.menu.add_command(label="Enviar Para")
+            app_button.bind("<Button-3>", lambda e, name=app_data["name"]: self.send_to_foulder(e, name))
+            
             row = btn_nmb // max_columns
             col = btn_nmb % max_columns
             app_button.grid(row=row, column=col, pady=10, padx=5)
             btn_nmb+=1
+
+
+    def send_to_foulder(self, event, app_name):
+        print(app_name)
+        self.menu.tk_popup(event.x_root, event.y_root)
+
 
     def adjust_app_buttons(self):
         new_size = (self.winfo_width(), self.winfo_height())

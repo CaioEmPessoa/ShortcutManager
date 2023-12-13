@@ -92,7 +92,7 @@ class AddSrtc():
 
             # caso nao seja uma imagem.
             except:
-                icon_path = "None"
+                icon_path = "img/unknown.png"
 
         return name, stc_path, icon_path
 

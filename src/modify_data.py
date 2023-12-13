@@ -11,7 +11,8 @@ class ModifyData():
     def read_data(self):
         if not os.path.exists("apps_data.json"):
             default_data = {"theme": "Dark",
-                            "size":[600,680],
+                            "wnd_size":[600,680],
+                            "srtc_size":"G",
                             "foulders":["Default"]}
 
             self.write_data(default_data)

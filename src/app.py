@@ -7,6 +7,12 @@ class App():
         self.srtc_btns = []
         self.changing = 0
 
+        self.SIZE_DICT = {
+            "G": {"icon":(120, 120), "srtc":150},
+            "M": {"icon":(80, 80), "srtc":100},
+            "P": {"icon":(50, 50), "srtc":70}
+        }
+
     def open_app(self, path):
         try:
             dir_path = os.path.dirname(path)
@@ -46,10 +52,10 @@ class App():
         self.init.modify_data.write_data(self.init.data)
         set_appearance_mode(current_theme)
 
-    def send_to_foulder(self, app_name):
-        print(app_name)
+    def send_to_foulder(self, app_name, foulder):
+        print(app_name + " to " + foulder)
 
     def on_close(self, wnd_size):
-        size_data = {"size":wnd_size}
+        size_data = {"wnd_size":wnd_size}
         self.init.modify_data.write_data(size_data)
         self.init.call_window("close")

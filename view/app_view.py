@@ -113,7 +113,9 @@ class AppWnd(ctk.CTk):
 
             icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(icon_size))
 
-            app_button = ctk.CTkButton(master=self.my_frame, width=srtc_size, height=srtc_size, text=app_data["name"], compound="top",
+            name = self.app.correct_name(app_data["name"])
+
+            app_button = ctk.CTkButton(master=self.my_frame, width=srtc_size, height=srtc_size, text=name, compound="top",
                                    command=lambda app_path=app_data["path"]: self.app.open_app(app_path), image=icon, font=('Segoe UI', 16),
                                    text_color="#807e7e", fg_color="transparent", border_color="#1f6aa5", border_width=2.5, hover_color="#184c74")
             
@@ -138,9 +140,11 @@ class AppWnd(ctk.CTk):
         self.grid_srcts()
 
     def adjust_shortcuts_grid(self):
+        srtc_size = self.app.SIZE_DICT[self.icon_size]["srtc"]
+
         new_size = (self.winfo_width(), self.winfo_height())
         self.app_size = new_size
-        max_columns = int(self.winfo_width() / 200)
+        max_columns = int(self.winfo_width() / int(srtc_size+50))
         if max_columns != self.max_columns and max_columns != 0:
             self.max_columns = max_columns
 

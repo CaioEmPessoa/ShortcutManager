@@ -8,7 +8,7 @@ class App():
         self.changing = 0
 
         self.SIZE_DICT = {
-            "G": {"icon":(120, 120), "srtc":150},
+            "G": {"icon":(100, 100), "srtc":150},
             "M": {"icon":(80, 80), "srtc":100},
             "P": {"icon":(50, 50), "srtc":70}
         }
@@ -51,6 +51,33 @@ class App():
 
         self.init.modify_data.write_data(self.init.data)
         set_appearance_mode(current_theme)
+
+    def correct_name(self, name):
+        if len(name) >= 10:
+            word_list = name.split(" ")
+
+            # If its only one word
+            if len(word_list) <= 1:
+                new_name = name[:7] + "..."
+                return new_name
+
+            # insert enter between the two words
+            word_list.insert(1, "\n")
+
+            # if the list has more than 2 words (counting the enter)
+            if len(word_list) >= 4:
+                word_list.insert(3, "...")
+                del word_list[4:]
+
+            if len(word_list[2]) >= 10:
+                word_list[2] = word_list[2][:7] + "..."
+
+            new_name = " ".join(word for word in word_list)
+            
+            return new_name
+        
+        else:
+            return name
 
     def send_to_foulder(self, app_name, foulder):
         print(app_name + " to " + foulder)

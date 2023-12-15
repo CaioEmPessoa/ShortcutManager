@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import filedialog
-from PIL import Image, UnidentifiedImageError
+from PIL import Image
 import shutil
 
 class AddSrtc():

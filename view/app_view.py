@@ -67,7 +67,7 @@ class AppWnd(ctk.CTk):
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
         welcome.grid(row=0, column=0, columnspan=3)
 
-        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site"], width=70, dropdown_direction="up",
+        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site", "Foulder"], width=70, dropdown_direction="up",
                                             command=lambda x: self.init.call_window(self.add_button.get()))
         self.add_button.set("Add")
         self.add_button.grid(row=2, column=0, padx=10, pady=10, sticky="E")
@@ -94,7 +94,7 @@ class AppWnd(ctk.CTk):
         self.foulders_tab.grid(row=1, column=0, columnspan=3, padx=15, pady=15, sticky="nsew")
         
         for foulder in self.init.data["foulders"]:
-            tab = self.foulders_tab.add(foulder)
+            self.foulders_tab.add(foulder)
             self.my_frame = ScrollFrame(master=self.foulders_tab.tab(foulder))
             self.my_frame.pack(fill="both", expand=True)
 

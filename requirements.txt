@@ -1,5 +1,5 @@
 annotated-types==0.6.0
-customtkinter @ git+https://github.com/CaioEmPessoa/CustomTkinter.git@e4922f65e9d5177473e6b280c765d31087ca2c91
+customtkinter @ git+https://github.com/CaioEmPessoa/CustomTkinter.git@84dd2387ff329cf26598c62d04bcdb5432f3eb64
 darkdetect==0.8.0
 packaging==23.2
 Pillow==10.1.0

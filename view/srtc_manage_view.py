@@ -36,7 +36,7 @@ class NewSrtcWnd(ctk.CTkToplevel):
 
         self.is_app = True
 
-        # Buttons, Labels and Entrys
+        # Buttons, Labels and Entries
         # LABELS
         self.name_label = ctk.CTkLabel(master=self, justify="left", text="Escolha o nome do app:")
         self.name_label.grid(row=0, column=0, padx=10, columnspan=3, sticky="W")
@@ -47,6 +47,9 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.icon_label = ctk.CTkLabel(master=self, text="Escolha o icone do atalho:")
         self.icon_label.grid(row=7, column=0, padx=10, columnspan=2, sticky="W")
 
+        self.bg_color_label = ctk.CTkLabel(master=self, text="Cor de fundo do botão:")
+        self.bg_color_label.grid(row=9, column=0)
+
         # END Labels
 
         # ENTRY
@@ -56,6 +59,10 @@ class NewSrtcWnd(ctk.CTkToplevel):
 
         self.path_entry = ctk.CTkEntry(master=self)
         self.path_entry.grid(row=4, column=0, 
+                        pady=10, padx=10, sticky="W")
+        
+        self.bg_color_entry = ctk.CTkOptionMenu(master=self, values=["None", "Red", "Green", "Purple"])
+        self.bg_color_entry.grid(row=10, column=0, 
                         pady=10, padx=10, sticky="W")
 
         self.icon_entry = ctk.CTkEntry(master=self)
@@ -72,7 +79,7 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.icon_window_button.grid(row=8, column=1, sticky="W")
 
         self.send_button = ctk.CTkButton(master=self, command=lambda: newapp.send(self), text="Concluir")
-        self.send_button.grid(row=9, pady=15, padx=15)
+        self.send_button.grid(row=11, pady=15, padx=15)
         # END Buttons
 
 class EditSrtcView():

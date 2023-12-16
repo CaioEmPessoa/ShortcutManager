@@ -13,6 +13,13 @@ class App():
             "P": {"icon":(50, 50), "srtc":70}
         }
 
+        self.COLOR_DICT = {
+            "None": "transparent",
+            "Red": "red",
+            "Green": "green",
+            "Purple": "purple"
+        }
+
     def open_app(self, path):
         try:
             dir_path = os.path.dirname(path)

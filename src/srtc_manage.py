@@ -20,7 +20,7 @@ class AddSrtc():
             self.add_srtc_view.icon_entry.insert(0, icon_path)
 
     def send(self, view):
-        name, app_path, icon_path = self.check_info(view)
+        name, app_path, icon_path, bg_color = self.check_info(view)
         if self.type == "site":
             app_path = self.convert_browser(view, app_path)
 
@@ -30,7 +30,8 @@ class AddSrtc():
                     "name": f"{name}",
                     "path": f"\"{app_path}\"",
                     "icon": f"{icon_path}",
-                    "type": self.type
+                    "type": self.type,
+                    "bg_color": f"{bg_color}"
                     }
                 }
             }
@@ -58,6 +59,7 @@ class AddSrtc():
         name = wnd.name_entry.get()
         stc_path = wnd.path_entry.get()
         icon_path = wnd.icon_entry.get()
+        bg_color = wnd.bg_color_entry.get()
 
         if wnd.is_app:
             self.type = "app"
@@ -94,7 +96,7 @@ class AddSrtc():
             except:
                 icon_path = "img/unknown.png"
 
-        return name, stc_path, icon_path
+        return name, stc_path, icon_path, bg_color
 
 class Edit():
     def call_srtc_wnd(self, init, app_name):

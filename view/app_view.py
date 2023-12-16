@@ -56,6 +56,7 @@ class AppWnd(ctk.CTk):
         
         self.app_size = (w, h)
         self.icon_size = self.init.data["srtc_size"]
+        self.current_tab = "Default"
         self.max_columns = 3
 
         self.create_itens()
@@ -118,10 +119,12 @@ class AppWnd(ctk.CTk):
             icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(icon_size))
 
             name = self.app.correct_name(app_data["name"])
-
-            app_button = ctk.CTkButton(master=self.folders_frame["Nintendo"], width=srtc_size, height=srtc_size, text=name, compound="top",
-                                   command=lambda app_path=app_data["path"]: self.app.open_app(app_path), image=icon, font=('Segoe UI', 16),
-                                   text_color="#807e7e", fg_color="transparent", border_color="#1f6aa5", border_width=2.5, hover_color="#184c74")
+            app_button = ctk.CTkButton(master=self.folders_frame["Default"], 
+                                       width=srtc_size, height=srtc_size, compound="top", 
+                                       text=name, command=lambda app_path=app_data["path"]: self.app.open_app(app_path), 
+                                       image=icon, font=('Segoe UI', 16),
+                                       text_color="#807e7e", border_width=2.5, border_color="#1f6aa5", 
+                                       hover_color="#184c74", fg_color=self.app.COLOR_DICT[app_data["bg_color"]])
             
             self.app.srtc_btns.append(app_button)
             
@@ -144,6 +147,7 @@ class AppWnd(ctk.CTk):
         self.grid_srcts()
 
     def adjust_shortcuts_grid(self):
+        self.current_tab = self.folders_tab.get()
         srtc_size = self.app.SIZE_DICT[self.icon_size]["srtc"]
 
         new_size = (self.winfo_width(), self.winfo_height())
@@ -155,7 +159,8 @@ class AppWnd(ctk.CTk):
             for btn in self.app.srtc_btns:
                 btn.grid_forget()
             self.grid_srcts()
-            self.my_frame.grid_columnconfigure((tuple(range(max_columns))), weight=1)
+            
+            self.folders_frame[self.current_tab].grid_columnconfigure((tuple(range(max_columns))), weight=1)
         
         #restart loop
         self.after(5, self.adjust_shortcuts_grid)

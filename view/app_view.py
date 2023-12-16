@@ -16,10 +16,10 @@ class PopupMenu():
         self.size_menu.add_command(label="Ícones Pequenos", command= lambda: self.app_wnd.change_icon_size("P"))
 
         if app_name:
-            self.foulder_menu = Menu(tearoff=0)
-            for foulder in self.init.data["foulders"]:
-                self.foulder_menu.add_command(label=foulder, command= lambda: self.app.send_to_foulder(app_name, foulder))
-            self.main_menu.add_cascade(label="Enviar Atalho Para...", menu=self.foulder_menu)
+            self.folder_menu = Menu(tearoff=0)
+            for folder in self.init.data["folders"]:
+                self.folder_menu.add_command(label=folder, command= lambda: self.app.send_to_folder(app_name, folder))
+            self.main_menu.add_cascade(label="Enviar Atalho Para...", menu=self.folder_menu)
         
         self.main_menu.add_cascade(label="Exibir", menu=self.size_menu)
         self.main_menu.add_checkbutton(label="Mostrar Ícones?")
@@ -67,7 +67,7 @@ class AppWnd(ctk.CTk):
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
         welcome.grid(row=0, column=0, columnspan=3)
 
-        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site", "Foulder"], width=70, dropdown_direction="up",
+        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site", "folder"], width=70, dropdown_direction="up",
                                             command=lambda x: self.init.call_window(self.add_button.get()))
         self.add_button.set("Add")
         self.add_button.grid(row=2, column=0, padx=10, pady=10, sticky="E")
@@ -87,16 +87,20 @@ class AppWnd(ctk.CTk):
 
         self.grid_srcts()
 
-        self.my_frame.bind("<Button-3>", lambda e: self.menu.show_main_menu(e))
 
     def create_tabs(self):
-        self.foulders_tab = ctk.CTkTabview(master=self)
-        self.foulders_tab.grid(row=1, column=0, columnspan=3, padx=15, pady=15, sticky="nsew")
+        self.folders_tab = ctk.CTkTabview(master=self)
+        self.folders_tab.grid(row=1, column=0, columnspan=3, padx=15, pady=15, sticky="nsew")
+        self.folders_frame = {}
         
-        for foulder in self.init.data["foulders"]:
-            self.foulders_tab.add(foulder)
-            self.my_frame = ScrollFrame(master=self.foulders_tab.tab(foulder))
-            self.my_frame.pack(fill="both", expand=True)
+        for folder in self.init.data["folders"]:
+            self.folders_tab.add(folder)
+            my_frame = ScrollFrame(master=self.folders_tab.tab(folder))
+            my_frame.pack(fill="both", expand=True)
+            
+            self.folders_frame[folder] = my_frame
+
+            my_frame.bind("<Button-3>", lambda e: self.menu.show_main_menu(e))
 
     def create_shortcuts(self):
         try:
@@ -115,7 +119,7 @@ class AppWnd(ctk.CTk):
 
             name = self.app.correct_name(app_data["name"])
 
-            app_button = ctk.CTkButton(master=self.my_frame, width=srtc_size, height=srtc_size, text=name, compound="top",
+            app_button = ctk.CTkButton(master=self.folders_frame["Nintendo"], width=srtc_size, height=srtc_size, text=name, compound="top",
                                    command=lambda app_path=app_data["path"]: self.app.open_app(app_path), image=icon, font=('Segoe UI', 16),
                                    text_color="#807e7e", fg_color="transparent", border_color="#1f6aa5", border_width=2.5, hover_color="#184c74")
             

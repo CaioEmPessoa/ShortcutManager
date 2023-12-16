@@ -1,6 +1,6 @@
 import customtkinter as ctk
 
-class NewFoulderWnd(ctk.CTkToplevel):
+class NewfolderWnd(ctk.CTkToplevel):
     def __init__(self, init):
         super().__init__()
         self.init = init
@@ -14,24 +14,24 @@ class NewFoulderWnd(ctk.CTkToplevel):
         self.title("Shortcut Manager")
         self.after(500, lambda: self.iconbitmap("img/icon.ico"))
 
-        self.new_foulder_elements()
+        self.new_folder_elements()
 
     def send_info(self):
-        new_foulder_name = self.name_entry.get()
-        if new_foulder_name == "":
+        new_folder_name = self.name_entry.get()
+        if new_folder_name == "":
             return
         
-        foulders_list = self.init.data["foulders"]
-        foulders_list.append(new_foulder_name)
+        folders_list = self.init.data["folders"]
+        folders_list.append(new_folder_name)
 
-        new_foulder_dict = {
-            "foulders":foulders_list
+        new_folder_dict = {
+            "folders":folders_list
         }
 
-        self.init.modify_data.write_data(new_foulder_dict)
+        self.init.modify_data.write_data(new_folder_dict)
         self.init.call_window("restart")
 
-    def new_foulder_elements(self):
+    def new_folder_elements(self):
         self.name_label = ctk.CTkLabel(master=self, text="Insira o nome da pasta:")
         self.name_label.pack(pady=7)
 

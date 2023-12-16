@@ -3,7 +3,7 @@ from src import app
 from view import app_view
 from src import srtc_manage
 from view import srtc_manage_view
-from src import manage_foulders
+from src import manage_folders
 
 class DefaultClass():
     def __init__(self):
@@ -36,9 +36,9 @@ class DefaultClass():
                 self.add_srtc_view.new_site_itens(self.add_srtc)
                 self.add_srtc_view.grab_set()
 
-            case "Foulder":
-                self.add_foulder = manage_foulders.NewFoulderWnd(self)
-                self.add_foulder.grab_set()
+            case "folder":
+                self.add_folder = manage_folders.NewfolderWnd(self)
+                self.add_folder.grab_set()
 
             case "edit":
                 self.add_srtc_view = srtc_manage_view.NewSrtcWnd()

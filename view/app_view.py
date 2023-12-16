@@ -119,24 +119,27 @@ class AppWnd(ctk.CTk):
             icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(icon_size))
 
             name = self.app.correct_name(app_data["name"])
-            app_button = ctk.CTkButton(master=self.folders_frame["Default"], 
+            app_button = ctk.CTkButton(master=self.folders_frame[app_data["foulder"]], 
                                        width=srtc_size, height=srtc_size, compound="top", 
                                        text=name, command=lambda app_path=app_data["path"]: self.app.open_app(app_path), 
                                        image=icon, font=('Segoe UI', 16),
                                        text_color="#807e7e", border_width=2.5, border_color="#1f6aa5", 
                                        hover_color="#184c74", fg_color=self.app.COLOR_DICT[app_data["bg_color"]])
             
-            self.app.srtc_btns.append(app_button)
+            #IDK
+            self.app.srtc_btns.update({app_data["foulder"]: self.app.srtc_btns[app_data["foulder"]].append(app_button)})
             
             app_button.bind("<Button-3>", lambda e, name=app_data["name"]: self.menu.show_srtc_menu(e, name))
 
     def grid_srcts(self):
         btn_nmb = 0
-        for srtc_btn in self.app.srtc_btns:
-            row = btn_nmb // self.max_columns
-            col = btn_nmb % self.max_columns
-            srtc_btn.grid(row=row, column=col, pady=10, padx=5)
-            btn_nmb+=1
+        print(self.app.srtc_btns)
+        for foulder in self.app.srtc_btns:
+            for srtc_btns in foulder:
+                row = btn_nmb // self.max_columns
+                col = btn_nmb % self.max_columns
+                srtc_btns.grid(row=row, column=col, pady=10, padx=5)
+                btn_nmb+=1
 
     def change_icon_size(self, size):
         self.icon_size = size

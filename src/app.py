@@ -35,7 +35,7 @@ class App():
         if self.changing == 0:
             self.changing = 1
             for foulder in self.srtc_btns:
-                for btn in foulder:
+                for btn in self.srtc_btns[foulder]:
                     btn_data = self.init.data["apps"][btn.cget("text")]
                     btn.configure(border_color="red", command=lambda app=btn_data["name"]: self.init.call_window("edit", app))
 
@@ -43,7 +43,7 @@ class App():
         else:
             self.changing = 0
             for foulder in self.srtc_btns:
-                for btn in foulder:
+                for btn in self.srtc_btns[foulder]:
                     btn_data = self.init.data["apps"][btn.cget("text")]
                     btn.configure(border_color="#1f6aa5", command=lambda app=btn_data["path"]: self.open_app(app))
 
@@ -62,6 +62,11 @@ class App():
         set_appearance_mode(current_theme)
 
     def correct_name(self, name):
+        #
+        # THIS FUNCTION WORKS, BUT IT GETS IN CONFLICT WITH THE EDIT ONE, THAT NEEDS THE NAME OF THE BUTTON TO BE EXATCLY LIKE ON THE JSON.
+        # I didn't want to do like this anyway, so Now I need to find a way to better padronize the size of the icons without change its text
+        #
+    
         if len(name) >= 10:
             word_list = name.split(" ")
 

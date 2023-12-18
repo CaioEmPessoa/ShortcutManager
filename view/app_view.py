@@ -56,7 +56,7 @@ class AppWnd(ctk.CTk):
         
         self.app_size = (w, h)
         self.icon_size = self.init.data["srtc_size"]
-        self.current_tab = "Default"
+        self.main_tab = "Default"
         self.max_columns = 3
 
         self.create_itens()
@@ -110,6 +110,10 @@ class AppWnd(ctk.CTk):
         except KeyError:
             return
         
+        # creating lists to store btns ont its folders
+        for folder in self.init.data["folders"]:
+            self.app.srtc_btns[folder] = []
+
         icon_size = self.app.SIZE_DICT[self.icon_size]["icon"]
         srtc_size = self.app.SIZE_DICT[self.icon_size]["srtc"]
         
@@ -119,52 +123,61 @@ class AppWnd(ctk.CTk):
             icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(icon_size))
 
             name = self.app.correct_name(app_data["name"])
-            app_button = ctk.CTkButton(master=self.folders_frame[app_data["foulder"]], 
+            app_button = ctk.CTkButton(master=self.folders_frame[app_data["folder"]], 
                                        width=srtc_size, height=srtc_size, compound="top", 
                                        text=name, command=lambda app_path=app_data["path"]: self.app.open_app(app_path), 
                                        image=icon, font=('Segoe UI', 16),
                                        text_color="#807e7e", border_width=2.5, border_color="#1f6aa5", 
                                        hover_color="#184c74", fg_color=self.app.COLOR_DICT[app_data["bg_color"]])
             
-            #IDK
-            self.app.srtc_btns.update({app_data["foulder"]: self.app.srtc_btns[app_data["foulder"]].append(app_button)})
-            
             app_button.bind("<Button-3>", lambda e, name=app_data["name"]: self.menu.show_srtc_menu(e, name))
+            
+            self.app.srtc_btns[app_data["folder"]].append(app_button)
 
     def grid_srcts(self):
-        btn_nmb = 0
-        print(self.app.srtc_btns)
-        for foulder in self.app.srtc_btns:
-            for srtc_btns in foulder:
+        for folder in self.app.srtc_btns:
+            btn_nmb = 0
+            for srtc_btn in self.app.srtc_btns[folder]:
                 row = btn_nmb // self.max_columns
                 col = btn_nmb % self.max_columns
-                srtc_btns.grid(row=row, column=col, pady=10, padx=5)
+                srtc_btn.grid(row=row, column=col, pady=10, padx=5)
                 btn_nmb+=1
 
     def change_icon_size(self, size):
         self.icon_size = size
-        for btn in self.app.srtc_btns:
-            btn.destroy()
-        self.app.srtc_btns = []
+        for folder in self.app.srtc_btns:
+            for btn in self.app.srtc_btns[folder]:
+                btn.destroy()
+
+        self.app.srtc_btns = {}
         self.create_shortcuts()
         self.grid_srcts()
 
     def adjust_shortcuts_grid(self):
-        self.current_tab = self.folders_tab.get()
+        current_tab = self.folders_tab.get()
         srtc_size = self.app.SIZE_DICT[self.icon_size]["srtc"]
 
         new_size = (self.winfo_width(), self.winfo_height())
-        self.app_size = new_size
-        max_columns = int(self.winfo_width() / int(srtc_size+50))
-        if max_columns != self.max_columns and max_columns != 0:
-            self.max_columns = max_columns
+        if new_size != self.app_size or current_tab != self.main_tab:
+            self.app_size = new_size
+            self.main_tab = current_tab
 
-            for btn in self.app.srtc_btns:
-                btn.grid_forget()
-            self.grid_srcts()
+            max_columns = int(self.winfo_width() / int(srtc_size+50))
+            if max_columns != 0:
+                self.max_columns = max_columns
+
+            for folder in self.app.srtc_btns:
+                for btn in self.app.srtc_btns[folder]:
+                    btn.grid_forget()
+
+                self.grid_srcts()
             
-            self.folders_frame[self.current_tab].grid_columnconfigure((tuple(range(max_columns))), weight=1)
-        
+            btn_ammount = len(self.app.srtc_btns[self.main_tab])
+            if self.max_columns > btn_ammount:
+                self.max_columns = btn_ammount
+                        
+            self.folders_frame[self.main_tab].grid_columnconfigure((tuple(range(self.max_columns))), weight=1)
+
         #restart loop
         self.after(5, self.adjust_shortcuts_grid)
 

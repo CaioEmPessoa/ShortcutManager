@@ -31,7 +31,7 @@ class AddSrtc():
                     "path": f"\"{app_path}\"",
                     "icon": f"{icon_path}",
                     "type": self.type,
-                    "foulder":foulder,
+                    "folder":foulder,
                     "bg_color": f"{bg_color}"
                     }
                 }
@@ -60,7 +60,7 @@ class AddSrtc():
         name = wnd.name_entry.get()
         stc_path = wnd.path_entry.get()
         icon_path = wnd.icon_entry.get()
-        foulder = self.init.app_view.current_tab
+        foulder = self.init.app_view.main_tab
         bg_color = wnd.bg_color_entry.get()
 
         if wnd.is_app:

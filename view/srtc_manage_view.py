@@ -6,7 +6,7 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.new_app_itens(newapp)
         self.is_app = False
 
-        w, h = 230, 340
+        w, h = 230, 440
         ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
         x, y = (ws - w) / 2, (hs - h) / 2
         self.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
@@ -23,7 +23,7 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.browser_entry.grid(row=6, column=0, padx=10, sticky="W")
 
     def new_app_itens(self, newapp):
-        w, h = 220, 330
+        w, h = 220, 430
         ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
         x, y = (ws - w) / 2, (hs - h) / 2
         self.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
@@ -32,7 +32,7 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.grid_rowconfigure((tuple(range(12))), weight=1)
 
         self.title("Shortcut Manager")
-        self.iconbitmap("img/icon.ico")
+        self.after(200, lambda:self.iconbitmap("img/icon.ico"))
 
         self.is_app = True
 

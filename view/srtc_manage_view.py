@@ -66,7 +66,9 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.icon_entry = ctk.CTkEntry(master=self, width=200)
         self.icon_entry.grid(row=8, column=0, pady=10, padx=10, sticky="e")
         
-        self.bg_color_entry = ctk.CTkOptionMenu(master=self, values=["Nenhum", "Vermelho", "Verde", "Roxo"])
+        color_list = [color for color in newapp.init.app.COLOR_DICT]
+
+        self.bg_color_entry = ctk.CTkOptionMenu(master=self, values=color_list)
         self.bg_color_entry.grid(row=10, column=0, pady=10, padx=10, columnspan=2)
         # END Entry
 
@@ -79,8 +81,8 @@ class NewSrtcWnd(ctk.CTkToplevel):
                                     command=lambda: newapp.search_window("icon"))
         self.icon_window_button.grid(row=8, column=1, sticky="W")
 
-        self.send_button = ctk.CTkButton(master=self, command=lambda: newapp.send(self), text="Concluir")
-        self.send_button.grid(row=11, pady=15, padx=15)
+        self.send_button = ctk.CTkButton(master=self, text="Concluir", command=lambda: newapp.send(self), width=80)
+        self.send_button.grid(row=11, column=0, pady=15, padx=15, columnspan=2)
         # END Buttons
 
 class EditSrtcView():
@@ -90,10 +92,10 @@ class EditSrtcView():
         wnd.icon_label.configure(text="Caminho pro ícone:\n(vazio para remover)")
 
         wnd.send_button.grid_forget()
-        wnd.send_button.grid(row=11, column=0, pady=15)
+        wnd.send_button.grid(row=11, column=0, pady=15, columnspan=1)
         
-        wnd.delete_button = ctk.CTkButton(master=wnd, fg_color="red", text="delete",
+        wnd.delete_button = ctk.CTkButton(master=wnd, fg_color="red", text="delete", width=80,
                                            command=lambda: edit_srtc.delete(srtc=app_to_edit, init=init))
-        wnd.delete_button.grid(row=11, column=1, pady=15, padx=10)
+        wnd.delete_button.grid(row=11, column=1, pady=15, sticky="w")
 
         edit_srtc.insert_data(init, wnd, app_to_edit)

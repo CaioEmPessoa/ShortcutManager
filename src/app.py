@@ -13,11 +13,12 @@ class App():
             "P": {"icon":(50, 50), "srtc":70}
         }
 
+        # dark, light
         self.COLOR_DICT = {
-            "Nenhum": "transparent",
-            "Vermelho": "red",
-            "Verde": "green",
-            "Roxo": "purple"
+            "Nenhum": "#1f6aa5",
+            "Verde": ("#1af592", "#0ae683"),
+            "Roxo": "purple",
+            "Rosa": ("#C12EE5", "#AC1AD1")
         }
 
     def open_app(self, path):

@@ -68,9 +68,9 @@ class AppWnd(ctk.CTk):
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
         welcome.grid(row=0, column=0, columnspan=3)
 
-        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site", "folder"], width=70, dropdown_direction="up",
+        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site", "Pasta"], width=70, dropdown_direction="up",
                                             command=lambda x: self.init.call_window(self.add_button.get()))
-        self.add_button.set("Add")
+        self.add_button.set("Novo")
         self.add_button.grid(row=2, column=0, padx=10, pady=10, sticky="E")
 
         edit_button = ctk.CTkButton(master=self, text="Editar", width=70,
@@ -120,15 +120,22 @@ class AppWnd(ctk.CTk):
         for app_name in data:
             app_data = data[app_name]
 
-            icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(icon_size))
+            if app_data["icon"] == "None":
+                icon = ctk.CTkImage(light_image=Image.open("img/unknown_light.png"), dark_image=Image.open("img/unknown_dark.png"), size=(icon_size))
+            else:
+                icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(icon_size))
+
+            bg_color = self.app.COLOR_DICT[app_data["bg_color"]]
+
+            text_color = ("Black", "White")
 
             name = self.app.correct_name(app_data["name"])
             app_button = ctk.CTkButton(master=self.folders_frame[app_data["folder"]], 
                                        width=srtc_size, height=srtc_size, compound="top", 
                                        text=name, command=lambda app_path=app_data["path"]: self.app.open_app(app_path), 
                                        image=icon, font=('Segoe UI', 16),
-                                       text_color="#807e7e", border_width=2.5, border_color="#1f6aa5", 
-                                       hover_color="#184c74", fg_color=self.app.COLOR_DICT[app_data["bg_color"]])
+                                       text_color=text_color, border_width=3, border_color=bg_color, 
+                                       hover_color=("#37709f", "#184c74"), fg_color="transparent")
             
             app_button.bind("<Button-3>", lambda e, name=app_data["name"]: self.menu.show_srtc_menu(e, name))
             

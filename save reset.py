@@ -3,7 +3,8 @@ import shutil
 
 try:
     for item in os.listdir("img"):
-        if item == "unknown.png" or item == "icon.ico":
+        app_imgs = ["unknown_dark.png", "unknown_light.png", "unknown.png", "icon.ico"]
+        if item in app_imgs:
             pass
         else:
             os.remove("img/" + item)

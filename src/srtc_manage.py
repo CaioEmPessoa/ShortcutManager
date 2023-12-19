@@ -91,16 +91,19 @@ class AddSrtc():
             # Confere se a imagem é uma imagem, e logo depois a copia para o diretorio de imagens
             try:
                 Image.open(icon_path)
+            # caso nao seja uma imagem.
+            except:
+                icon_path = "None"
+
+            try:
                 shutil.copy(icon_path, "img")
 
                 sliced = icon_path.split('/')
                 sliced = sliced[len(sliced)-1]
 
                 icon_path = "img/" + sliced
-
-            # caso nao seja uma imagem.
-            except:
-                icon_path = "img/unknown.png"
+            except shutil.SameFileError:
+                pass
 
         return name, stc_path, icon_path, folder, bg_color
 
@@ -132,10 +135,14 @@ class Edit():
         elif app_data["type"] == "app":
             path = app_data["path"]
             path = path[:len(path)-1][1:]
+        
+        if app_data["icon"] != "None":
+            wnd.icon_entry.insert(0, app_data["icon"])
 
         wnd.name_entry.insert(0, app_data["name"])
         wnd.name_entry.configure(state="disabled")
 
         wnd.path_entry.insert(0, path)
-        wnd.icon_entry.insert(0, app_data["icon"])
+        
+        wnd.bg_color_entry.set(app_data["bg_color"])
  

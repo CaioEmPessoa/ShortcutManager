@@ -18,7 +18,7 @@ class DefaultClass():
 
     def call_window(self, window, app_to_edit=None):
 
-        self.app_view.add_button.set("Add")
+        self.app_view.add_button.set("Novo")
         match window:
             case "root":
                 self.app_view.destroy()
@@ -36,7 +36,7 @@ class DefaultClass():
                 self.add_srtc_view.new_site_itens(self.add_srtc)
                 self.add_srtc_view.grab_set()
 
-            case "folder": 
+            case "Pasta": 
                 self.add_folder = manage_folders.NewfolderWnd(self)
                 self.add_folder.grab_set()
 

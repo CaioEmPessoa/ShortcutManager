@@ -39,7 +39,7 @@ class ModifyData():
 
         cache_img = os.listdir(img_path)
 
-        app_imgs = ["unknown.png", "icon.ico"]
+        app_imgs = ["unknown_dark.png", "unknown_light.png", "unknown.png", "icon.ico"]
         for img in cache_img:
             if img not in saved_img and img not in app_imgs:
                 os.remove(os.path.join(img_path, img))

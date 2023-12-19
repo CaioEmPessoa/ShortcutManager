@@ -86,13 +86,13 @@ class EditSrtcView():
     def change_elements(self, init, wnd, edit_srtc, app_to_edit):
         edit_srtc.call_srtc_wnd(init, app_to_edit)
 
-        wnd.icon_label.configure(text="Path to the preview image:\n(empty to remove)")
+        wnd.icon_label.configure(text="Caminho pro ícone:\n(vazio para remover)")
 
         wnd.send_button.grid_forget()
         wnd.send_button.grid(row=11, column=0, pady=15, columnspan=1)
         
         wnd.delete_button = ctk.CTkButton(master=wnd, fg_color="red", text="delete",
-                                           command=lambda:print("delete :)"))
+                                           command=lambda: edit_srtc.delete(srtc=app_to_edit, init=init))
         wnd.delete_button.grid(row=11, column=1, pady=15, padx=10)
 
         edit_srtc.insert_data(init, wnd, app_to_edit)

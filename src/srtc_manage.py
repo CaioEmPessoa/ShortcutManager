@@ -20,7 +20,7 @@ class AddSrtc():
             self.add_srtc_view.icon_entry.insert(0, icon_path)
 
     def send(self, view):
-        name, app_path, icon_path, foulder, bg_color = self.check_info(view)
+        name, app_path, icon_path, folder, bg_color = self.check_info(view)
         if self.type == "site":
             app_path = self.convert_browser(view, app_path)
 
@@ -31,7 +31,7 @@ class AddSrtc():
                     "path": f"\"{app_path}\"",
                     "icon": f"{icon_path}",
                     "type": self.type,
-                    "folder":foulder,
+                    "folder":folder,
                     "bg_color": f"{bg_color}"
                     }
                 }
@@ -60,7 +60,7 @@ class AddSrtc():
         name = wnd.name_entry.get()
         stc_path = wnd.path_entry.get()
         icon_path = wnd.icon_entry.get()
-        foulder = self.init.app_view.main_tab
+        folder = self.init.app_view.main_tab
         bg_color = wnd.bg_color_entry.get()
 
         if wnd.is_app:
@@ -98,7 +98,7 @@ class AddSrtc():
             except:
                 icon_path = "img/unknown.png"
 
-        return name, stc_path, icon_path, foulder, bg_color
+        return name, stc_path, icon_path, folder, bg_color
 
 class Edit():
     def call_srtc_wnd(self, init, app_name):
@@ -108,6 +108,11 @@ class Edit():
             init.add_srtc_view.new_site_itens(init.add_srtc)
         elif type == "app":
             init.add_srtc_view.new_app_itens(init.add_srtc)
+
+    def delete(self, srtc, init):
+        del init.data["apps"][srtc]
+        init.modify_data.write_data(init.data)
+        init.call_window("restart")
 
     def insert_data(self, init, wnd, app):
         app_data = init.data["apps"][app]

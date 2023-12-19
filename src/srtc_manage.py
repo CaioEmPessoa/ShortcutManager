@@ -102,6 +102,8 @@ class AddSrtc():
                 sliced = sliced[len(sliced)-1]
 
                 icon_path = "img/" + sliced
+            except FileNotFoundError:
+                icon_path = "None"
             except shutil.SameFileError:
                 pass
 

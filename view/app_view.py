@@ -15,11 +15,18 @@ class PopupMenu():
         self.size_menu.add_command(label="Ícones Médios", command= lambda: self.app_wnd.change_icon_size("M"))
         self.size_menu.add_command(label="Ícones Pequenos", command= lambda: self.app_wnd.change_icon_size("P"))
 
+        # se for botão direito em um atalho
         if app_name:
+            # adiciona o editar
+            self.main_menu.add_command(label="Editar", command=lambda app=app_name: self.init.call_window("edit", app))
+            
+            # adiciona o enviar para
             self.folder_menu = Menu(tearoff=0)
             for folder in self.init.data["folders"]:
                 self.folder_menu.add_command(label=folder, command= lambda right_folder = folder: self.app.send_to_folder(app_name, right_folder))
             self.main_menu.add_cascade(label="Enviar Atalho Para...", menu=self.folder_menu)
+            
+            self.main_menu.add_separator()
         
         self.main_menu.add_cascade(label="Exibir", menu=self.size_menu)
         self.main_menu.add_checkbutton(label="Mostrar Ícones?")

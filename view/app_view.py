@@ -170,7 +170,7 @@ class AppWnd(ctk.CTk):
             self.main_tab = current_tab
 
             max_columns = int(self.winfo_width() / int(srtc_size+50))
-            if max_columns == 0:
+            if max_columns != 0:
                 self.max_columns = max_columns
 
             for folder in self.app.srtc_btns:
@@ -179,10 +179,14 @@ class AppWnd(ctk.CTk):
 
                 self.grid_srcts()
             
-            btn_ammount = len(self.app.srtc_btns[self.main_tab])
+            try:
+                btn_ammount = len(self.app.srtc_btns[self.main_tab])
+            except KeyError:
+                btn_ammount = 0
+
             if self.max_columns > btn_ammount and btn_ammount != 0:
                 self.max_columns = btn_ammount
-                        
+            
             self.folders_frame[self.main_tab].grid_columnconfigure((tuple(range(self.max_columns))), weight=1)
 
         #restart loop

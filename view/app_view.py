@@ -18,7 +18,7 @@ class PopupMenu():
         if app_name:
             self.folder_menu = Menu(tearoff=0)
             for folder in self.init.data["folders"]:
-                self.folder_menu.add_command(label=folder, command= lambda: self.app.send_to_folder(app_name, folder))
+                self.folder_menu.add_command(label=folder, command= lambda right_folder = folder: self.app.send_to_folder(app_name, right_folder))
             self.main_menu.add_cascade(label="Enviar Atalho Para...", menu=self.folder_menu)
         
         self.main_menu.add_cascade(label="Exibir", menu=self.size_menu)
@@ -163,7 +163,7 @@ class AppWnd(ctk.CTk):
             self.main_tab = current_tab
 
             max_columns = int(self.winfo_width() / int(srtc_size+50))
-            if max_columns != 0:
+            if max_columns == 0:
                 self.max_columns = max_columns
 
             for folder in self.app.srtc_btns:
@@ -173,7 +173,7 @@ class AppWnd(ctk.CTk):
                 self.grid_srcts()
             
             btn_ammount = len(self.app.srtc_btns[self.main_tab])
-            if self.max_columns > btn_ammount:
+            if self.max_columns > btn_ammount and btn_ammount != 0:
                 self.max_columns = btn_ammount
                         
             self.folders_frame[self.main_tab].grid_columnconfigure((tuple(range(self.max_columns))), weight=1)

@@ -47,6 +47,10 @@ class AddSrtc():
             browser = "chrome"
 
         # formats the link if it isn't
+            
+        if link[:5] == "steam":
+            return "start " + link
+
         if link[:4] == 'www.':
             link = 'https://' + link
 

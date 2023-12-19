@@ -6,29 +6,33 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.new_app_itens(newapp)
         self.is_app = False
 
-        w, h = 230, 440
+        w, h = 330, 440
         ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
         x, y = (ws - w) / 2, (hs - h) / 2
         self.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
-        self.grid_columnconfigure((0, 1, 2), weight=1)
-        self.grid_rowconfigure((tuple(range(12))), weight=1)
 
         self.path_label.configure(text="Insira o link para o site:")
         self.path_window_button.grid_forget()
 
-        self.browser_label = ctk.CTkLabel(master=self, text="Qual navegador? Chrome é padrão.\n(precisa ser baseado em chromium)")
-        self.browser_label.grid(row=5, column=0, padx=10, columnspan=2, sticky="W")
+        self.path_entry.configure(width=250)
+        self.path_entry.grid_forget()
+        self.path_entry.grid(row=4, column=0, pady=10, padx=10, columnspan=2)
+
+        self.path_label.configure(width=250)
+
+        self.browser_label = ctk.CTkLabel(master=self, text="Qual navegador? Chrome é padrão.\n(precisa ser baseado em chromium)\n")
+        self.browser_label.grid(row=5, column=0, padx=10, columnspan=2)
         
-        self.browser_entry = ctk.CTkEntry(master=self)
-        self.browser_entry.grid(row=6, column=0, padx=10, sticky="W")
+        self.browser_entry = ctk.CTkEntry(master=self, width=250)
+        self.browser_entry.grid(row=6, column=0, padx=10, columnspan=2)
 
     def new_app_itens(self, newapp):
-        w, h = 220, 430
+        w, h = 330, 440
         ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
         x, y = (ws - w) / 2, (hs - h) / 2
         self.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
 
-        self.grid_columnconfigure((0, 1, 2), weight=1)
+        self.grid_columnconfigure((0, 1), weight=1)
         self.grid_rowconfigure((tuple(range(12))), weight=1)
 
         self.title("Shortcut Manager")
@@ -38,35 +42,32 @@ class NewSrtcWnd(ctk.CTkToplevel):
 
         # Buttons, Labels and Entries
         # LABELS
-        self.name_label = ctk.CTkLabel(master=self, justify="left", text="Escolha o nome do app:")
-        self.name_label.grid(row=0, column=0, padx=10, columnspan=3, sticky="W")
+        self.name_label = ctk.CTkLabel(master=self, anchor="w", text="Escolha o nome do app:", )
+        self.name_label.grid(row=0, column=0, padx=10, columnspan=2)
 
         self.path_label = ctk.CTkLabel(master=self, text="Escolha o caminho do atalho:")
-        self.path_label.grid(row=3, column=0, padx=10, columnspan=2, sticky="W")
+        self.path_label.grid(row=3, column=0, padx=10, columnspan=2)
 
         self.icon_label = ctk.CTkLabel(master=self, text="Escolha o icone do atalho:")
-        self.icon_label.grid(row=7, column=0, padx=10, columnspan=2, sticky="W")
+        self.icon_label.grid(row=7, column=0, padx=10, columnspan=2)
 
         self.bg_color_label = ctk.CTkLabel(master=self, text="Cor de fundo do botão:")
-        self.bg_color_label.grid(row=9, column=0)
+        self.bg_color_label.grid(row=9, column=0, columnspan=2)
 
         # END Labels
 
         # ENTRY
-        self.name_entry = ctk.CTkEntry(master=self, width=200)
-        self.name_entry.grid(row=1, column=0, 
-                        pady=10, padx=10, sticky="W", columnspan=3)
+        self.name_entry = ctk.CTkEntry(master=self, width=250)
+        self.name_entry.grid(row=1, column=0, pady=10, padx=10, columnspan=2)
 
-        self.path_entry = ctk.CTkEntry(master=self)
-        self.path_entry.grid(row=4, column=0, 
-                        pady=10, padx=10, sticky="W")
+        self.path_entry = ctk.CTkEntry(master=self, width=200)
+        self.path_entry.grid(row=4, column=0, pady=10, padx=10, sticky="e")
+
+        self.icon_entry = ctk.CTkEntry(master=self, width=200)
+        self.icon_entry.grid(row=8, column=0, pady=10, padx=10, sticky="e")
         
-        self.bg_color_entry = ctk.CTkOptionMenu(master=self, values=["None", "Red", "Green", "Purple"])
-        self.bg_color_entry.grid(row=10, column=0, 
-                        pady=10, padx=10, sticky="W")
-
-        self.icon_entry = ctk.CTkEntry(master=self)
-        self.icon_entry.grid(row=8, column=0, pady=10, padx=10, sticky="W")
+        self.bg_color_entry = ctk.CTkOptionMenu(master=self, values=["Nenhum", "Vermelho", "Verde", "Roxo"])
+        self.bg_color_entry.grid(row=10, column=0, pady=10, padx=10, columnspan=2)
         # END Entry
 
         # Buttons
@@ -89,7 +90,7 @@ class EditSrtcView():
         wnd.icon_label.configure(text="Caminho pro ícone:\n(vazio para remover)")
 
         wnd.send_button.grid_forget()
-        wnd.send_button.grid(row=11, column=0, pady=15, columnspan=1)
+        wnd.send_button.grid(row=11, column=0, pady=15)
         
         wnd.delete_button = ctk.CTkButton(master=wnd, fg_color="red", text="delete",
                                            command=lambda: edit_srtc.delete(srtc=app_to_edit, init=init))

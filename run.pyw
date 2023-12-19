@@ -36,7 +36,7 @@ class DefaultClass():
                 self.add_srtc_view.new_site_itens(self.add_srtc)
                 self.add_srtc_view.grab_set()
 
-            case "folder":
+            case "folder": 
                 self.add_folder = manage_folders.NewfolderWnd(self)
                 self.add_folder.grab_set()
 

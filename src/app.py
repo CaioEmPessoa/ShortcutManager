@@ -14,10 +14,10 @@ class App():
         }
 
         self.COLOR_DICT = {
-            "None": "transparent",
-            "Red": "red",
-            "Green": "green",
-            "Purple": "purple"
+            "Nenhum": "transparent",
+            "Vermelho": "red",
+            "Verde": "green",
+            "Roxo": "purple"
         }
 
     def open_app(self, path):

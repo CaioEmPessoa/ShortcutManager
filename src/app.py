@@ -46,7 +46,7 @@ class App():
             for folder in self.srtc_btns:
                 for btn in self.srtc_btns[folder]:
                     btn_data = self.init.data["apps"][btn.cget("text")]
-                    btn.configure(border_color="#1f6aa5", command=lambda app=btn_data["path"]: self.open_app(app))
+                    btn.configure(border_color=self.COLOR_DICT[btn_data["bg_color"]], command=lambda app=btn_data["path"]: self.open_app(app))
 
     def switch_theme(self):
         # If the theme is dark it switches it to light and vice-versa

@@ -129,10 +129,14 @@ class Edit():
         if app_data["type"] == "site":
             path = app_data["path"]
             split_path = path.split(" ")
-            path = split_path[3].replace("--app=", "")
-            browser = split_path[1]
+            
+            if split_path[1][:5] == "steam":
+                path = split_path[1].replace("\"", "")
+            else:
+                path = split_path[3].replace("--app=", "")
+                browser = split_path[1]
 
-            wnd.browser_entry.insert(0, browser)
+                wnd.browser_entry.insert(0, browser)
 
         elif app_data["type"] == "app":
             path = app_data["path"]

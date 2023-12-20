@@ -159,6 +159,8 @@ class AppWnd(ctk.CTk):
 
     def change_icon_size(self, size):
         self.icon_size = size
+        self.init.data["srtc_size"] = self.icon_size
+        
         for folder in self.app.srtc_btns:
             for btn in self.app.srtc_btns[folder]:
                 btn.destroy()

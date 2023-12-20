@@ -51,8 +51,8 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.icon_label = ctk.CTkLabel(master=self, text="Escolha o icone do atalho:")
         self.icon_label.grid(row=7, column=0, padx=10, columnspan=2)
 
-        self.bg_color_label = ctk.CTkLabel(master=self, text="Cor de fundo do botão:")
-        self.bg_color_label.grid(row=9, column=0, columnspan=2)
+        self.bd_color_label = ctk.CTkLabel(master=self, text="Cor da borda do botão:")
+        self.bd_color_label.grid(row=9, column=0, columnspan=2)
 
         # END Labels
 
@@ -68,8 +68,8 @@ class NewSrtcWnd(ctk.CTkToplevel):
         
         color_list = [color for color in newapp.init.app.COLOR_DICT]
 
-        self.bg_color_entry = ctk.CTkOptionMenu(master=self, values=color_list)
-        self.bg_color_entry.grid(row=10, column=0, pady=10, padx=10, columnspan=2)
+        self.bd_color_entry = ctk.CTkOptionMenu(master=self, values=color_list)
+        self.bd_color_entry.grid(row=10, column=0, pady=10, padx=10, columnspan=2)
         # END Entry
 
         # Buttons

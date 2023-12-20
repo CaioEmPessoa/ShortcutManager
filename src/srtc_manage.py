@@ -20,7 +20,7 @@ class AddSrtc():
             self.add_srtc_view.icon_entry.insert(0, icon_path)
 
     def send(self, view):
-        name, app_path, icon_path, folder, bg_color = self.check_info(view)
+        name, app_path, icon_path, folder, bd_color = self.check_info(view)
         if self.type == "site":
             app_path = self.convert_browser(view, app_path)
 
@@ -32,7 +32,7 @@ class AddSrtc():
                     "icon": f"{icon_path}",
                     "type": self.type,
                     "folder":folder,
-                    "bg_color": f"{bg_color}"
+                    "bd_color": f"{bd_color}"
                     }
                 }
             }
@@ -65,7 +65,7 @@ class AddSrtc():
         stc_path = wnd.path_entry.get()
         icon_path = wnd.icon_entry.get()
         folder = self.init.app_view.main_tab
-        bg_color = wnd.bg_color_entry.get()
+        bd_color = wnd.bd_color_entry.get()
 
         if wnd.is_app:
             self.type = "app"
@@ -107,7 +107,7 @@ class AddSrtc():
             except shutil.SameFileError:
                 pass
 
-        return name, stc_path, icon_path, folder, bg_color
+        return name, stc_path, icon_path, folder, bd_color
 
 class Edit():
     def call_srtc_wnd(self, init, app_name):
@@ -150,5 +150,5 @@ class Edit():
 
         wnd.path_entry.insert(0, path)
         
-        wnd.bg_color_entry.set(app_data["bg_color"])
+        wnd.bd_color_entry.set(app_data["bd_color"])
  

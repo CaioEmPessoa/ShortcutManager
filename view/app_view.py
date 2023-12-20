@@ -131,7 +131,7 @@ class AppWnd(ctk.CTk):
             else:
                 icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(icon_size))
 
-            bg_color = self.app.COLOR_DICT[app_data["bg_color"]]
+            bd_color = self.app.COLOR_DICT[app_data["bd_color"]]
 
             text_color = ("Black", "White")
 
@@ -140,7 +140,7 @@ class AppWnd(ctk.CTk):
                                        width=srtc_size, height=srtc_size, compound="top", 
                                        text=name, command=lambda app_path=app_data["path"]: self.app.open_app(app_path), 
                                        image=icon, font=('Segoe UI', 16),
-                                       text_color=text_color, border_width=3, border_color=bg_color, 
+                                       text_color=text_color, border_width=3, border_color=bd_color, 
                                        hover_color=("#37709f", "#184c74"), fg_color="transparent")
             
             app_button.bind("<Button-3>", lambda e, name=app_data["name"]: self.menu.show_srtc_menu(e, name))

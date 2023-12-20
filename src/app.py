@@ -16,9 +16,14 @@ class App():
         # dark, light
         self.COLOR_DICT = {
             "Nenhum": "#1f6aa5",
-            "Verde": ("#1af592", "#0ae683"),
-            "Roxo": "purple",
-            "Rosa": ("#C12EE5", "#AC1AD1")
+            "Azul Alt": ("#38bfc8", "#37bec8"),
+            "Rosa": ("#e92591", "#da1682"),
+            "Vermelho": ("#ed3226", "#d91f12"),
+            "Roxo": ("#8625e2", "#7e1cd9"),
+            "Verde": ("#0ae683", "#1af592"),
+            "Amarelo":("#f5ee12", "#ebe40a"),
+            "Laranja": ("#e87524", "#e87524"),
+            "Bege": ("#bfb3ab", "#544840")
         }
 
     def open_app(self, path):

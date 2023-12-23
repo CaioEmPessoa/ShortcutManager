@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import Menu
 from PIL import Image
+import ctypes
 
 class PopupMenu():
     def __init__(self, init, app, app_wnd):
@@ -56,11 +57,13 @@ class AppWnd(ctk.CTk):
         self.grid_columnconfigure((0, 1, 2), weight=1)
         ctk.set_appearance_mode(init.data["theme"])
 
+        self.scale_factor = ctypes.windll.shcore.GetScaleFactorForDevice(0)/100
+
         w, h = tuple(self.init.data["wnd_size"])
         ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
         x, y = (ws/2) - (w/2), (hs/2) - (h/2)
-        self.geometry('%dx%d+%d+%d' % (w, h, x, y))
-        
+        self.geometry('%dx%d+%d+%d' % (w, h, x*self.scale_factor, y*self.scale_factor))
+
         self.app_size = (w, h)
         self.icon_size = self.init.data["srtc_size"]
         self.main_tab = "Default"
@@ -99,7 +102,7 @@ class AppWnd(ctk.CTk):
         self.folders_tab = ctk.CTkTabview(master=self)
         self.folders_tab.grid(row=1, column=0, columnspan=3, padx=15, pady=15, sticky="nsew")
         self.folders_frame = {}
-        
+    
         for folder in self.init.data["folders"]:
             self.folders_tab.add(folder)
             my_frame = ScrollFrame(master=self.folders_tab.tab(folder))
@@ -172,7 +175,7 @@ class AppWnd(ctk.CTk):
         current_tab = self.folders_tab.get()
         srtc_size = self.app.SIZE_DICT[self.icon_size]["srtc"]
 
-        new_size = (self.winfo_width(), self.winfo_height())
+        new_size = (self.winfo_width()/self.scale_factor, self.winfo_height()/self.scale_factor)
         if new_size != self.app_size or current_tab != self.main_tab:
             self.app_size = new_size
             self.main_tab = current_tab

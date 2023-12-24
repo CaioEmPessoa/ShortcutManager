@@ -109,4 +109,3 @@ class App():
     def on_close(self, wnd_size):
         size_data = {"wnd_size":wnd_size}
         self.init.modify_data.write_data(size_data)
-        self.init.call_window("close")

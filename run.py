@@ -50,10 +50,12 @@ class DefaultClass():
                 self.add_srtc_view.grab_set()
 
             case "restart":
+                self.app.on_close(self.app_view.app_size)
                 self.app_view.destroy()
                 default = DefaultClass()
 
             case "close":
+                self.app.on_close(self.app_view.app_size)
                 self.app_view.destroy()
 
 if __name__ == "__main__":

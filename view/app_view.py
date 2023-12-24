@@ -71,7 +71,7 @@ class AppWnd(ctk.CTk):
 
         self.create_itens()
         self.after(5, self.adjust_shortcuts_grid)
-        self.protocol("WM_DELETE_WINDOW", lambda:app.on_close(self.app_size))
+        self.protocol("WM_DELETE_WINDOW", lambda:init.call_window("close"))
 
     def create_itens(self):
         welcome = ctk.CTkLabel(master=self, text="Escolha um ou adicione um novo atalho", 

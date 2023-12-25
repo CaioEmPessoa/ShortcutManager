@@ -90,6 +90,8 @@ class AppWnd(ctk.CTk):
 
         edit_button = ctk.CTkButton(master=self, text="Editar", width=70,
                                     command=lambda: self.app.enable_edit())
+        edit_button.grid(row=2, column=1, 
+                          padx=10, pady=10)
 
         theme_buttom = ctk.CTkButton(master=self, text="Tema", width=70,
                                      command=lambda: self.app.switch_theme())

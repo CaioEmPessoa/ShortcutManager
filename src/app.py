@@ -106,6 +106,11 @@ class App():
         self.init.modify_data.write_data(self.init.data)
         self.init.call_window("restart")
 
+    def show_icons(self, show_icon):
+        self.init.data["show_icons"] = show_icon
+        self.init.modify_data.write_data(self.init.data)
+        self.init.call_window("restart")
+
     def on_close(self, wnd_size):
         size_data = {"wnd_size":wnd_size}
         self.init.modify_data.write_data(size_data)

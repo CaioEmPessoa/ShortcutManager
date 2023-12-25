@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from tkinter import Menu
+from tkinter import Menu, BooleanVar
 from PIL import Image
 import ctypes
 
@@ -28,10 +28,13 @@ class PopupMenu():
             self.main_menu.add_cascade(label="Enviar Atalho Para...", menu=self.folder_menu)
             
             self.main_menu.add_separator()
-        
-        self.main_menu.add_cascade(label="Exibir", menu=self.size_menu)
-        self.main_menu.add_checkbutton(label="Mostrar Ícones?")
 
+        self.main_menu.add_cascade(label="Exibir", menu=self.size_menu)
+
+        self.main_menu.add_checkbutton(label="Mostrar Ícones?", 
+                                       command=lambda: self.app.show_icons(self.app_wnd.check_btn.get()),
+                                       variable=self.app_wnd.check_btn, onvalue=1, offvalue=0)
+        
     def show_srtc_menu(self, event, app_name):
         self.create_menus(app_name)
         self.main_menu.tk_popup(event.x_root, event.y_root)
@@ -64,6 +67,8 @@ class AppWnd(ctk.CTk):
         x, y = (ws/2) - (w/2), (hs/2) - (h/2)
         self.geometry('%dx%d+%d+%d' % (w, h, x*self.scale_factor, y*self.scale_factor))
 
+        self.check_btn = BooleanVar()
+        self.check_btn.set(self.init.data["show_icons"])
         self.app_size = (w, h)
         self.icon_size = self.init.data["srtc_size"]
         self.main_tab = "Default"
@@ -134,13 +139,18 @@ class AppWnd(ctk.CTk):
             else:
                 icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(icon_size))
 
-            bd_color = self.app.COLOR_DICT[app_data["bd_color"]]
-
-            text_color = ("Black", "White")
-
             name = self.app.correct_name(app_data["name"])
+            bd_color = self.app.COLOR_DICT[app_data["bd_color"]]
+            text_color = ("Black", "White")
+            show_icons = self.init.data["show_icons"]
+            compound="top"
+            
+            if not show_icons:
+                compound="bottom"
+                icon = ""
+
             app_button = ctk.CTkButton(master=self.folders_frame[app_data["folder"]], 
-                                       width=srtc_size, height=srtc_size, compound="top", 
+                                       width=srtc_size, height=srtc_size, compound=compound, 
                                        text=name, command=lambda app_path=app_data["path"]: self.app.open_app(app_path), 
                                        image=icon, font=('Segoe UI', 16),
                                        text_color=text_color, border_width=3, border_color=bd_color, 

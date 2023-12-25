@@ -13,6 +13,7 @@ class ModifyData():
             default_data = {"theme": "Dark",
                             "wnd_size":[600,680],
                             "srtc_size":"G",
+                            "show_icons":True,
                             "folders":["Default"]}
 
             self.write_data(default_data)

@@ -83,7 +83,7 @@ class AppWnd(ctk.CTk):
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
         welcome.grid(row=0, column=0, columnspan=3)
 
-        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site", "Pasta"], width=70, dropdown_direction="up",
+        self.add_button = ctk.CTkOptionMenu(self, values=["App", "Site", "Steam", "Pasta"], width=70, dropdown_direction="up",
                                             command=lambda x: self.init.call_window(self.add_button.get()))
         self.add_button.set("Novo")
         self.add_button.grid(row=2, column=0, padx=10, pady=10, sticky="E")

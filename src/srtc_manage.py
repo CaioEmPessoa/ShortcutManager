@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import filedialog
+from os.path import splitext, split
 from PIL import Image
 import shutil
 
@@ -8,21 +9,30 @@ class AddSrtc():
         self.init = init
         self.add_srtc_view = init.add_srtc_view
 
-    def search_window(self, path_icon):
-        if path_icon == "path":
+    def search_window(self, file_type):
+        if file_type == "path":
             self.add_srtc_view.path_entry.delete(0, "end")
             app_path = filedialog.askopenfilename()
             self.add_srtc_view.path_entry.insert(0, app_path)
 
-        elif path_icon == "icon":
+        elif file_type == "icon":
             self.add_srtc_view.icon_entry.delete(0, "end")
             icon_path = filedialog.askopenfilename()
             self.add_srtc_view.icon_entry.insert(0, icon_path)
+            
+        elif file_type == "steam":
+            self.add_srtc_view.path_entry.delete(0, "end")
+            self.add_srtc_view.name_entry.delete(0, "end")
+            self.add_srtc_view.icon_entry.delete(0, "end")
+            srtc_path = filedialog.askopenfilename(filetypes=[("Atalho da Internet", ".url")])
+            name, url_path, icon_path = self.convert_url_path(srtc_path)
+
+            self.add_srtc_view.name_entry.insert(0, name)
+            self.add_srtc_view.path_entry.insert(0, url_path)
+            self.add_srtc_view.icon_entry.insert(0, icon_path)
 
     def send(self, view):
-        name, app_path, icon_path, folder, bd_color = self.check_info(view)
-        if self.type == "site":
-            app_path = self.convert_browser(view, app_path)
+        name, app_path, icon_path, srtc_type, folder, bd_color = self.check_info(view)
 
         current_app_dic = {
             "apps": {
@@ -30,7 +40,7 @@ class AddSrtc():
                     "name": f"{name}",
                     "path": f"\"{app_path}\"",
                     "icon": f"{icon_path}",
-                    "type": self.type,
+                    "type": srtc_type,
                     "folder":folder,
                     "bd_color": f"{bd_color}"
                     }
@@ -40,6 +50,23 @@ class AddSrtc():
         self.init.modify_data.write_data(current_app_dic)
         self.init.call_window("restart")
 
+    def convert_url_path(self, srtc_path):
+        with open(srtc_path, 'rb') as stream:
+            content = str(stream.read())
+            url_start = content.find("URL=")
+            url_end = content.find("\\r", url_start)
+            url = content[url_start:url_end].replace("URL=", "")
+
+            icon_start = content.find("IconFile=")
+            icon_end = content.find("\\r", icon_start)
+            icon = content[icon_start:icon_end].replace("IconFile=", "")
+            icon = icon.replace("\\\\", "/")
+
+            split_path = splitext(split(srtc_path)[1])
+            name = split_path[len(split_path)-2]
+            
+            return name, url, icon
+
     def convert_browser(self, add_srtc_view, link):
         browser = add_srtc_view.browser_entry.get()
 
@@ -47,10 +74,6 @@ class AddSrtc():
             browser = "chrome"
 
         # formats the link if it isn't
-            
-        if link[:5] == "steam":
-            return "start " + link
-
         if link[:4] == 'www.':
             link = 'https://' + link
 
@@ -62,17 +85,13 @@ class AddSrtc():
 
     def check_info(self, wnd):
         name = wnd.name_entry.get()
-        stc_path = wnd.path_entry.get()
+        srtc_path = wnd.path_entry.get()
         icon_path = wnd.icon_entry.get()
         folder = self.init.app_view.main_tab
         bd_color = wnd.bd_color_entry.get()
+        srtc_type = wnd.srtc_type
 
-        if wnd.is_app:
-            self.type = "app"
-        elif not wnd.is_app:
-            self.type = "site"
-
-        if stc_path == "":
+        if srtc_path == "":
             print("CAMINHO DO ATALHO VAZIO")
 
             wnd.send_button.configure(fg_color="Red", text="Caminho Vazio")
@@ -82,7 +101,7 @@ class AddSrtc():
             print("NOME VAZIO")
 
             # Get the name sliced of the app
-            sliced = stc_path.split('/')
+            sliced = srtc_path.split('/')
             sliced = sliced[len(sliced)-1]
             wnd.name_entry.insert(0, sliced.split('.')[0])
             return
@@ -107,7 +126,12 @@ class AddSrtc():
             except shutil.SameFileError:
                 pass
 
-        return name, stc_path, icon_path, folder, bd_color
+        if srtc_type == "site":
+            srtc_path = self.convert_browser(wnd, srtc_path)
+        elif srtc_type == "steam":
+            srtc_path = "start " + srtc_path
+
+        return name, srtc_path, icon_path, srtc_type, folder, bd_color
 
 class Edit():
     def call_srtc_wnd(self, init, app_name):

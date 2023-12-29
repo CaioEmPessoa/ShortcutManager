@@ -182,13 +182,14 @@ class AppWnd(ctk.CTk):
         self.app.srtc_btns = {}
         self.create_shortcuts()
         self.grid_srcts()
+        self.adjust_shortcuts_grid(True)
 
-    def adjust_shortcuts_grid(self):
+    def adjust_shortcuts_grid(self, size_cng=False):
         current_tab = self.folders_tab.get()
         srtc_size = self.app.SIZE_DICT[self.icon_size]["srtc"]
 
         new_size = (self.winfo_width()/self.scale_factor, self.winfo_height()/self.scale_factor)
-        if new_size != self.app_size or current_tab != self.main_tab:
+        if new_size != self.app_size or current_tab != self.main_tab or size_cng:
             self.app_size = new_size
             self.main_tab = current_tab
 

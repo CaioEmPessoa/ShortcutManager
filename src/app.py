@@ -64,7 +64,7 @@ class App():
 
         self.init.data["theme"] = current_theme
 
-        self.init.modify_data.write_data(self.init.data)
+        self.init.modify_data.write_data()
         set_appearance_mode(current_theme)
 
     def correct_name(self, name):
@@ -103,14 +103,14 @@ class App():
     def send_to_folder(self, app_name, folder):
         print(folder)
         self.init.data["apps"][app_name]["folder"] = folder
-        self.init.modify_data.write_data(self.init.data)
+        self.init.modify_data.write_data()
         self.init.call_window("restart")
 
     def show_icons(self, show_icon):
         self.init.data["show_icons"] = show_icon
-        self.init.modify_data.write_data(self.init.data)
+        self.init.modify_data.write_data()
         self.init.call_window("restart")
 
     def on_close(self, wnd_size):
-        size_data = {"wnd_size":wnd_size}
-        self.init.modify_data.write_data(size_data)
+        self.init.data["wnd_size"] = wnd_size
+        self.init.modify_data.write_data()

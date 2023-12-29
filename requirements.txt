@@ -3,6 +3,4 @@ customtkinter @ git+https://github.com/CaioEmPessoa/CustomTkinter.git@0f703b28e6
 darkdetect==0.8.0
 packaging==23.2
 Pillow==10.1.0
-pydantic==2.5.2
-pydantic_core==2.14.5
 typing_extensions==4.8.0

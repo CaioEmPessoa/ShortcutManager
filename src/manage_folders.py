@@ -24,11 +24,8 @@ class NewfolderWnd(ctk.CTkToplevel):
         folders_list = self.init.data["folders"]
         folders_list.append(new_folder_name)
 
-        new_folder_dict = {
-            "folders":folders_list
-        }
-
-        self.init.modify_data.write_data(new_folder_dict)
+        self.init.data["folders"] = folders_list
+        self.init.modify_data.write_data()
         self.init.call_window("restart")
 
     def new_folder_elements(self):

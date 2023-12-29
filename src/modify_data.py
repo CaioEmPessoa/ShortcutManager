@@ -1,10 +1,10 @@
-from pydantic.utils import deep_update
 import json
 import os
 
 class ModifyData():
 
-    def __init__(self):
+    def __init__(self, init):
+        self.init = init
         self.data = {}
 
     # checa os apps no jsone cria uma lista com nomes, caminhos e icones deles.
@@ -14,10 +14,10 @@ class ModifyData():
                             "wnd_size":[600,680],
                             "srtc_size":"G",
                             "show_icons":True,
-                            "folders":["Default"]}
-
+                            "folders":["Default"],
+                            "apps":{}}
+            
             self.write_data(default_data)
-            self.data = default_data
 
         with open("apps_data.json", "r") as read_file:
             self.data = json.load(read_file)
@@ -26,8 +26,12 @@ class ModifyData():
 
         return self.data
 
-    def write_data(self, data):
-        self.data = deep_update(self.data, data)
+    def write_data(self, data=None):
+        if data:
+            self.data = data
+        elif not data:
+            self.data = self.init.data
+    
         with open("apps_data.json", "w") as write_file:
             json.dump(self.data, write_file, indent=4)
 

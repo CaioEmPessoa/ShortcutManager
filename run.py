@@ -11,8 +11,9 @@ class DefaultClass():
     def __init__(self):
         super().__init__()
 
-        self.modify_data = modify_data.ModifyData()
+        self.modify_data = modify_data.ModifyData(self)
         self.data = self.modify_data.read_data()
+        self.modify_data.write_data()
  
         self.app = app.App(self)
         self.app_view = app_view.AppWnd(self, self.app)

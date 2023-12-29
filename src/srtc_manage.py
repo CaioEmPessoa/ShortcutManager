@@ -34,8 +34,7 @@ class AddSrtc():
     def send(self, view):
         name, app_path, icon_path, srtc_type, folder, bd_color = self.check_info(view)
 
-        current_app_dic = {
-            "apps": {
+        current_app_dict = {
                 name: {
                     "name": f"{name}",
                     "path": f"\"{app_path}\"",
@@ -45,9 +44,9 @@ class AddSrtc():
                     "bd_color": f"{bd_color}"
                     }
                 }
-            }
-
-        self.init.modify_data.write_data(current_app_dic)
+        
+        self.init.data["apps"].update(current_app_dict)
+        self.init.modify_data.write_data()
         self.init.call_window("restart")
 
     def convert_url_path(self, srtc_path):

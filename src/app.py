@@ -23,7 +23,7 @@ class App():
             "Verde": ("#0ae683", "#1af592"),
             "Amarelo":("#f5ee12", "#ebe40a"),
             "Laranja": ("#e87524", "#e87524"),
-            "Bege": ("#bfb3ab", "#544840")
+            "Branco/Preto": ("Black", "White")
         }
 
     def open_app(self, path):

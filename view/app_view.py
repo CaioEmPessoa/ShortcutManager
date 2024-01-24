@@ -211,7 +211,7 @@ class AppWnd(ctk.CTk):
             if self.max_columns > btn_ammount and btn_ammount != 0:
                 self.max_columns = btn_ammount
             
-            self.folders_frame[self.main_tab].grid_columnconfigure((tuple(range(self.max_columns))), weight=1)
+            
 
         #restart loop
         self.after(5, self.adjust_shortcuts_grid)

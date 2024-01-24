@@ -1,7 +1,9 @@
 import customtkinter as ctk
 from tkinter import filedialog
 from os.path import splitext, split
+from os import listdir
 from PIL import Image
+import icoextract
 import shutil
 
 class AddSrtc():
@@ -14,6 +16,7 @@ class AddSrtc():
             self.add_srtc_view.path_entry.delete(0, "end")
             app_path = filedialog.askopenfilename()
             self.add_srtc_view.path_entry.insert(0, app_path)
+
 
         elif file_type == "icon":
             self.add_srtc_view.icon_entry.delete(0, "end")
@@ -106,24 +109,25 @@ class AddSrtc():
             return
 
         else:
-            # Confere se a imagem é uma imagem, e logo depois a copia para o diretorio de imagens
-            try:
-                Image.open(icon_path)
-            # caso nao seja uma imagem.
-            except:
-                icon_path = "None"
+            if icon_path == "":
+                if srtc_path.endswith(".exe"):
+                    path_icon = icoextract.IconExtractor(srtc_path).get_icon()
+                    path_icon = Image.open(path_icon)
 
-            try:
-                shutil.copy(icon_path, "img")
+                    icon_path = "img/"+name+".ico"
+                    path_icon.save(icon_path)
 
-                sliced = icon_path.split('/')
-                sliced = sliced[len(sliced)-1]
+            elif icon_path != "":
+                # Confere se a imagem é uma imagem, e logo depois a copia para o diretorio de imagens
+                try:
+                    Image.open(icon_path)
+                    icon_id = str(len(listdir("../img"))+1)
+                    icon_path = "img/" + icon_id + ".png"
 
-                icon_path = "img/" + sliced
-            except FileNotFoundError:
-                icon_path = "None"
-            except shutil.SameFileError:
-                pass
+                    shutil.copy(icon_path, icon_path)
+
+                except:
+                    icon_path = "None"
 
         if srtc_type == "site":
             srtc_path = self.convert_browser(wnd, srtc_path)

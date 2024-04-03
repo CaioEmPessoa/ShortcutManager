@@ -110,12 +110,16 @@ class AddSrtc():
 
         else:
             if icon_path == "":
+                icon_path = "None"
+                '''
                 if srtc_path.endswith(".exe"):
                     path_icon = icoextract.IconExtractor(srtc_path).get_icon()
                     path_icon = Image.open(path_icon)
 
                     icon_path = "img/"+name+".ico"
                     path_icon.save(icon_path)
+                '''
+            
 
             elif icon_path != "":
                 # Confere se a imagem é uma imagem, e logo depois a copia para o diretorio de imagens

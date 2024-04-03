@@ -45,7 +45,6 @@ class DefaultClass():
                 self.add_srtc_view.new_steam_itens(self.add_srtc)
                 self.add_srtc_view.grab_set()
 
-
             case "Pasta": 
                 self.add_folder = manage_folders.NewfolderWnd(self)
                 self.add_folder.grab_set()

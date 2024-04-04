@@ -154,7 +154,7 @@ class AddSrtc():
             srtc_path = self.convert_browser(wnd, srtc_path)
         elif srtc_type == "steam":
             srtc_path = "start " + srtc_path
-            
+
         return name, srtc_path, icon_path, srtc_type, folder, bd_color
 
 class Edit():
@@ -165,6 +165,8 @@ class Edit():
             init.add_srtc_view.new_site_itens(init.add_srtc)
         elif type == "app":
             init.add_srtc_view.new_app_itens(init.add_srtc)
+        elif type == "steam":
+            init.add_srtc_view.new_steam_itens(init.add_srtc)
 
     def delete(self, srtc, init):
         del init.data["apps"][srtc]
@@ -185,6 +187,10 @@ class Edit():
                 browser = split_path[1]
 
                 wnd.browser_entry.insert(0, browser)
+        
+        elif app_data["type"] == "steam":
+            path = app_data["path"]
+            path = path[6:-1]
 
         elif app_data["type"] == "app":
             path = app_data["path"]

@@ -8,7 +8,7 @@ class PopupMenu():
         super().__init__()
         self.init, self.app, self.app_wnd = init, app, app_wnd
 
-    def create_menus(self, app_name=False):
+    def create_menus(self, srtc_id=False):
         self.main_menu = Menu(tearoff=0)
         
         self.size_menu = Menu(tearoff=0)
@@ -17,14 +17,14 @@ class PopupMenu():
         self.size_menu.add_command(label="Ícones Pequenos", command= lambda: self.app_wnd.change_icon_size("P"))
 
         # se for botão direito em um atalho
-        if app_name:
+        if srtc_id:
             # adiciona o editar
-            self.main_menu.add_command(label="Editar", command=lambda app=app_name: self.init.call_window("edit", app))
+            self.main_menu.add_command(label="Editar", command=lambda app=srtc_id: self.init.call_window("edit", app))
             
             # adiciona o enviar para
             self.folder_menu = Menu(tearoff=0)
             for folder in self.init.data["folders"]:
-                self.folder_menu.add_command(label=folder, command= lambda right_folder = folder: self.app.send_to_folder(app_name, right_folder))
+                self.folder_menu.add_command(label=folder, command= lambda right_folder = folder: self.app.send_to_folder(srtc_id, right_folder))
             self.main_menu.add_cascade(label="Enviar Atalho Para...", menu=self.folder_menu)
             
             self.main_menu.add_separator()
@@ -35,8 +35,8 @@ class PopupMenu():
                                        command=lambda: self.app.show_icons(self.app_wnd.check_btn.get()),
                                        variable=self.app_wnd.check_btn, onvalue=1, offvalue=0)
         
-    def show_srtc_menu(self, event, app_name):
-        self.create_menus(app_name)
+    def show_srtc_menu(self, event, srtc_id):
+        self.create_menus(srtc_id)
         self.main_menu.tk_popup(event.x_root, event.y_root)
 
     def show_main_menu(self, event):
@@ -156,7 +156,9 @@ class AppWnd(ctk.CTk):
                                        text_color=text_color, border_width=3, border_color=bd_color, 
                                        hover_color=("#37709f", "#184c74"), fg_color="transparent")
             
-            app_button.bind("<Button-3>", lambda e, name=app_data["name"]: self.menu.show_srtc_menu(e, name))
+            app_button.srtc_id = app_data["id"]
+            
+            app_button.bind("<Button-3>", lambda e, name=app_data["name"]: self.menu.show_srtc_menu(e, app_button.srtc_id))
             
             self.app.srtc_btns[app_data["folder"]].append(app_button)
 

@@ -43,7 +43,6 @@ class DefaultClass():
                 self.add_srtc_view.new_steam_itens(self.add_srtc)
                 self.add_srtc_view.grab_set()
 
-
             case "Pasta": 
                 self.add_folder = manage_folders.NewfolderWnd(self)
                 self.add_folder.grab_set()
@@ -52,7 +51,7 @@ class DefaultClass():
                 self.add_srtc_view = srtc_manage_view.NewSrtcWnd()
                 self.add_srtc = srtc_manage.AddSrtc(self)
                 self.edit_srtc = srtc_manage.Edit()
-                self.srtc_edit = srtc_manage_view.EditSrtcView().change_elements(self, self.add_srtc_view, self.edit_srtc, app_to_edit)
+                self.srtc_edit = srtc_manage_view.EditSrtcView().change_elements(self, self.add_srtc_view, self.add_srtc, self.edit_srtc, app_to_edit)
 
                 self.add_srtc_view.grab_set()
 

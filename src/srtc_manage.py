@@ -33,12 +33,19 @@ class AddSrtc():
             self.add_srtc_view.path_entry.insert(0, url_path)
             self.add_srtc_view.icon_entry.insert(0, icon_path)
 
-    def send(self, view):
+    def send(self, view, edit_id=False):
+        #                if edit != edit == appid
         name, app_path, icon_path, srtc_type, folder, bd_color = self.check_info(view)
 
+        if edit_id in self.init.data["apps"]:
+            srtc_id = edit_id
+        else:
+            srtc_id = str(len(listdir(f"{getcwd()}/img/"))+1)
+
         current_app_dict = {
-                name: {
+                srtc_id: {
                     "name": f"{name}",
+                    "id":srtc_id,
                     "path": f"\"{app_path}\"",
                     "icon": f"{icon_path}",
                     "type": srtc_type,
@@ -50,6 +57,7 @@ class AddSrtc():
         self.init.data["apps"].update(current_app_dict)
         self.init.modify_data.write_data()
         self.init.call_window("restart")
+
 
     def convert_url_path(self, srtc_path):
         with open(srtc_path, 'rb') as stream:
@@ -95,7 +103,7 @@ class AddSrtc():
         if srtc_path == "":
             print("CAMINHO DO ATALHO VAZIO")
 
-            wnd.send_button.configure(fg_color="Red", text="Caminho Vazio")
+            wnd.send_button.configure(fg_color="Red", text="CAMINHO VAZIO")
             return
 
         elif name == "":
@@ -106,11 +114,9 @@ class AddSrtc():
             sliced = sliced[len(sliced)-1]
             wnd.name_entry.insert(0, sliced.split('.')[0])
             return
-        
 
-        # handeling images
         else:
-            ## tentando extrair imagens de ,exe
+            ## tentando extrair imagens de .exe caso nao tenha escolhido imagem
             if icon_path == "":
                 icon_path = "None"
                 
@@ -135,8 +141,8 @@ class AddSrtc():
                     copy_path = "None"
 
                 try:
-                # TODO: check if this works
                     icon_id = str(len(listdir(f"{getcwd()}/img/"))+1)
+                    # TODO: save icon id on json to avoid same name for different images when edit
                     copy_path = "img/" + icon_id + ".png"
 
                     print(icon_path, copy_path)
@@ -147,9 +153,10 @@ class AddSrtc():
 
                     icon_path = "img/" + sliced
                 except FileNotFoundError:
-                    icon_path = "none"
+                    icon_path = "None"
                 except shutil.SameFileError:
                     pass
+
         if srtc_type == "site":
             srtc_path = self.convert_browser(wnd, srtc_path)
         elif srtc_type == "steam":
@@ -200,7 +207,6 @@ class Edit():
             wnd.icon_entry.insert(0, app_data["icon"])
 
         wnd.name_entry.insert(0, app_data["name"])
-        wnd.name_entry.configure(state="disabled")
 
         wnd.path_entry.insert(0, path)
         

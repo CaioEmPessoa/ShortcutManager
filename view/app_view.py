@@ -155,10 +155,8 @@ class AppWnd(ctk.CTk):
                                        image=icon, font=('Segoe UI', 16),
                                        text_color=text_color, border_width=3, border_color=bd_color, 
                                        hover_color=("#37709f", "#184c74"), fg_color="transparent")
-            
-            app_button.srtc_id = app_data["id"]
-            
-            app_button.bind("<Button-3>", lambda e, name=app_data["name"]: self.menu.show_srtc_menu(e, app_button.srtc_id))
+                        
+            app_button.bind("<Button-3>", lambda e, srtc_id=app_data["id"]: self.menu.show_srtc_menu(e, srtc_id))
             
             self.app.srtc_btns[app_data["folder"]].append(app_button)
 

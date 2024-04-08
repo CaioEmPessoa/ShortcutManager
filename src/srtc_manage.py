@@ -34,18 +34,19 @@ class AddSrtc():
             self.add_srtc_view.icon_entry.insert(0, icon_path)
 
     def send(self, view, edit_id=False):
-        #                if edit != edit == appid
-        name, app_path, icon_path, srtc_type, folder, bd_color = self.check_info(view)
 
         if edit_id in self.init.data["apps"]:
-            srtc_id = edit_id
+            self.edit_id = edit_id
         else:
-            srtc_id = str(len(listdir(f"{getcwd()}/img/"))+1)
+            self.edit_id = str(len(listdir(f"{getcwd()}/img/"))+1)
+
+        name, app_path, icon_path, srtc_type, folder, bd_color = self.check_info(view)
+
 
         current_app_dict = {
-                srtc_id: {
+                self.edit_id: {
                     "name": f"{name}",
-                    "id":srtc_id,
+                    "id":self.edit_id,
                     "path": f"\"{app_path}\"",
                     "icon": f"{icon_path}",
                     "type": srtc_type,
@@ -115,6 +116,7 @@ class AddSrtc():
             wnd.name_entry.insert(0, sliced.split('.')[0])
             return
 
+        # se tiver todas info certinho
         else:
             ## tentando extrair imagens de .exe caso nao tenha escolhido imagem
             if icon_path == "":
@@ -141,8 +143,8 @@ class AddSrtc():
                     copy_path = "None"
 
                 try:
-                    icon_id = str(len(listdir(f"{getcwd()}/img/"))+1)
-                    # TODO: save icon id on json to avoid same name for different images when edit
+                    icon_id = self.edit_id
+
                     copy_path = "img/" + icon_id + ".png"
 
                     print(icon_path, copy_path)

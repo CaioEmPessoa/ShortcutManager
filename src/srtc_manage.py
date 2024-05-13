@@ -38,7 +38,7 @@ class AddSrtc():
         if edit_id in self.init.data["apps"]:
             self.edit_id = edit_id
         else:
-            self.edit_id = str(len(listdir(f"{getcwd()}/img/"))+1)
+            self.edit_id = str(len(self.init.data["apps"])+1)
 
         name, app_path, icon_path, srtc_type, folder, bd_color = self.check_info(view)
 

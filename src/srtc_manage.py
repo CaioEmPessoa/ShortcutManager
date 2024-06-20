@@ -150,7 +150,7 @@ class AddSrtc():
                 try:
                     icon_id = self.edit_id
 
-                    copy_path = "img/" + icon_id + ".png"
+                    copy_path = "img/" + str(icon_id) + ".png"
 
                     print(icon_path, copy_path)
                     shutil.copy(icon_path, copy_path)

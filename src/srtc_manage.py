@@ -2,6 +2,8 @@ import customtkinter as ctk
 from tkinter import filedialog
 from os.path import splitext, split
 from os import listdir, getcwd
+from random import random
+from math import floor
 from PIL import Image
 import shutil
 
@@ -40,10 +42,9 @@ class AddSrtc():
         else:
             apps_dict = self.init.data["apps"]
             if len(apps_dict) > 0:
-                last_item = apps_dict[list(apps_dict)[len(apps_dict)-1]]
-                self.edit_id = str(int(last_item["id"]) + 1)
+                self.edit_id = floor(random()*10000)
             else:
-                self.edit_id = 1
+                self.edit_id = "1"
 
         name, app_path, icon_path, srtc_type, folder, bd_color = self.check_info(view)
 

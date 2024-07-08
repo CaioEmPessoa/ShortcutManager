@@ -15,7 +15,7 @@ class NewSrtcWnd(ctk.CTkToplevel):
 
         self.path_label.configure(width=250)
 
-        self.browser_label = ctk.CTkLabel(master=self, text="Qual navegador? Chrome é padrão.\n(precisa ser baseado em chromium)\n")
+        self.browser_label = ctk.CTkLabel(master=self, text="Qual navegador? Chrome é padrão.\n(Caso queira firefox, leia como no github.)\n")
         self.browser_label.grid(row=5, column=0, padx=10, columnspan=2)
         
         self.browser_entry = ctk.CTkEntry(master=self, width=250)

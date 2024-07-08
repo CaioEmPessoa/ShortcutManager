@@ -95,8 +95,12 @@ class AddSrtc():
 
         elif link[:8] != 'https://':
             link = 'https://' + link
-
-        link = f'start {browser} --new-window --app={link} & exit'
+        
+        if browser == "firefox":
+            link = f"start firefox --name=AppName --no-remote -P \"Apps\" {link}"
+        else:
+            link = f'start {browser} --new-window --app={link} & exit'
+        
         return link
 
     def check_info(self, wnd):

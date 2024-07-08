@@ -4,6 +4,10 @@ The idea came when my taskbar and my desktop started to feel "overfloated" with 
 Below are some examples of how you can organize and use the app:
 ![image](https://github.com/CaioEmPessoa/ShortcutManager/assets/127911795/b315e252-6a43-4930-82fa-927c41b3b9a8)
 
+## Installing...
+You can just download the .exe in the "Releases" tab and extract it anywhere.
+Or if you want this normal python version, just clone this repo and install the requirements. Carefull to not run the 'save reset.py', it deletes all your data and resets the app to the defaults.
+
 ## How it does?
 ### Adding a shortcut
 First you need to decide if you want to add a shortcut to a local app, an website or a Steam game(not necessarly) after that you'll see one of theese windows:

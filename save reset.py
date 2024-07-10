@@ -17,6 +17,14 @@ except:
     print("Save already cleared.")
 
 print("attempting to clear cache...")
+
+try:
+    print("Removing spec")
+    os.remove(os.path.join(os.getcwd(), "run.spec"))
+    print("Spec removed.")
+except FileNotFoundError:
+    print("Spec not found.")
+
 cache_foulders = ["view", "src"]
 for s in cache_foulders:
     s = os.path.join(os.getcwd(), s, "__pycache__")

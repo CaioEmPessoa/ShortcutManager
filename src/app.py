@@ -29,8 +29,11 @@ class App():
     def open_app(self, path):
         try:
             dir_path = os.path.dirname(path)
+            app_dir = os.getcwd()
             os.chdir(dir_path[1:])
             os.startfile(path)
+            os.chdir(app_dir) # lazy? fix
+                              # maybe better if didn't change the dir at all
 
         #   GET ERROR THAT IS NOT A APP
         except OSError:

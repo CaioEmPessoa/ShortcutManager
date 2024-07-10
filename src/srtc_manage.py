@@ -42,7 +42,7 @@ class AddSrtc():
         else:
             apps_dict = self.init.data["apps"]
             if len(apps_dict) > 0:
-                self.edit_id = floor(random()*10000)
+                self.edit_id = str(floor(random()*10000))
             else:
                 self.edit_id = "1"
 

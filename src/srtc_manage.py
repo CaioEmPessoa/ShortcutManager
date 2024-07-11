@@ -126,54 +126,55 @@ class AddSrtc():
             wnd.name_entry.insert(0, sliced.split('.')[0])
             return
 
-        # se tiver todas info certinho
+        ## tentando extrair imagens de .exe caso nao tenha escolhido imagem
+        if icon_path == "":
+            icon_path = "None"
+            
+            '''
+            # Auto get a icon from a .exe file
+            this once worked but the module was discontinued.
+            if srtc_path.endswith(".exe"):
+                path_icon = icoextract.IconExtractor(srtc_path).get_icon()
+                path_icon = Image.open(path_icon)
+
+                # TODO: name = id like other one
+                copy_path = "img/"+name+".ico"
+                path_icon.save(copy_path)
+            '''
+
+        ## caso o user tenha escolhido uma imagem ...
         else:
-            ## tentando extrair imagens de .exe caso nao tenha escolhido imagem
-            if icon_path == "":
-                icon_path = "None"
-                
-                '''
-                this once worked but the module was discontinued.
-                if srtc_path.endswith(".exe"):
-                    path_icon = icoextract.IconExtractor(srtc_path).get_icon()
-                    path_icon = Image.open(path_icon)
+            # Confere se a imagem é uma imagem
+            try:
+                Image.open(icon_path)
+            # caso nao seja uma imagem.
+            except:
+                copy_path = "None"
+                print("IMAGEM INVÁLIDA")
 
-                    # TODO: name = id like other one
-                    copy_path = "img/"+name+".ico"
-                    path_icon.save(copy_path)
-                '''
+                wnd.send_button.configure(fg_color="Red", text="IMAGEM INVALIDA")
+                return
 
-            ## caso o user tenha escolhido uma imagem ...
-            else:
-                # Confere se a imagem é uma imagem
-                try:
-                    Image.open(icon_path)
-                # caso nao seja uma imagem.
-                except:
-                    copy_path = "None"
+            try:
+                icon_id = self.edit_id
 
-                try:
-                    icon_id = self.edit_id
+                copy_path = "img/" + str(icon_id) + ".png"
 
-                    copy_path = "img/" + str(icon_id) + ".png"
+                print(icon_path, copy_path)
+                shutil.copy(icon_path, copy_path)
 
-                    print(icon_path, copy_path)
-                    shutil.copy(icon_path, copy_path)
+                sliced = copy_path.split('/')
+                sliced = sliced[len(sliced)-1]
 
-                    sliced = copy_path.split('/')
-                    sliced = sliced[len(sliced)-1]
-
-                    icon_path = "img/" + sliced
-                except FileNotFoundError:
-                    icon_path = "None"
-                except shutil.SameFileError:
-                    pass
+                icon_path = "img/" + sliced
+            except shutil.SameFileError:
+                pass
 
         if srtc_type == "site":
             srtc_path = self.convert_browser(wnd, srtc_path)
         elif srtc_type == "steam":
             srtc_path = "start " + srtc_path
-
+        
         return name, srtc_path, icon_path, srtc_type, folder, bd_color
 
 class Edit():

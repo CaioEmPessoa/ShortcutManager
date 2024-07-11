@@ -8,9 +8,9 @@ class App():
         self.changing = 0
 
         self.SIZE_DICT = {
-            "G": {"icon":(100, 100), "srtc":150},
-            "M": {"icon":(80, 80), "srtc":100},
-            "P": {"icon":(50, 50), "srtc":70}
+            "G": {"icon":(140, 140), "srtc":170, "wrap":18},
+            "M": {"icon":(80, 80), "srtc":100, "wrap":14},
+            "P": {"icon":(50, 50), "srtc":70, "wrap":10}
         }
 
         # dark, light
@@ -69,39 +69,6 @@ class App():
 
         self.init.modify_data.write_data()
         set_appearance_mode(current_theme)
-
-    def correct_name(self, name):
-        #
-        # THIS FUNCTION WORKS, BUT IT GETS IN CONFLICT WITH THE EDIT ONE, THAT NEEDS THE NAME OF THE BUTTON TO BE EXATCLY LIKE ON THE JSON.
-        # I didn't want to do like this anyway, so Now I need to find a way to better padronize the size of the icons without change its text
-        #
-        return name
-    
-        if len(name) >= 10:
-            word_list = name.split(" ")
-
-            # If its only one word
-            if len(word_list) <= 1:
-                new_name = name[:7] + "..."
-                return new_name
-
-            # insert enter between the two words
-            word_list.insert(1, "\n")
-
-            # if the list has more than 2 words (counting the enter)
-            if len(word_list) >= 4:
-                word_list.insert(3, "...")
-                del word_list[4:]
-
-            if len(word_list[2]) >= 10:
-                word_list[2] = word_list[2][:7] + "..."
-
-            new_name = " ".join(word for word in word_list)
-            
-            return new_name
-        
-        else:
-            return name
 
     def send_to_folder(self, app_name, folder):
         print(folder)

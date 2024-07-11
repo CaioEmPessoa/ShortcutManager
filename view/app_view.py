@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import Menu, BooleanVar
+from textwrap import wrap
 from PIL import Image
 import ctypes
 
@@ -130,8 +131,10 @@ class AppWnd(ctk.CTk):
         for folder in self.init.data["folders"]:
             self.app.srtc_btns[folder] = []
 
-        icon_size = self.app.SIZE_DICT[self.icon_size]["icon"]
-        srtc_size = self.app.SIZE_DICT[self.icon_size]["srtc"]
+        size_dict_info = self.app.SIZE_DICT[self.icon_size]
+        icon_size = size_dict_info["icon"]
+        srtc_size = size_dict_info["srtc"]
+        wrap_size = size_dict_info["wrap"]
         
         for app_name in data:
             app_data = data[app_name]
@@ -141,7 +144,7 @@ class AppWnd(ctk.CTk):
             else:
                 icon = ctk.CTkImage(light_image=Image.open(app_data["icon"]),size=(icon_size))
 
-            name = self.app.correct_name(app_data["name"])
+            name = "\n".join(wrap(app_data["name"], wrap_size-1))
             bd_color = self.app.COLOR_DICT[app_data["bd_color"]]
             text_color = ("Black", "White")
             show_icons = self.init.data["show_icons"]
@@ -154,7 +157,7 @@ class AppWnd(ctk.CTk):
             app_button = ctk.CTkButton(master=self.folders_frame[app_data["folder"]], 
                                        width=srtc_size, height=srtc_size, compound=compound, 
                                        text=name, command=lambda app_path=app_data["path"]: self.app.open_app(app_path), 
-                                       image=icon, font=('Segoe UI', 16),
+                                       image=icon, font=("Consolas", 16),
                                        text_color=text_color, border_width=3, border_color=bd_color, 
                                        hover_color=("#37709f", "#184c74"), fg_color="transparent")
                         

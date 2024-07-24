@@ -5,9 +5,13 @@ from src import srtc_manage
 from view import srtc_manage_view
 from src import manage_folders
 
+from src import iconextract
+
 class DefaultClass():
     def __init__(self):
         super().__init__()
+
+        self.iconextract = iconextract
 
         self.modify_data = modify_data.ModifyData(self)
         self.data = self.modify_data.read_data()

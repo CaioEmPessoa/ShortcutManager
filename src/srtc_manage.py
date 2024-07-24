@@ -128,19 +128,13 @@ class AddSrtc():
 
         ## tentando extrair imagens de .exe caso nao tenha escolhido imagem
         if icon_path == "":
-            icon_path = "None"
-            
-            '''
-            # Auto get a icon from a .exe file
-            this once worked but the module was discontinued.
-            if srtc_path.endswith(".exe"):
-                path_icon = icoextract.IconExtractor(srtc_path).get_icon()
-                path_icon = Image.open(path_icon)
-
-                # TODO: name = id like other one
-                copy_path = "img/"+name+".ico"
-                path_icon.save(copy_path)
-            '''
+            try:
+                icon = self.init.iconextract.get_icon(srtc_path, (wnd.srtc_type=="site"))
+                print("ALERT: FOUND IMAGE, WANT TO KEEP IT?")
+                icon_path = "img/" + str(self.edit_id) + ".png"
+                icon.save(icon_path)
+            except:
+                icon_path = "None"
 
         ## caso o user tenha escolhido uma imagem ...
         else:
@@ -160,13 +154,9 @@ class AddSrtc():
 
                 copy_path = "img/" + str(icon_id) + ".png"
 
-                print(icon_path, copy_path)
                 shutil.copy(icon_path, copy_path)
 
-                sliced = copy_path.split('/')
-                sliced = sliced[len(sliced)-1]
-
-                icon_path = "img/" + sliced
+                icon_path = copy_path
             except shutil.SameFileError:
                 pass
 

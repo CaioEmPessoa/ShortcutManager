@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 from os.path import splitext, split
 from os import listdir, getcwd
 from random import random
@@ -114,7 +114,7 @@ class AddSrtc():
         if srtc_path == "":
             print("CAMINHO DO ATALHO VAZIO")
 
-            wnd.send_button.configure(fg_color="Red", text="CAMINHO VAZIO")
+            messagebox.showerror("Erro.", "Caminho para o atalho vazio.")
             return
 
         elif name == "":
@@ -128,13 +128,18 @@ class AddSrtc():
 
         ## tentando extrair imagens de .exe caso nao tenha escolhido imagem
         if icon_path == "":
-            try:
-                icon = self.init.iconextract.get_icon(srtc_path, (wnd.srtc_type=="site"))
-                print("ALERT: FOUND IMAGE, WANT TO KEEP IT?")
-                icon_path = "img/" + str(self.edit_id) + ".png"
-                icon.save(icon_path)
-            except:
-                icon_path = "None"
+            choice = messagebox.askokcancel(title="Icone encontrado!", message=f"Uma uma imagem de ícone foi encontrada para '{srtc_path}'.\n Quer utilizar a imagem encontrada? (pode mudar isso depois)")
+            if choice:
+                try:
+                    icon = self.init.iconextract.get_icon(srtc_path, (wnd.srtc_type=="site"))
+                    icon_path = "img/" + str(self.edit_id) + ".png"
+                    icon.save(icon_path)
+                except:
+                    messagebox.showerror("Erro.", "Erro ao extrair a imagem, provavelmente há algum erro no atalho e ele não funcionará.")
+                    icon_path = "None"
+            else:
+                    icon_path = "None"
+
 
         ## caso o user tenha escolhido uma imagem ...
         else:
@@ -146,7 +151,7 @@ class AddSrtc():
                 copy_path = "None"
                 print("IMAGEM INVÁLIDA")
 
-                wnd.send_button.configure(fg_color="Red", text="IMAGEM INVALIDA")
+                messagebox.showerror("Erro.", "Imagem para ícone inválida.")
                 return
 
             try:

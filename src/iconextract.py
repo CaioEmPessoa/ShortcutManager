@@ -184,12 +184,18 @@ def requestIcon(url):
     return background
 
 
-def get_icon(path):
-    if path[:5] == "https":
+def get_icon(path, link):
+    if link:
+        if path[:4] == 'www.':
+            path = 'https://' + path
+
+        elif path[:8] != 'https://':
+            path = 'https://' + path
+
         img = requestIcon(path)
     elif path[-4:] == ".exe":
         img = extract_exe_icon(path, IconSize.LARGE)
     else:
         print("Invalid path.")
-        return
+        raise Exception("Invalid Path.")
     return img

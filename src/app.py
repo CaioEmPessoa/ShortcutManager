@@ -8,8 +8,8 @@ class App():
         self.changing = 0
 
         self.SIZE_DICT = {
-            "G": {"icon":(140, 140), "srtc":170, "wrap":18},
-            "M": {"icon":(80, 80), "srtc":100, "wrap":14},
+            "G": {"icon":(120, 120), "srtc":115, "wrap":18},
+            "M": {"icon":(80, 80), "srtc":80, "wrap":14},
             "P": {"icon":(50, 50), "srtc":70, "wrap":10}
         }
 
@@ -72,7 +72,7 @@ class App():
 
     def send_to_folder(self, app_name, folder):
         print(folder)
-        self.init.data["apps"][app_name]["folder"] = folder
+        self.init.data["apps"][str(app_name)]["folder"] = folder
         self.init.modify_data.write_data()
         self.init.call_window("restart")
 

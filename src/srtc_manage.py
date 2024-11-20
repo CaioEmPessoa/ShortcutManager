@@ -97,7 +97,7 @@ class AddSrtc():
             link = 'https://' + link
         
         if browser == "firefox":
-            link = f"start firefox --name=AppName --no-remote -P \"Apps\" {link}"
+            link = f"start firefox --name=AppName -new-window --no-remote -P \"Apps\" {link}"
         else:
             link = f'start {browser} --new-window --app={link} & exit'
         

@@ -79,7 +79,7 @@ class AppWnd(ctk.CTk):
         self.after(5, self.adjust_shortcuts_grid)
         self.protocol("WM_DELETE_WINDOW", lambda:init.call_window("close"))
 
-        # self.bind("<MouseWheel>", self.switch_tabs)
+        self.bind("<MouseWheel>", self.switch_tabs)
 
     def create_itens(self):
         welcome = ctk.CTkLabel(master=self, text="Escolha um ou adicione um novo atalho", 
@@ -222,8 +222,8 @@ class AppWnd(ctk.CTk):
     def switch_tabs(self, event):
         current_tab_index = self.init.data["folders"].index(self.folders_tab.get())
 
-        # if scroll is vertical
-        if event.state == 0:
+        # if scroll is not vertical
+        if event.state != 9:
             return
         # left
         if event.delta > 0 and current_tab_index != 0:

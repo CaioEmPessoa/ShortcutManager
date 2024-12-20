@@ -76,6 +76,23 @@ class App():
         self.init.modify_data.write_data()
         self.init.call_window("restart")
 
+    def move_srct(self, app_start, app_end): # start and end positions
+        app_dict = self.init.data["apps"]
+        apps_list = [i for i in app_dict]
+
+        swap_app = apps_list[app_start]
+        apps_list[app_start] = apps_list[app_end]
+        apps_list[app_end] = swap_app
+
+        new_dict = {}
+        for i in apps_list:
+            new_dict[i] = app_dict[i]
+
+        self.init.data["apps"] = new_dict
+
+        self.init.modify_data.write_data()
+        self.init.call_window("restart")
+
     def show_icons(self, show_icon):
         self.init.data["show_icons"] = show_icon
         self.init.modify_data.write_data()

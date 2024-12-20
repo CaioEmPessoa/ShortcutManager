@@ -31,13 +31,14 @@ class PopupMenu():
             # submenu pra mover atalho de lugar
             self.move_menu = Menu(tearoff=0)
             app_data = self.init.data["apps"]
+            start = [i for i in app_data].index(srtc_id)
             pos = 0 # used for change location label
             for i in app_data:
                 pos += 1
                 if i == srtc_id: # don't add same srtc to the submenu
                     continue
                 command_label = f"{pos} ({app_data[i]["name"]})"
-                self.move_menu.add_command(label=command_label, command= lambda x=command_label: print(x)) # TODO: add command
+                self.move_menu.add_command(label=command_label, command= lambda start=start, end=pos-1: self.app.move_srct(start, end))
 
             self.main_menu.add_cascade(label="Mover Atalho Para...", menu=self.move_menu)
 

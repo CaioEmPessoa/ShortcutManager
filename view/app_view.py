@@ -28,6 +28,19 @@ class PopupMenu():
                 self.folder_menu.add_command(label=folder, command= lambda right_folder = folder: self.app.send_to_folder(srtc_id, right_folder))
             self.main_menu.add_cascade(label="Enviar Atalho Para...", menu=self.folder_menu)
             
+            # submenu pra mover atalho de lugar
+            self.move_menu = Menu(tearoff=0)
+            app_data = self.init.data["apps"]
+            pos = 0 # used for change location label
+            for i in app_data:
+                pos += 1
+                if i == srtc_id: # don't add same srtc to the submenu
+                    continue
+                command_label = f"{pos} ({app_data[i]["name"]})"
+                self.move_menu.add_command(label=command_label, command= lambda x=command_label: print(x)) # TODO: add command
+
+            self.main_menu.add_cascade(label="Mover Atalho Para...", menu=self.move_menu)
+
             self.main_menu.add_separator()
 
         self.main_menu.add_cascade(label="Exibir", menu=self.size_menu)

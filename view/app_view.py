@@ -34,10 +34,9 @@ class PopupMenu():
             start = [i for i in app_data].index(srtc_id)
             pos = 0 # used for change location label
             for i in app_data:
+                pos += 1
                 if app_data[i]["folder"] != self.app_wnd.folders_tab.get(): # hides apps from another tab
                     continue
-
-                pos += 1
                 if i == srtc_id: # don't add same srtc to the submenu
                     continue
                 command_label = f"{pos} ({app_data[i]["name"]})"

@@ -238,8 +238,10 @@ class AppWnd(ctk.CTk):
     def switch_tabs(self, event):
         current_tab_index = self.init.data["folders"].index(self.folders_tab.get())
 
-        # if scroll is not vertical
-        if event.state != 9:
+        print(event.state)
+
+        # if has experimental side-scroll feature and mouse interaction is equal to it conitnues function
+        if not ("side_scroll" in self.init.data and event.state == self.init.data["side_scroll"]):
             return
         # left
         if event.delta > 0 and current_tab_index != 0:

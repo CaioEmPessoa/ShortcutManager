@@ -103,13 +103,13 @@ class AppWnd(ctk.CTk):
         self.max_columns = 3
 
         self.create_itens()
-        self.after(5, self.adjust_shortcuts_grid)
+        self.after(5, self.adjust_shortcuts_grid(True))
         self.protocol("WM_DELETE_WINDOW", lambda:init.call_window("close"))
 
         self.bind("<MouseWheel>", self.switch_tabs)
 
     def create_itens(self):
-        welcome = ctk.CTkLabel(master=self, text="Escolha um ou adicione um novo atalho",
+        welcome = ctk.CTkLabel(master=self, text="Escolha ou adicione um novo atalho",
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
         welcome.grid(row=0, column=0, columnspan=3)
 
@@ -214,12 +214,12 @@ class AppWnd(ctk.CTk):
         self.grid_srcts()
         self.adjust_shortcuts_grid(True)
 
-    def adjust_shortcuts_grid(self, size_cng=False):
+    def adjust_shortcuts_grid(self, size_change=False):
         current_tab = self.folders_tab.get()
         srtc_size = self.app.SIZE_DICT[self.icon_size]["srtc"]
 
         new_size = (self.winfo_width()/self.scale_factor, self.winfo_height()/self.scale_factor)
-        if new_size != self.app_size or current_tab != self.main_tab or size_cng:
+        if new_size != self.app_size or current_tab != self.main_tab or size_change:
             self.app_size = new_size
             self.main_tab = current_tab
 

@@ -5,8 +5,9 @@ Below are some examples of how you can organize and use the app:
 ![image](https://github.com/CaioEmPessoa/ShortcutManager/assets/127911795/b315e252-6a43-4930-82fa-927c41b3b9a8)
 
 ## Installing:
-You can just download the .exe in the "Releases" tab and extract it anywhere.
-Or if you want this normal python version, just clone this repo and install the requirements. Carefull to not run the 'save reset.py' if not needed, it deletes all your data and resets the app to the defaults.
+If on windows, you can just download the .exe in the "Releases" tab and extract it anywhere. It probably will be marked as virus cause I won't be paying microsoft to be verified..
+For other plataforms you can just run the python version. Remember to install the requirements and run the "run.py".
+Also carefull to not run the 'save reset.py' if not needed, it deletes all your data and resets the app to the defaults. (its there mostly for debbuging...)
 
 ## How it does?
 ### Adding a shortcut

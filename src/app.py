@@ -1,5 +1,5 @@
 from customtkinter import set_appearance_mode
-import os
+import os, sys, subprocess
 
 class App():
     def __init__(self, init):
@@ -25,6 +25,40 @@ class App():
             "Laranja": ("#e87524", "#e87524"),
             "Branco/Preto": ("Black", "White")
         }
+
+    def get_linux_scale_factor(self):
+        try:
+            # GNOME
+            output = subprocess.check_output(
+                ["gsettings", "get", "org.gnome.desktop.interface", "scaling-factor"]
+            ).decode().strip()
+            if output == "uint32 0":
+                pass
+            elif output.startswith("uint32"):
+                return float(output.split()[-1])
+        except:
+            pass
+
+        try:
+            # Wayland
+            output = subprocess.check_output(
+                ["gsettings", "get", "org.gnome.desktop.interface", "text-scaling-factor"]
+            ).decode().strip()
+            return float(output)
+        except:
+            pass
+
+        try:
+            # X11
+            output = subprocess.check_output(["xrandr", "--query"]).decode()
+            for line in output.splitlines():
+                if "connected primary" in line and "scale" in line:
+                    scale_part = line.split("scale")[1].split()[0]
+                    return float(scale_part.replace('x', ''))
+        except:
+            pass
+
+        return 1.0
 
     def open_app(self, path):
         try:

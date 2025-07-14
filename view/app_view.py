@@ -2,6 +2,7 @@ import customtkinter as ctk
 from tkinter import Menu, BooleanVar
 from textwrap import wrap
 from PIL import Image
+import screeninfo
 import ctypes
 
 
@@ -79,15 +80,21 @@ class AppWnd(ctk.CTk):
         self.grid_columnconfigure((0, 1, 2), weight=1)
         ctk.set_appearance_mode(init.data["theme"])
 
-        if (self.init.isWindows): # centrilize with windll
+        # Start window on center of screen
+        w, h = tuple(self.init.data["wnd_size"])
+        if (self.init.isWindows):
             self.scale_factor = ctypes.windll.shcore.GetScaleFactorForDevice(0)/100
 
-            w, h = tuple(self.init.data["wnd_size"])
             ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
             x, y = (ws/2) - (w/2), (hs/2) - (h/2)
             self.geometry('%dx%d+%d+%d' % (w, h, x*self.scale_factor, y*self.scale_factor))
         else:
-            w, h = tuple(self.init.data["wnd_size"])
+            print(self.app.get_linux_scale_factor())
+            self.scale_factor = self.app.get_linux_scale_factor()
+            m_info = screeninfo.get_monitors()[0]
+            ws, hs = m_info.width, m_info.height
+            x, y = (ws / 2) - (w / 2), (hs / 2) - (h / 2)
+            self.geometry('%dx%d+%d+%d' % (w, h, x / self.scale_factor, y / self.scale_factor))
 
         self.check_btn = BooleanVar()
         self.check_btn.set(self.init.data["show_icons"])

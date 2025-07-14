@@ -18,7 +18,6 @@ class AddSrtc():
             app_path = filedialog.askopenfilename()
             self.add_srtc_view.path_entry.insert(0, app_path)
 
-
         elif file_type == "icon":
             self.add_srtc_view.icon_entry.delete(0, "end")
             icon_path = filedialog.askopenfilename()

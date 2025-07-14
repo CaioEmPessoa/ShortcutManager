@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox
+import screeninfo
 
 class NewSrtcWnd(ctk.CTkToplevel):
     def new_site_itens(self, newapp):
@@ -27,9 +28,14 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.path_label.configure(text="Escolha o caminho do atalho (ou link direto do jogo):")
         self.path_window_button.configure(command=lambda: newapp.search_window("steam"))
 
-    def new_app_itens(self, newapp):
+    def new_app_itens(self, newapp, init):
+
+        if (init.isWindows):
+            ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
+        else:
+            m_info = screeninfo.get_monitors()[0]
+            ws, hs = m_info.width, m_info.height
         w, h = 330, 440
-        ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
         x, y = (ws - w) / 2, (hs - h) / 2
         self.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
 
@@ -37,8 +43,8 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.grid_rowconfigure((tuple(range(12))), weight=1)
 
         self.title("Shortcut Manager")
-        # if(self.init.isWindows):
-        #    self.after(200, lambda:self.iconbitmap("img/icon.ico"))
+        if(init.isWindows):
+           self.after(200, lambda:self.iconbitmap("img/icon.ico"))
 
         self.srtc_type = "app"
 

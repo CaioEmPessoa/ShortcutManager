@@ -25,13 +25,13 @@ class PopupMenu():
             self.main_menu.add_command(label="Editar", command=lambda app=srtc_id: self.init.call_window("edit", app))
 
             # adiciona o enviar para
-            self.folder_menu = Menu(tearoff=0)
+            self.folder_menu = Menu(self.main_menu, tearoff=0)
             for folder in self.init.data["folders"]:
                 self.folder_menu.add_command(label=folder, command= lambda right_folder = folder: self.app.send_to_folder(srtc_id, right_folder))
             self.main_menu.add_cascade(label="Enviar Atalho Para...", menu=self.folder_menu)
 
             # submenu pra mover atalho de lugar
-            self.move_menu = Menu(tearoff=0)
+            self.move_menu = Menu(self.main_menu, tearoff=0)
             app_data = self.init.data["apps"]
             start = [i for i in app_data].index(srtc_id)
             pos = 0 # used for change location label

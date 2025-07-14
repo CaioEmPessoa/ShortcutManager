@@ -16,12 +16,12 @@ class ModifyData():
                             "show_icons":True,
                             "folders":["Default"],
                             "apps":{}}
-            
+
             self.write_data(default_data)
 
         with open("apps_data.json", "r") as read_file:
             self.data = json.load(read_file)
-        
+
         self.clear_unused_img()
 
         return self.data
@@ -31,7 +31,7 @@ class ModifyData():
             self.data = data
         elif not data:
             self.data = self.init.data
-    
+
         with open("apps_data.json", "w") as write_file:
             json.dump(self.data, write_file, indent=4)
 
@@ -54,6 +54,6 @@ class ModifyData():
             if item != "unknown.png":
                 os.remove("img/" + item)
         os.remove("apps_data.json")
-                
+
         init.call_window("close")
         init.call_window("restart")

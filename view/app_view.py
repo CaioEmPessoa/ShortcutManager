@@ -4,6 +4,7 @@ from textwrap import wrap
 from PIL import Image
 import ctypes
 
+
 class PopupMenu():
     def __init__(self, init, app, app_wnd):
         super().__init__()
@@ -11,7 +12,7 @@ class PopupMenu():
 
     def create_menus(self, srtc_id=False):
         self.main_menu = Menu(tearoff=0)
-        
+
         self.size_menu = Menu(tearoff=0)
         self.size_menu.add_command(label="Ícones Grandes", command= lambda: self.app_wnd.change_icon_size("G"))
         self.size_menu.add_command(label="Ícones Médios", command= lambda: self.app_wnd.change_icon_size("M"))
@@ -21,13 +22,13 @@ class PopupMenu():
         if srtc_id:
             # adiciona o editar
             self.main_menu.add_command(label="Editar", command=lambda app=srtc_id: self.init.call_window("edit", app))
-            
+
             # adiciona o enviar para
             self.folder_menu = Menu(tearoff=0)
             for folder in self.init.data["folders"]:
                 self.folder_menu.add_command(label=folder, command= lambda right_folder = folder: self.app.send_to_folder(srtc_id, right_folder))
             self.main_menu.add_cascade(label="Enviar Atalho Para...", menu=self.folder_menu)
-            
+
             # submenu pra mover atalho de lugar
             self.move_menu = Menu(tearoff=0)
             app_data = self.init.data["apps"]
@@ -39,7 +40,7 @@ class PopupMenu():
                     continue
                 if i == srtc_id: # don't add same srtc to the submenu
                     continue
-                command_label = f"{pos} ({app_data[i]["name"]})"
+                command_label = f"{pos} ({app_data[i]['name']})"
                 self.move_menu.add_command(label=command_label, command= lambda start=start, end=pos-1: self.app.move_srct(start, end))
 
             self.main_menu.add_cascade(label="Mover Atalho Para...", menu=self.move_menu)
@@ -48,10 +49,10 @@ class PopupMenu():
 
         self.main_menu.add_cascade(label="Exibir", menu=self.size_menu)
 
-        self.main_menu.add_checkbutton(label="Mostrar Ícones?", 
+        self.main_menu.add_checkbutton(label="Mostrar Ícones?",
                                        command=lambda: self.app.show_icons(self.app_wnd.check_btn.get()),
                                        variable=self.app_wnd.check_btn, onvalue=1, offvalue=0)
-        
+
     def show_srtc_menu(self, event, srtc_id):
         self.create_menus(srtc_id)
         self.main_menu.tk_popup(event.x_root, event.y_root)
@@ -71,18 +72,22 @@ class AppWnd(ctk.CTk):
         self.init, self.app, self.menu = init, app, PopupMenu(init, app, self)
 
         self.title("Shortcut Manager")
-        self.iconbitmap("img/icon.ico")
+        if(self.init.isWindows):
+            self.iconbitmap("img/icon.ico")
 
         self.grid_rowconfigure((1), weight=1)
         self.grid_columnconfigure((0, 1, 2), weight=1)
         ctk.set_appearance_mode(init.data["theme"])
 
-        self.scale_factor = ctypes.windll.shcore.GetScaleFactorForDevice(0)/100
+        if (self.init.isWindows): # centrilize with windll
+            self.scale_factor = ctypes.windll.shcore.GetScaleFactorForDevice(0)/100
 
-        w, h = tuple(self.init.data["wnd_size"])
-        ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
-        x, y = (ws/2) - (w/2), (hs/2) - (h/2)
-        self.geometry('%dx%d+%d+%d' % (w, h, x*self.scale_factor, y*self.scale_factor))
+            w, h = tuple(self.init.data["wnd_size"])
+            ws, hs = self.winfo_screenwidth(), self.winfo_screenheight()
+            x, y = (ws/2) - (w/2), (hs/2) - (h/2)
+            self.geometry('%dx%d+%d+%d' % (w, h, x*self.scale_factor, y*self.scale_factor))
+        else:
+            w, h = tuple(self.init.data["wnd_size"])
 
         self.check_btn = BooleanVar()
         self.check_btn.set(self.init.data["show_icons"])
@@ -98,7 +103,7 @@ class AppWnd(ctk.CTk):
         self.bind("<MouseWheel>", self.switch_tabs)
 
     def create_itens(self):
-        welcome = ctk.CTkLabel(master=self, text="Escolha um ou adicione um novo atalho", 
+        welcome = ctk.CTkLabel(master=self, text="Escolha um ou adicione um novo atalho",
                                font=('Segoe UI', 20), text_color="#807e7e", width=500)
         welcome.grid(row=0, column=0, columnspan=3)
 
@@ -117,7 +122,7 @@ class AppWnd(ctk.CTk):
 
         self.create_tabs()
 
-        self.create_shortcuts() 
+        self.create_shortcuts()
 
         self.grid_srcts()
 
@@ -126,12 +131,12 @@ class AppWnd(ctk.CTk):
         self.folders_tab = ctk.CTkTabview(master=self)
         self.folders_tab.grid(row=1, column=0, columnspan=3, padx=15, pady=15, sticky="nsew")
         self.folders_frame = {}
-    
+
         for folder in self.init.data["folders"]:
             self.folders_tab.add(folder)
             my_frame = ScrollFrame(master=self.folders_tab.tab(folder))
             my_frame.pack(fill="both", expand=True)
-            
+
             self.folders_frame[folder] = my_frame
 
             my_frame.bind("<Button-3>", lambda e: self.menu.show_main_menu(e))
@@ -142,7 +147,7 @@ class AppWnd(ctk.CTk):
 
         except KeyError:
             return
-        
+
         # creating lists to store btns ont its folders
         for folder in self.init.data["folders"]:
             self.app.srtc_btns[folder] = []
@@ -151,7 +156,7 @@ class AppWnd(ctk.CTk):
         icon_size = size_dict_info["icon"]
         srtc_size = size_dict_info["srtc"]
         wrap_size = size_dict_info["wrap"]
-        
+
         for app_name in data:
             app_data = data[app_name]
 
@@ -165,20 +170,20 @@ class AppWnd(ctk.CTk):
             text_color = ("Black", "White")
             show_icons = self.init.data["show_icons"]
             compound="top"
-            
+
             if not show_icons:
                 compound="bottom"
                 icon = ""
 
-            app_button = ctk.CTkButton(master=self.folders_frame[app_data["folder"]], 
-                                       width=srtc_size, height=srtc_size, compound=compound, 
-                                       text=name, command=lambda app_path=app_data["path"]: self.app.open_app(app_path), 
+            app_button = ctk.CTkButton(master=self.folders_frame[app_data["folder"]],
+                                       width=srtc_size, height=srtc_size, compound=compound,
+                                       text=name, command=lambda app_path=app_data["path"]: self.app.open_app(app_path),
                                        image=icon, font=("Consolas", 16),
-                                       text_color=text_color, border_width=3, border_color=bd_color, 
+                                       text_color=text_color, border_width=3, border_color=bd_color,
                                        hover_color=("#37709f", "#184c74"), fg_color="transparent")
-                        
+
             app_button.bind("<Button-3>", lambda e, srtc_id=app_data["id"]: self.menu.show_srtc_menu(e, srtc_id))
-            
+
             self.app.srtc_btns[app_data["folder"]].append(app_button)
 
     def grid_srcts(self):
@@ -193,7 +198,7 @@ class AppWnd(ctk.CTk):
     def change_icon_size(self, size):
         self.icon_size = size
         self.init.data["srtc_size"] = self.icon_size
-        
+
         for folder in self.app.srtc_btns:
             for btn in self.app.srtc_btns[folder]:
                 btn.destroy()
@@ -221,7 +226,7 @@ class AppWnd(ctk.CTk):
                     btn.grid_forget()
 
                 self.grid_srcts()
-            
+
             try:
                 btn_ammount = len(self.app.srtc_btns[self.main_tab])
             except KeyError:
@@ -229,7 +234,7 @@ class AppWnd(ctk.CTk):
 
             if self.max_columns > btn_ammount and btn_ammount != 0:
                 self.max_columns = btn_ammount
-            
+
             self.folders_frame[self.main_tab].grid_columnconfigure((tuple(range(self.max_columns))), weight=1)
 
         #restart loop

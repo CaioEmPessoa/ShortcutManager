@@ -23,7 +23,7 @@ class AddSrtc():
             self.add_srtc_view.icon_entry.delete(0, "end")
             icon_path = filedialog.askopenfilename()
             self.add_srtc_view.icon_entry.insert(0, icon_path)
-            
+
         elif file_type == "steam":
             self.add_srtc_view.path_entry.delete(0, "end")
             self.add_srtc_view.name_entry.delete(0, "end")
@@ -60,7 +60,7 @@ class AddSrtc():
                     "bd_color": f"{bd_color}"
                     }
                 }
-        
+
         self.init.data["apps"].update(current_app_dict)
         self.init.modify_data.write_data()
         self.init.call_window("restart")
@@ -80,7 +80,7 @@ class AddSrtc():
 
             split_path = splitext(split(srtc_path)[1])
             name = split_path[len(split_path)-2]
-            
+
             return name, url, icon
 
     def convert_browser(self, add_srtc_view, link):
@@ -95,12 +95,12 @@ class AddSrtc():
 
         elif link[:8] != 'https://':
             link = 'https://' + link
-        
+
         if browser == "firefox":
             link = f"start firefox --name=AppName -new-window --no-remote -P \"Apps\" {link}"
         else:
             link = f'start {browser} --new-window --app={link} & exit'
-        
+
         return link
 
     def check_info(self, wnd):
@@ -169,7 +169,7 @@ class AddSrtc():
             srtc_path = self.convert_browser(wnd, srtc_path)
         elif srtc_type == "steam":
             srtc_path = "start " + srtc_path
-        
+
         return name, srtc_path, icon_path, srtc_type, folder, bd_color
 
 class Edit():
@@ -194,7 +194,7 @@ class Edit():
         if app_data["type"] == "site":
             path = app_data["path"]
             split_path = path.split(" ")
-            
+
             if split_path[1][:5] == "steam":
                 path = split_path[1].replace("\"", "")
             else:
@@ -202,7 +202,7 @@ class Edit():
                 browser = split_path[1]
 
                 wnd.browser_entry.insert(0, browser)
-        
+
         elif app_data["type"] == "steam":
             path = app_data["path"]
             path = path[6:-1]
@@ -210,13 +210,12 @@ class Edit():
         elif app_data["type"] == "app":
             path = app_data["path"]
             path = path[:len(path)-1][1:]
-        
+
         if app_data["icon"] != "None":
             wnd.icon_entry.insert(0, app_data["icon"])
 
         wnd.name_entry.insert(0, app_data["name"])
 
         wnd.path_entry.insert(0, path)
-        
+
         wnd.bd_color_entry.set(app_data["bd_color"])
- 

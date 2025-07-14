@@ -4,19 +4,22 @@ from view import app_view
 from src import srtc_manage
 from view import srtc_manage_view
 from src import manage_folders
-
 from src import iconextract
+
+import platform
 
 class DefaultClass():
     def __init__(self):
         super().__init__()
+
+        self.isWindows = platform.system() == 'Windows'
 
         self.iconextract = iconextract
 
         self.modify_data = modify_data.ModifyData(self)
         self.data = self.modify_data.read_data()
         self.modify_data.write_data()
- 
+
         self.app = app.App(self)
         self.app_view = app_view.AppWnd(self, self.app)
         self.app_view.mainloop()
@@ -34,7 +37,7 @@ class DefaultClass():
                 self.add_srtc = srtc_manage.AddSrtc(self)
                 self.add_srtc_view.new_app_itens(self.add_srtc)
                 self.add_srtc_view.grab_set()
-            
+
             case "Site":
                 self.add_srtc_view = srtc_manage_view.NewSrtcWnd()
                 self.add_srtc = srtc_manage.AddSrtc(self)
@@ -47,7 +50,7 @@ class DefaultClass():
                 self.add_srtc_view.new_steam_itens(self.add_srtc)
                 self.add_srtc_view.grab_set()
 
-            case "Pasta": 
+            case "Pasta":
                 self.add_folder = manage_folders.NewfolderWnd(self)
                 self.add_folder.grab_set()
 

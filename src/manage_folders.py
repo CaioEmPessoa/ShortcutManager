@@ -10,9 +10,10 @@ class NewfolderWnd(ctk.CTkToplevel):
         x, y = (ws - w) / 2, (hs - h) / 2
         self.geometry(f'{w}x{h}+{int(x)}+{int(y)}')
         self.grid_columnconfigure((0, 1, 2), weight=1)
-        
+
         self.title("Shortcut Manager")
-        self.after(500, lambda: self.iconbitmap("img/icon.ico"))
+        if(self.init.isWindows):
+            self.after(500, lambda: self.iconbitmap("/img/icon.ico"))
 
         self.new_folder_elements()
 
@@ -20,7 +21,7 @@ class NewfolderWnd(ctk.CTkToplevel):
         new_folder_name = self.name_entry.get()
         if new_folder_name == "":
             return
-        
+
         folders_list = self.init.data["folders"]
         folders_list.append(new_folder_name)
 

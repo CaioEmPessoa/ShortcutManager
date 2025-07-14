@@ -17,7 +17,7 @@ class NewSrtcWnd(ctk.CTkToplevel):
 
         self.browser_label = ctk.CTkLabel(master=self, text="Qual navegador? Chrome é padrão.\n(Caso queira firefox, leia como no github.)\n")
         self.browser_label.grid(row=5, column=0, padx=10, columnspan=2)
-        
+
         self.browser_entry = ctk.CTkEntry(master=self, width=250)
         self.browser_entry.grid(row=6, column=0, padx=10, columnspan=2)
 
@@ -37,7 +37,8 @@ class NewSrtcWnd(ctk.CTkToplevel):
         self.grid_rowconfigure((tuple(range(12))), weight=1)
 
         self.title("Shortcut Manager")
-        self.after(200, lambda:self.iconbitmap("img/icon.ico"))
+        # if(self.init.isWindows):
+        #    self.after(200, lambda:self.iconbitmap("img/icon.ico"))
 
         self.srtc_type = "app"
 
@@ -66,7 +67,7 @@ class NewSrtcWnd(ctk.CTkToplevel):
 
         self.icon_entry = ctk.CTkEntry(master=self, width=200)
         self.icon_entry.grid(row=8, column=0, pady=10, padx=10, sticky="e")
-        
+
         color_list = [color for color in newapp.init.app.COLOR_DICT]
 
         self.bd_color_entry = ctk.CTkOptionMenu(master=self, values=color_list)
@@ -74,11 +75,11 @@ class NewSrtcWnd(ctk.CTkToplevel):
         # END Entry
 
         # Buttons
-        self.path_window_button = ctk.CTkButton(master=self, text="Janela", width=10, 
+        self.path_window_button = ctk.CTkButton(master=self, text="Janela", width=10,
                                     command=lambda: newapp.search_window("path"))
         self.path_window_button.grid(row=4, column=1, sticky="W")
 
-        self.icon_window_button = ctk.CTkButton(master=self, text="Janela", width=10, 
+        self.icon_window_button = ctk.CTkButton(master=self, text="Janela", width=10,
                                     command=lambda: newapp.search_window("icon"))
         self.icon_window_button.grid(row=8, column=1, sticky="W")
 
@@ -96,7 +97,7 @@ class EditSrtcView():
         wnd.send_button.grid_forget()
         wnd.send_button.configure(command=lambda: add_srtc.send(wnd, edit_id=app_to_edit))
         wnd.send_button.grid(row=11, column=0, pady=15, columnspan=1)
-        
+
         wnd.delete_button = ctk.CTkButton(master=wnd, fg_color="red", text="delete", width=80,
                                            command=lambda: edit_srtc.delete(srtc=app_to_edit, init=init))
         wnd.delete_button.grid(row=11, column=1, pady=15, sticky="w")

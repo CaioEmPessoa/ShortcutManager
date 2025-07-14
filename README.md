@@ -13,7 +13,7 @@ Also carefull to not run the 'save reset.py' if not needed, it deletes all your 
 
 ## How it does?
 ### Adding a shortcut
-First you need to decide if you want to add a shortcut to a local app, an website or a Steam game after that you'll see one of theese windows:
+First you need to decide if you want to add a shortcut to a local app, an website or a Steam game. After that you'll see one of theese windows:
 
 ___
 ### Adding a APP:
@@ -65,7 +65,7 @@ ___
 </details>
 
 ___
-#### Adding a STEAM shortcut:
+#### Adding a STEAM shortcut: (NOTE: This only works on windows. In other sistems you'll probably have to add it manually as an "app")
 - If you selected the steam generated desktop icon it will fill all the informations for you, even the icon, so I recommend just selecting the path and call it a day. (YOU CAN DELETE THE DESKTOP SHORTCUT LATER)
 - Name of shortcut
 - Link to the game, its usually like this: "steam://rungameid/\<gameid\>", the way you get the game id is by creating a shortcut of it in your desktop, reading the properties of the url.

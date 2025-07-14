@@ -14,7 +14,7 @@ class PopupMenu():
     def create_menus(self, srtc_id=False):
         self.main_menu = Menu(tearoff=0)
 
-        self.size_menu = Menu(tearoff=0)
+        self.size_menu = Menu(self.main_menu, tearoff=0)
         self.size_menu.add_command(label="Ícones Grandes", command= lambda: self.app_wnd.change_icon_size("G"))
         self.size_menu.add_command(label="Ícones Médios", command= lambda: self.app_wnd.change_icon_size("M"))
         self.size_menu.add_command(label="Ícones Pequenos", command= lambda: self.app_wnd.change_icon_size("P"))

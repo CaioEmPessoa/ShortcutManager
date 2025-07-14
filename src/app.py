@@ -60,16 +60,17 @@ class App():
 
         return 1.0
 
+    def open_file(self, filename):
+        if sys.platform == "win32":
+            os.startfile(filename)
+        else:
+            opener = "open" if sys.platform == "darwin" else "xdg-open"
+            subprocess.call([opener, filename])
+
     def open_app(self, path):
         try:
-            dir_path = os.path.dirname(path)
-            app_dir = os.getcwd()
-            os.chdir(dir_path[1:])
-            os.startfile(path)
-            os.chdir(app_dir) # lazy? fix
-                              # maybe better if didn't change the dir at all
+            self.open_file(path)
 
-        #   GET ERROR THAT IS NOT A APP
         except OSError:
             os.system(f"{path}")
         self.init.call_window("close")
@@ -105,7 +106,6 @@ class App():
         set_appearance_mode(current_theme)
 
     def send_to_folder(self, app_name, folder):
-        print(folder)
         self.init.data["apps"][str(app_name)]["folder"] = folder
         self.init.modify_data.write_data()
         self.init.call_window("restart")

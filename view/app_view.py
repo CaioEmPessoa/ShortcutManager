@@ -89,7 +89,6 @@ class AppWnd(ctk.CTk):
             x, y = (ws/2) - (w/2), (hs/2) - (h/2)
             self.geometry('%dx%d+%d+%d' % (w, h, x*self.scale_factor, y*self.scale_factor))
         else:
-            print(self.app.get_linux_scale_factor())
             self.scale_factor = self.app.get_linux_scale_factor()
             m_info = screeninfo.get_monitors()[0]
             ws, hs = m_info.width, m_info.height

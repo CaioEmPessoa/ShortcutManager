@@ -12,7 +12,8 @@ class DefaultClass():
     def __init__(self):
         super().__init__()
 
-        self.isWindows = platform.system() == 'Windows'
+        self.isWindows = platform.system() == 'Windows' # i swear i didn't want to import platform in various places
+                                                        # but I even got a way to import it in different forms too..
 
         self.iconextract = iconextract
 

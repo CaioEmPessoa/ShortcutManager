@@ -7,6 +7,8 @@ from math import floor
 from PIL import Image
 import shutil
 
+import platform
+
 class AddSrtc():
     def __init__(self, init):
         self.init = init
@@ -52,7 +54,7 @@ class AddSrtc():
                 self.edit_id: {
                     "name": f"{name}",
                     "id":self.edit_id,
-                    "path": f"\"{app_path}\"",
+                    "path": f"\"{app_path}\"" if platform.system() == 'Windows' else app_path,
                     "icon": f"{icon_path}",
                     "type": srtc_type,
                     "folder":folder,
